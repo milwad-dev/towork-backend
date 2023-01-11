@@ -194,6 +194,11 @@ return [
         Illuminate\View\ViewServiceProvider::class,
 
         /*
+         * Module Service Providers...
+         */
+        Modules\Common\Providers\CommonServiceProvider::class,
+
+        /*
          * Package Service Providers...
          */
 
