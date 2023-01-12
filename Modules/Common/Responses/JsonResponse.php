@@ -2,6 +2,8 @@
 
 namespace Modules\Common\Responses;
 
+use Symfony\Component\HttpFoundation\Response;
+
 class JsonResponse
 {
     /**
@@ -15,5 +17,23 @@ class JsonResponse
     public function successResponse(array|string|int|object $data, array $headers = [], int $options = 0)
     {
         return response()->json(data: $data, headers: $headers, options: $options);
+    }
+
+    /**
+     * Return forbidden json response.
+     *
+     * @param array|string|int|object $data
+     * @param array $headers
+     * @param int $options
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function forbiddenResponse(array|string|int|object $data, array $headers = [], int $options = 0)
+    {
+        return response()->json(
+            data: $data,
+            status: Response::HTTP_FORBIDDEN,
+            headers: $headers,
+            options: $options
+        );
     }
 }
