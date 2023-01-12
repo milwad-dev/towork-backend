@@ -36,4 +36,22 @@ class JsonResponse
             options: $options
         );
     }
+
+    /**
+     * Return no-content json response.
+     *
+     * @param array|string|int|object $data
+     * @param array $headers
+     * @param int $options
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function noContentResponse(array|string|int|object $data, array $headers = [], int $options = 0)
+    {
+        return response()->json(
+            data: $data,
+            status: Response::HTTP_NO_CONTENT,
+            headers: $headers,
+            options: $options
+        );
+    }
 }
