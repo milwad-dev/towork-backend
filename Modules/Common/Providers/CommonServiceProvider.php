@@ -17,7 +17,7 @@ class CommonServiceProvider extends ServiceProvider
     public function register()
     {
         $this->registerCommands();
-        $this->bindJsonResponse();
+        $this->bindJsonResponseFacade();
     }
 
     /**
@@ -31,12 +31,14 @@ class CommonServiceProvider extends ServiceProvider
     }
 
     /**
-     * Bind json response.
+     * Bind json response facade.
      *
      * @return void
      */
-    private function bindJsonResponse()
+    private function bindJsonResponseFacade()
     {
-        app()->bind(JsonResponseInterface::class, JsonResponse::class);
+        app()->bind('json-response', function ($app) {
+            return new JsonResponse();
+        });
     }
 }
