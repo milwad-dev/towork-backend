@@ -13,6 +13,17 @@ class UserServiceProvider extends ServiceProvider
      */
     public function register()
     {
+        $this->registerMigrations();
+        
+    }
+
+    /**
+     * Load migration files.
+     *
+     * @return void
+     */
+    public function registerMigrations(): void
+    {
         $this->loadMigrationsFrom(__DIR__ . '/../Database/Migrations');
     }
 }
