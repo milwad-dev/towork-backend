@@ -4,9 +4,14 @@ namespace Modules\User\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Modules\User\Http\Requests\UserStoreRequest;
+use Modules\User\Http\Resources\UserSingleResource;
+use Modules\User\Services\UserService;
 
 class UserController extends Controller
 {
+    public function __construct(private readonly UserService $userService) {}
+
     /**
      * Display a listing of the resource.
      *
@@ -20,12 +25,14 @@ class UserController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param  UserStoreRequest $request
+     * @return UserSingleResource
      */
-    public function store(Request $request)
+    public function store(UserStoreRequest $request)
     {
-        //
+        $user = $this->userService->store($request->validated());
+
+        return new UserSingleResource($user);
     }
 
     /**

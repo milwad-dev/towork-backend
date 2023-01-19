@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ccbd816a07b206f971042295b899d1ba",
+    "content-hash": "89d8fe2e975d2bdbfd0984d600387f1e",
     "packages": [
         {
             "name": "brick/math",
@@ -1654,6 +1654,66 @@
                 }
             ],
             "time": "2022-04-17T13:12:02+00:00"
+        },
+        {
+            "name": "milwad/laravel-validate",
+            "version": "v1.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/milwad-dev/laravel-validate.git",
+                "reference": "e5454340de653c37cd7aa3c707f3f7fad6ae57b4"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/milwad-dev/laravel-validate/zipball/e5454340de653c37cd7aa3c707f3f7fad6ae57b4",
+                "reference": "e5454340de653c37cd7aa3c707f3f7fad6ae57b4",
+                "shasum": ""
+            },
+            "require": {
+                "laravel/framework": "^8.0|^9.0"
+            },
+            "require-dev": {
+                "orchestra/testbench": "^5.0|^6.0|^7.0",
+                "phpunit/phpunit": "^9.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Milwad\\LaravelValidate\\LaravelValidateServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Milwad\\LaravelValidate\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "milwad khosravi",
+                    "email": "milwad.dev@gmail.com",
+                    "homepage": "https://milwad.ir",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Write rules easy & fast",
+            "homepage": "https://github.com/milwad-dev/laravel-validate",
+            "keywords": [
+                "laravel-validate",
+                "milwad",
+                "regex",
+                "validate"
+            ],
+            "support": {
+                "issues": "https://github.com/milwad-dev/laravel-validate/issues",
+                "source": "https://github.com/milwad-dev/laravel-validate/tree/v1.3"
+            },
+            "time": "2023-01-01T20:31:22+00:00"
         },
         {
             "name": "monolog/monolog",
