@@ -21,4 +21,20 @@ class UserService
             'password' => Hash::make($data['password'])
         ]);
     }
+
+    /**
+     * Update user by array of data and id.
+     *
+     * @param array $data
+     * @param int $id
+     * @return int
+     */
+    public function update(array $data, int $id)
+    {
+        return User::query()->where('id', $id)->update([
+            'name' => $data['name'],
+            'email' => $data['email'],
+            'password' => Hash::make($data['password'])
+        ]);
+    }
 }
