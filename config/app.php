@@ -196,6 +196,7 @@ return [
         /*
          * Module Service Providers...
          */
+        Modules\User\Providers\UserServiceProvider::class,
         Modules\Common\Providers\CommonServiceProvider::class,
 
         /*
