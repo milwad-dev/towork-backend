@@ -2,17 +2,21 @@
 
 namespace Modules\User\Tests\Feature;
 
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Modules\User\Models\User;
 use Tests\TestCase;
 
 class UserIndexTest extends TestCase
 {
+    use RefreshDatabase;
+
     /**
-     * A basic feature test example.
+     * Test get all users.
      *
+     * @test
      * @return void
      */
-    public function test_example()
+    public function get_all_users()
     {
         $user = User::factory()->create();
 
