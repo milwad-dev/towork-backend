@@ -20,7 +20,11 @@ class UserIndexTest extends TestCase
         $response->assertOk();
         $response->assertJsonStructure([
             'data' => [
-                'users' => []
+                '*' => [
+                    'name',
+                    'email',
+                    'phone',
+                ]
             ]
         ]);
     }
