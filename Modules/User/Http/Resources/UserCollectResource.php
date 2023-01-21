@@ -15,11 +15,13 @@ class UserCollectResource extends ResourceCollection
     public function toArray($request)
     {
         return [
-            'data' => [
-                'name' => $this->name,
-                'email' => $this->email,
-                'phone' => $this->phone,
-            ]
+            'data' => $this->collection->map(function ($user) {
+                return [
+                    'name'  => $user->name,
+                    'email' => $user->email,
+                    'phone' => $user->phone,
+                ];
+            })
         ];
     }
 

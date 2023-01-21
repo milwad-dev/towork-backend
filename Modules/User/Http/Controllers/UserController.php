@@ -7,11 +7,15 @@ use Illuminate\Http\Request;
 use Modules\User\Http\Requests\UserStoreRequest;
 use Modules\User\Http\Resources\UserCollectResource;
 use Modules\User\Http\Resources\UserSingleResource;
+use Modules\User\Repositories\UserRepoEloquent;
 use Modules\User\Services\UserService;
 
 class UserController extends Controller
 {
-    public function __construct(private readonly UserService $userService) {}
+    public function __construct(
+        private readonly UserService $userService,
+        private readonly UserRepoEloquent $userRepoEloquent
+    ) {}
 
     /**
      * Display a listing of the resource.
@@ -20,7 +24,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = $this->repoEloquent->getLatest()->paginate(10);
+        $users = $this->userRepoEloquent->getLatest()->paginate(10);
 
         return new UserCollectResource($users);
     }
