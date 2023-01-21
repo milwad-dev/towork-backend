@@ -2,9 +2,9 @@
 
 namespace Modules\Common\Providers;
 
+use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\ServiceProvider;
 use Modules\Common\Console\Commands\MakeModule;
-use Modules\Common\Contracts\JsonResponseInterface;
 use Modules\Common\Responses\JsonResponse;
 
 class CommonServiceProvider extends ServiceProvider
@@ -16,8 +16,21 @@ class CommonServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->registerCommands();
         $this->bindJsonResponseFacade();
+        $this->registerCommands();
+        $this->registerFactories();
+    }
+
+    /**
+     * Bind json response facade.
+     *
+     * @return void
+     */
+    private function bindJsonResponseFacade()
+    {
+        app()->bind('json-response', function ($app) {
+            return new JsonResponse();
+        });
     }
 
     /**
@@ -31,14 +44,14 @@ class CommonServiceProvider extends ServiceProvider
     }
 
     /**
-     * Bind json response facade.
+     * Load factories.
      *
      * @return void
      */
-    private function bindJsonResponseFacade()
+    private function registerFactories()
     {
-        app()->bind('json-response', function ($app) {
-            return new JsonResponse();
+        Factory::guessFactoryNamesUsing(static function (string $modelName) {
+            return 'Modules\Common\Database\\Factories\\' . class_basename($modelName) . 'Factory';
         });
     }
 }

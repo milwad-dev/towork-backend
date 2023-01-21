@@ -2,6 +2,7 @@
 
 namespace Modules\User\Tests\Feature;
 
+use Modules\User\Models\User;
 use Tests\TestCase;
 
 class UserIndexTest extends TestCase
@@ -13,8 +14,14 @@ class UserIndexTest extends TestCase
      */
     public function test_example()
     {
-        $response = $this->get('/');
+        $user = User::factory()->create();
 
-        $response->assertStatus(200);
+        $response = $this->actingAs($user)->getJson(route('users.index'));
+        $response->assertOk();
+        $response->assertJsonStructure([
+            'data' => [
+                'users' => []
+            ]
+        ]);
     }
 }
