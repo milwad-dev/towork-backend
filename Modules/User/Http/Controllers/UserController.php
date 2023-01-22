@@ -28,20 +28,7 @@ class UserController extends Controller
 
         return new UserCollectResource($users);
     }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  UserStoreRequest $request
-     * @return UserSingleResource
-     */
-    public function store(UserStoreRequest $request)
-    {
-        $user = $this->userService->store($request->validated());
-
-        return new UserSingleResource($user);
-    }
-
+    
     /**
      * Display the specified resource.
      *
