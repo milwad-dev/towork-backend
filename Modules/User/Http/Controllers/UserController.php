@@ -18,6 +18,28 @@ class UserController extends Controller
     ) {}
 
     /**
+     * @OA\Get(
+     *      path="/users",
+     *      operationId="getLatestUsers",
+     *      tags={"Users"},
+     *      summary="Get Latest users with paginate",
+     *      description="Return latest user with paginate in specific json format.",
+     *      @OA\Response(
+     *          response=200,
+     *          description="Successful operation",
+     *          @OA\JsonContent(ref="#/components/schemas/ProjectResource")
+     *       ),
+     *      @OA\Response(
+     *          response=401,
+     *          description="Unauthenticated",
+     *      ),
+     *      @OA\Response(
+     *          response=403,
+     *          description="Forbidden"
+     *      )
+     *     )
+     */
+    /**
      * Display a listing of the resource.
      *
      * @return UserCollectResource
