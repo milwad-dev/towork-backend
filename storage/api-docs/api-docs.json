@@ -1,7 +1,7 @@
 {
     "openapi": "3.0.0",
     "info": {
-        "title": "My First API",
+        "title": "To-Work-Backend",
         "version": "0.1"
     },
     "paths": {
