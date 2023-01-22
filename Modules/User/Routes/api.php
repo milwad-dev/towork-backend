@@ -8,5 +8,5 @@ use Modules\User\Http\Controllers\UserController;
  */
 
 Route::group(['prefix' => config('app.version'), 'middleware' => 'auth'], static function ($router) {
-    $router->apiResource('users', UserController::class);
+    $router->apiResource('users', UserController::class)->except('store');
 });
