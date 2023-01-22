@@ -28,7 +28,7 @@ class UserController extends Controller
 
         return new UserCollectResource($users);
     }
-    
+
     /**
      * Display the specified resource.
      *
