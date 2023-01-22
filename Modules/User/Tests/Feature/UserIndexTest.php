@@ -11,13 +11,14 @@ class UserIndexTest extends TestCase
     use RefreshDatabase;
 
     /**
-     * Test get all users.
+     * Test admin user can see get all users.
      *
      * @test
      * @return void
      */
-    public function get_all_users()
+    public function admin_user_can_see_get_all_users()
     {
+        // TODO Add role
         $user = User::factory()->create();
 
         $response = $this->actingAs($user)->getJson(route('users.index'));
@@ -32,4 +33,8 @@ class UserIndexTest extends TestCase
             ]
         ]);
     }
+
+    /**
+     * 
+     */
 }
