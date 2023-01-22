@@ -35,6 +35,23 @@ class UserIndexTest extends TestCase
     }
 
     /**
-     * 
+     * Test guest user can not see get all users.
+     *
+     * @test
+     * @return void
      */
+//    public function guest_user_can_not_see_get_all_users()
+//    {
+//        // TODO Add role
+//        $response = $this->getJson(route('users.index'));
+//        $response->assertJsonStructure([
+//            'data' => [
+//                '*' => [
+//                    'name',
+//                    'email',
+//                    'phone',
+//                ]
+//            ]
+//        ]);
+//    }
 }
