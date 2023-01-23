@@ -30,7 +30,8 @@
             "Database\\Factories\\": "database/factories/",
             "Database\\Seeders\\": "database/seeders/",
             "Modules\\User\\": "Modules/User/",
-            "Modules\\Common\\": "Modules/Common/"
+            "Modules\\Common\\": "Modules/Common/",
+            "Modules\\Auth\\": "Modules/Auth/"
         }
     },
     "autoload-dev": {
