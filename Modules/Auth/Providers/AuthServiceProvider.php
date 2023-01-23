@@ -7,12 +7,15 @@ use Illuminate\Support\Facades\Route;
 
 class AuthServiceProvider extends ServiceProvider
 {
-    public $namespace = 'Modules\Auth\Http\Controllers';
-
+    /**
+     * Register files.
+     *
+     * @return void
+     */
     public function register()
     {
-        $this->loadMigrationsFrom(__DIR__ . '/../Database/Migrations');
-
-        Route::middleware('web')->namespace($this->namespace)->group(__DIR__ . '/../routes/Auth_routes.php');
+        Route::middleware('web')
+            ->namespace('Modules\Auth\Http\Controllers')
+            ->group(__DIR__ . '/../Routes/auth_routes.php');
     }
 }
