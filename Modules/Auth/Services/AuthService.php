@@ -2,8 +2,8 @@
 
 namespace Modules\Auth\Services;
 
-use Modules\Common\Contracts\Interface\ServicesInterface;
 use Modules\Auth\Models\Auth;
+use Modules\Common\Contracts\Interface\ServicesInterface;
 use Modules\Common\Repositories\CommonRepoEloquent;
 
 class AuthService implements ServicesInterface
@@ -29,4 +29,3 @@ class AuthService implements ServicesInterface
         return CommonRepoEloquent::query($this->class);
     }
 }
-        
