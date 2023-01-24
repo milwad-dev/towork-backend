@@ -19,7 +19,7 @@ class LoginController extends Controller
     public function __invoke(LoginRequest $request)
     {
         $field = $request->email;
-        $correctField = filter_var($field, FILTER_VALIDATE_EMAIL) ? 'email' : 'phone';
+        $correctField = $this->filterField($field);
 
         if (! Auth::attempt([$correctField => $field, 'password' => $request->password])) {
             return response([
@@ -37,5 +37,16 @@ class LoginController extends Controller
             ],
             'status' => 'success'
         ]);
+    }
+
+    /**
+     * Filter field by email or phone.
+     *
+     * @param string $field
+     * @return string
+     */
+    private function filterField(string $field): string
+    {
+        return filter_var($field, FILTER_VALIDATE_EMAIL) ? 'email' : 'phone';
     }
 }

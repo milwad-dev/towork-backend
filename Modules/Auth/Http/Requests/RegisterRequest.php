@@ -38,11 +38,11 @@ class RegisterRequest extends FormRequest
     }
 
     /**
-     * Passed validation.
+     * Prepand for validation.
      *
      * @return void
      */
-    protected function passedValidation()
+    protected function prepareForValidation()
     {
         $this->merge([
             'password' => Hash::make($this->password)
