@@ -26,7 +26,8 @@ class RegisterController extends Controller
             'data' => [
                 'user'  => $user,
                 'token' => $token
-            ]
+            ],
+            'status' => 'success'
         ], Response::HTTP_CREATED);
     }
 }
