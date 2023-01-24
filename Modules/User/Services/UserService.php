@@ -33,9 +33,10 @@ class UserService
     public function update(array $data, int $id)
     {
         return User::query()->where('id', $id)->update([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => Hash::make($data['password'])
+            'name'      => $data['name'],
+            'email'     => $data['email'],
+            'phone'     => $data['phone'],
+            'password'  => Hash::make($data['password'])
         ]);
     }
 }
