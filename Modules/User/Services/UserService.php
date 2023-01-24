@@ -8,6 +8,22 @@ use Modules\User\Models\User;
 class UserService
 {
     /**
+     * Create user by array of data.
+     *
+     * @param array $data
+     * @return \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Eloquent\Model
+     */
+    public function create(array $data)
+    {
+        return User::query()->create([
+            'name'      => $data['name'],
+            'email'     => $data['email'],
+            'phone'     => $data['phone'],
+            'password'  => Hash::make($data['password'])
+        ]);
+    }
+
+    /**
      * Update user by array of data and id.
      *
      * @param array $data
