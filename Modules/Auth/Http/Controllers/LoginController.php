@@ -10,6 +10,12 @@ use Symfony\Component\HttpFoundation\Response;
 
 class LoginController extends Controller
 {
+    /**
+     * Login user.
+     *
+     * @param LoginRequest $request
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response
+     */
     public function __invoke(LoginRequest $request)
     {
         $field = $request->email;
