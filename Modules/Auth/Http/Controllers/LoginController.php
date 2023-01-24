@@ -6,5 +6,8 @@ use Modules\Common\Http\Controllers\Controller;
 
 class LoginController extends Controller
 {
+    public function __invoke()
+    {
 
+    }
 }

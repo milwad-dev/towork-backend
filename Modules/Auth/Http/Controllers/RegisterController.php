@@ -9,6 +9,13 @@ use Symfony\Component\HttpFoundation\Response;
 
 class RegisterController extends Controller
 {
+    /**
+     * Register user.
+     *
+     * @param RegisterRequest $request
+     * @param UserService $userService
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response
+     */
     public function __invoke(RegisterRequest $request, UserService $userService)
     {
         $user  = $userService->create($request->validated());
