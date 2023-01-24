@@ -11,9 +11,9 @@ class UserService
      * Create user by array of data.
      *
      * @param array $data
-     * @return \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Eloquent\Model
+     * @return User
      */
-    public function create(array $data)
+    public function create(array $data): User
     {
         return User::query()->create([
             'name'      => $data['name'],
@@ -38,5 +38,17 @@ class UserService
             'phone'     => $data['phone'],
             'password'  => Hash::make($data['password'])
         ]);
+    }
+
+    /**
+     * Generate token.
+     *
+     * @param User $user
+     * @param string $name
+     * @return string
+     */
+    public function generateToken(User $user, string $name = 'create-user')
+    {
+        return $user->createToken($name)->plainTextToken;
     }
 }
