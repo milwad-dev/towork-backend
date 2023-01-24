@@ -3,9 +3,13 @@
 namespace Modules\Auth\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Hash;
 use Milwad\LaravelValidate\Rules\ValidPhoneNumber;
 use Milwad\LaravelValidate\Rules\ValidStrongPassword;
 
+/**
+ * @property $password
+ */
 class RegisterRequest extends FormRequest
 {
     /**
@@ -31,5 +35,17 @@ class RegisterRequest extends FormRequest
             'phone'     => ['required', 'numeric', new ValidPhoneNumber()],
             'password'  => ['required', 'string', 'min:8', 'max:250', new ValidStrongPassword()]
         ];
+    }
+
+    /**
+     * Passed validation.
+     *
+     * @return void
+     */
+    protected function passedValidation()
+    {
+        $this->merge([
+            'password' => Hash::make($this->password)
+        ]);
     }
 }
