@@ -2,11 +2,9 @@
 
 namespace Modules\User\Http\Controllers;
 
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Modules\User\Http\Requests\UserStoreRequest;
+use Modules\Common\Http\Controllers\Controller;
 use Modules\User\Http\Resources\UserCollectResource;
-use Modules\User\Http\Resources\UserSingleResource;
 use Modules\User\Repositories\UserRepoEloquent;
 use Modules\User\Services\UserService;
 
