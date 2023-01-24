@@ -14,8 +14,8 @@ class AuthServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        Route::middleware('web')
-            ->namespace('Modules\Auth\Http\Controllers')
+        Route::middleware('api')
+            ->prefix('api')
             ->group(__DIR__ . '/../Routes/auth_routes.php');
     }
 }
