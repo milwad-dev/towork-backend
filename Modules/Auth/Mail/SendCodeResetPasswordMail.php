@@ -8,7 +8,7 @@ use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-class SendCodeResetPassword extends Mailable
+class SendCodeResetPasswordMail extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -17,10 +17,7 @@ class SendCodeResetPassword extends Mailable
      *
      * @return void
      */
-    public function __construct()
-    {
-        //
-    }
+    public function __construct(public int $code) {}
 
     /**
      * Get the message envelope.
@@ -30,6 +27,7 @@ class SendCodeResetPassword extends Mailable
     public function envelope()
     {
         return new Envelope(
+            from: config('app.email'),
             subject: 'Send Code Reset Password',
         );
     }
@@ -42,17 +40,7 @@ class SendCodeResetPassword extends Mailable
     public function content()
     {
         return new Content(
-            markdown: 'mail.send-code-reset-password',
+            markdown: 'Auth::mail.send-code-reset-password',
         );
-    }
-
-    /**
-     * Get the attachments for the message.
-     *
-     * @return array
-     */
-    public function attachments()
-    {
-        return [];
     }
 }

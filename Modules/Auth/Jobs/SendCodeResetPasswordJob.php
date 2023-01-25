@@ -8,7 +8,7 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Mail;
-use Modules\Auth\Mail\SendCodeResetPassword;
+use Modules\Auth\Mail\SendCodeResetPasswordMail;
 
 class SendCodeResetPasswordJob implements ShouldQueue
 {
@@ -32,6 +32,6 @@ class SendCodeResetPasswordJob implements ShouldQueue
     public function handle()
     {
         Mail::to($this->email)
-            ->send(new SendCodeResetPassword($this->code));
+            ->send(new SendCodeResetPasswordMail($this->code));
     }
 }
