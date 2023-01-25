@@ -16,7 +16,9 @@ class ResetPasswordService
      */
     public function deleteByEmail(string $email)
     {
-        return ResetCodePassword::query()->where('email', $email)->delete();
+        return ResetCodePassword::query()
+            ->where('email', $email)
+            ->delete();
     }
 
     /**

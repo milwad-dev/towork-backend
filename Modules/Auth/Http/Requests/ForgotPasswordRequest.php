@@ -6,6 +6,7 @@ use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Hash;
 use Milwad\LaravelValidate\Rules\ValidPhoneNumber;
 use Milwad\LaravelValidate\Rules\ValidStrongPassword;
+use Modules\Auth\Services\ResetPasswordService;
 
 /**
  * @property $email
@@ -32,5 +33,18 @@ class ForgotPasswordRequest extends FormRequest
         return [
             'email' => ['required', 'email', 'min:3', 'max:250', 'exists::users,email'],
         ];
+    }
+
+    /**
+     * Prepand for validation.
+     *
+     * @return void
+     * @throws \Exception
+     */
+    protected function prepareForValidation()
+    {
+        $this->merge([
+            'code' => resolve(ResetPasswordService::class)->generateCode()
+        ]);
     }
 }
