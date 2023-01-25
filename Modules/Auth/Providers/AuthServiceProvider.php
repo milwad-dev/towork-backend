@@ -16,6 +16,7 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerRoutes();
         $this->registerMigrations();
+        $this->registerViews();
     }
 
     /**
@@ -38,5 +39,15 @@ class AuthServiceProvider extends ServiceProvider
     private function registerMigrations(): void
     {
         $this->loadMigrationsFrom(__DIR__ . '/../Database/Migrations');
+    }
+
+    /**
+     * Load view files.
+     *
+     * @return void
+     */
+    private function registerViews(): void
+    {
+        $this->loadViewsFrom(__DIR__ . '/../Resources/Views', 'Auth');
     }
 }
