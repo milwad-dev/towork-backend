@@ -3,6 +3,7 @@
 namespace Modules\Auth\Http\Controllers;
 
 use Modules\Auth\Http\Requests\ForgotPasswordRequest;
+use Modules\Auth\Jobs\SendCodeResetPasswordJob;
 use Modules\Auth\Services\ResetPasswordService;
 use Modules\Common\Http\Controllers\Controller;
 
@@ -19,6 +20,7 @@ class ForgotPasswordController extends Controller
     {
         $resetPasswordService->deleteByEmail($request->email); // Delete all old code that user send before.
         $code = $resetPasswordService->store($request->validated()); // Store code.
+        SendCodeResetPasswordJob::dispatch($request->email, $code); // Send email
 
         return response([
             'data' => ['message' => 'Forgot password email sent successfully.'],
