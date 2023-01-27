@@ -19,7 +19,7 @@ class ForgotPasswordController extends Controller
     public function __invoke(ForgotPasswordRequest $request, ResetPasswordService $resetPasswordService)
     {
         $resetPasswordService->deleteByEmail($request->email); // Delete all old code that user send before.
-        $code = $resetPasswordService->store($request->validated()); // Store code.
+        $code = $resetPasswordService->store($request->all()); // Store code.
         SendCodeResetPasswordJob::dispatch($request->email, $code); // Send email
 
         return response([
