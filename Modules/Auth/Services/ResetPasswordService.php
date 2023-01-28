@@ -2,9 +2,12 @@
 
 namespace Modules\Auth\Services;
 
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Modules\Auth\Models\ResetCodePassword;
+use Symfony\Component\HttpFoundation\Response;
 
 class ResetPasswordService
 {
@@ -45,5 +48,21 @@ class ResetPasswordService
             'code'       => $data['code'],
             'created_at' => now()
         ]);
+    }
+
+    /**
+     * Delete reset code with return response.
+     *
+     * @param ResetCodePassword $resetCodePassword
+     * @return Application|ResponseFactory|\Illuminate\Http\Response
+     */
+    public function deleteResetCodePasswordWithReturnResponse(ResetCodePassword $resetCodePassword)
+    {
+        $resetCodePassword->delete();
+
+        return response([
+            'message'   => 'The code has expired.',
+            'status'    => 'error'
+        ], Response::HTTP_GONE);
     }
 }
