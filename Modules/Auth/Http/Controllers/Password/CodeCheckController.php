@@ -28,8 +28,11 @@ class CodeCheckController extends Controller
         }
 
         return response([
-            'code'      => $resetCodePassword->code,
-            'message'   => 'The code is valid.'
+            'data' => [
+                'code'      => $resetCodePassword->code,
+                'message'   => 'The code is valid.'
+            ],
+            'status' => 'success'
         ]);
     }
 }
