@@ -2,7 +2,6 @@
 
 namespace Modules\Auth\Http\Controllers;
 
-use Illuminate\Support\Facades\Hash;
 use Modules\Auth\Http\Requests\RegisterRequest;
 use Modules\Common\Http\Controllers\Controller;
 use Modules\User\Services\UserService;

@@ -1,6 +1,6 @@
 <?php
 
-namespace Modules\Auth\Http\Controllers;
+namespace Modules\Auth\Http\Controllers\Password;
 
 use Modules\Auth\Http\Requests\ForgotPasswordRequest;
 use Modules\Auth\Jobs\SendCodeResetPasswordJob;

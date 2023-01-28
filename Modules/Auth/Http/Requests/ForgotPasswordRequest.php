@@ -3,9 +3,6 @@
 namespace Modules\Auth\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Support\Facades\Hash;
-use Milwad\LaravelValidate\Rules\ValidPhoneNumber;
-use Milwad\LaravelValidate\Rules\ValidStrongPassword;
 use Modules\Auth\Services\ResetPasswordService;
 
 /**
