@@ -2,7 +2,7 @@
 
 namespace Modules\Auth\Http\Controllers\Password;
 
-use Modules\Auth\Http\Requests\ForgotPasswordRequest;
+use Modules\Auth\Http\Requests\Password\ForgotPasswordRequest;
 use Modules\Auth\Jobs\SendCodeResetPasswordJob;
 use Modules\Auth\Services\ResetPasswordService;
 use Modules\Common\Http\Controllers\Controller;

@@ -1,6 +1,6 @@
 <?php
 
-namespace Modules\Auth\Http\Requests;
+namespace Modules\Auth\Http\Requests\Password;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Modules\Auth\Services\ResetPasswordService;
