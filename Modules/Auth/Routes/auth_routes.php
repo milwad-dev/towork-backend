@@ -14,4 +14,5 @@ Route::group([], static function ($router) {
     // Password
     $router->post('password/email', ForgotPasswordController::class);
     $router->post('password/code/check', CodeCheckController::class);
+    $router->post('password/reset', ResetPasswordController::class);
 });
