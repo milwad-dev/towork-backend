@@ -12,4 +12,11 @@ class ResetCodePassword extends Model
      * @var string[]
      */
     protected $fillable = ['email', 'code', 'created_at'];
+
+    /**
+     * Set timestamps.
+     *
+     * @var bool
+     */
+    public $timestamps = false;
 }

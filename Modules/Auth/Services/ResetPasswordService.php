@@ -41,8 +41,9 @@ class ResetPasswordService
     public function store(array $data)
     {
         return ResetCodePassword::query()->create([
-            'email' => $data['email'],
-            'code'  => $data['code']
+            'email'      => $data['email'],
+            'code'       => $data['code'],
+            'created_at' => now()
         ]);
     }
 }

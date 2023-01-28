@@ -20,7 +20,7 @@ class ForgotPasswordController extends Controller
     {
         $resetPasswordService->deleteByEmail($request->email); // Delete all old code that user send before.
         $code = $resetPasswordService->store($request->all()); // Store code.
-        SendCodeResetPasswordJob::dispatch($request->email, $code); // Send email
+        SendCodeResetPasswordJob::dispatch($request->email, $code->code); // Send email
 
         return response([
             'data' => ['message' => 'Forgot password email sent successfully.'],
