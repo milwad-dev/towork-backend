@@ -2,10 +2,15 @@
 
 namespace Modules\Auth\Tests\Feature;
 
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
 class RegisterTest extends TestCase
 {
+    use WithFaker;
+    use RefreshDatabase;
+
     /**
      * Test user can register.
      *
@@ -17,7 +22,7 @@ class RegisterTest extends TestCase
         $name  = $this->faker->name;
         $email = $this->faker->email;
 
-        $response = $this->postJson(route('register'), [
+        $response = $this->postJson(route('auth.register'), [
             'name'      => $name,
             'email'     => $email,
             'phone'     => 1111111111,
