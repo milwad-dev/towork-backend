@@ -7,7 +7,7 @@ use Modules\Auth\Http\Controllers\Password\ForgotPasswordController;
 use Modules\Auth\Http\Controllers\Password\ResetPasswordController;
 use Modules\Auth\Http\Controllers\RegisterController;
 
-Route::group([], static function ($router) {
+Route::group(['middleware' => 'guest'], static function ($router) {
     $router->post('register', RegisterController::class)->name('auth.register');
 
     $router->post('login', LoginController::class)->name('auth.login');
