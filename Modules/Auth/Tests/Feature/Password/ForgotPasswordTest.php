@@ -2,10 +2,13 @@
 
 namespace Modules\Auth\Tests\Feature\Password;
 
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
 class ForgotPasswordTest extends TestCase
 {
+    use RefreshDatabase;
+    
     /**
      * Test guest user can see store reset password code in forgot page.
      *
