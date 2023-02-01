@@ -13,7 +13,7 @@ Route::group(['middleware' => 'guest'], static function ($router) {
     $router->post('login', LoginController::class)->name('auth.login');
 
     // Password
-    $router->post('password/email', ForgotPasswordController::class);
+    $router->post('password/email', ForgotPasswordController::class)->name('auth.forgot_password');
     $router->post('password/code/check', CodeCheckController::class);
     $router->post('password/reset', ResetPasswordController::class);
 });
