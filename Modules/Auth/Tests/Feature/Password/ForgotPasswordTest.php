@@ -23,7 +23,7 @@ class ForgotPasswordTest extends TestCase
     {
         User::factory()->create(['email' => 'milwad.dev@gmail.com']);
 
-        $response = $this->post(route('auth.forgot_password'), ['email' => 'milwad.dev@gmail.com']);
+        $response = $this->postJson(route('auth.forgot_password'), ['email' => 'milwad.dev@gmail.com']);
         $response->assertOk();
         $response->assertJsonStructure([
             'data' => [
@@ -49,16 +49,13 @@ class ForgotPasswordTest extends TestCase
     {
         $user = User::factory()->create(['email' => 'milwad.dev@gmail.com']);
 
-        $response = $this->actingAs($user)->post(route('auth.forgot_password'), ['email' => 'milwad.dev@gmail.com']);
-        $response->assertOk();
+        $response = $this->actingAs($user)->postJson(route('auth.forgot_password'), ['email' => 'milwad.dev@gmail.com']);
+        $response->assertStatus(400);
         $response->assertJsonStructure([
-            'data' => [
-                'message'
-            ],
-            'status'
+            'message'
         ]);
 
-        $this->assertDatabaseCount('reset_code_passwords', 1);
+        $this->assertDatabaseCount('reset_code_passwords', 0);
         $this->assertDatabaseCount('users', 1);
 
 //        Queue::fake();
