@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Queue;
 use Modules\Auth\Jobs\SendCodeResetPasswordJob;
 use Modules\User\Models\User;
 use Tests\TestCase;
+use function PHPUnit\Framework\exactly;
 
 class ForgotPasswordTest extends TestCase
 {
@@ -23,6 +24,32 @@ class ForgotPasswordTest extends TestCase
         User::factory()->create(['email' => 'milwad.dev@gmail.com']);
 
         $response = $this->post(route('auth.forgot_password'), ['email' => 'milwad.dev@gmail.com']);
+        $response->assertOk();
+        $response->assertJsonStructure([
+            'data' => [
+                'message'
+            ],
+            'status'
+        ]);
+
+        $this->assertDatabaseCount('reset_code_passwords', 1);
+        $this->assertDatabaseCount('users', 1);
+
+//        Queue::fake();
+//        Queue::assertPushed(SendCodeResetPasswordJob::class);
+    }
+
+    /**
+     * Test login user can not see store reset password code in forgot page.
+     *
+     * @test
+     * @return void
+     */
+    public function login_user_can_not_see_store_reset_password_code_in_forgot_page()
+    {
+        $user = User::factory()->create(['email' => 'milwad.dev@gmail.com']);
+
+        $response = $this->actingAs($user)->post(route('auth.forgot_password'), ['email' => 'milwad.dev@gmail.com']);
         $response->assertOk();
         $response->assertJsonStructure([
             'data' => [
