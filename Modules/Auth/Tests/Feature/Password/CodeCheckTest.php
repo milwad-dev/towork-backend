@@ -21,8 +21,15 @@ class CodeCheckTest extends TestCase
     {
         $email = 'milwad.dev@gmail.com';
 
-        $this->postJson(route('auth.forgot_password'), ['email' => $email]);
-        dd(ResetCodePassword::query()->count());
+        $forgotResponse = $this->postJson(route('auth.forgot_password'), ['email' => $email]);
+        $forgotResponse->assertOk();
+        $forgotResponse->assertJsonStructure([
+            'data' => [
+                'message'
+            ],
+            'status'
+        ]);
+
         $response = $this->postJson(route('auth.check_code_password'), [
             'code' => ResetCodePassword::query()->value('code')
         ]);
