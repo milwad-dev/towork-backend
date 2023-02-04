@@ -41,5 +41,8 @@ class CodeCheckTest extends TestCase
             ],
             'status'
         ]);
+
+        $this->assertDatabaseCount('reset_code_passwords', 1);
+        $this->assertDatabaseCount('users', 1);
     }
 }
