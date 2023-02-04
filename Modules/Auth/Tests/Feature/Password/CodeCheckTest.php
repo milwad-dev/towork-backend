@@ -20,6 +20,7 @@ class CodeCheckTest extends TestCase
     public function guest_user_can_send_code_for_forgot_password_and_check_is_valid()
     {
         $email = 'milwad.dev@gmail.com';
+        User::factory()->create(['email' => $email]);
 
         $forgotResponse = $this->postJson(route('auth.forgot_password'), ['email' => $email]);
         $forgotResponse->assertOk();
