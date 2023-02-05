@@ -15,5 +15,5 @@ use Modules\Auth\Http\Controllers\RegisterController;
     // Password
     $router->post('password/email', ForgotPasswordController::class)->name('auth.forgot_password');
     $router->post('password/code/check', CodeCheckController::class)->name('auth.check_code_password');
-    $router->post('password/reset', ResetPasswordController::class);
+    $router->post('password/reset', ResetPasswordController::class)->name('auth.reset_password');
 });
