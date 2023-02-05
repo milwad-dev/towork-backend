@@ -7,13 +7,13 @@ use Modules\Auth\Http\Controllers\Password\ForgotPasswordController;
 use Modules\Auth\Http\Controllers\Password\ResetPasswordController;
 use Modules\Auth\Http\Controllers\RegisterController;
 
-    Route::group(['middleware' => 'guest:sanctum'], static function ($router) {
-    $router->post('register', RegisterController::class)->name('auth.register');
+Route::group(['middleware' => 'guest:sanctum', 'name' => 'auth.'], static function ($router) {
+    $router->post('register', RegisterController::class)->name('register');
 
-    $router->post('login', LoginController::class)->name('auth.login');
+    $router->post('login', LoginController::class)->name('login');
 
     // Password
-    $router->post('password/email', ForgotPasswordController::class)->name('auth.forgot_password');
-    $router->post('password/code/check', CodeCheckController::class)->name('auth.check_code_password');
-    $router->post('password/reset', ResetPasswordController::class)->name('auth.reset_password');
+    $router->post('password/email', ForgotPasswordController::class)->name('forgot_password');
+    $router->post('password/code/check', CodeCheckController::class)->name('check_code_password');
+    $router->post('password/reset', ResetPasswordController::class)->name('reset_password');
 });
