@@ -15,4 +15,9 @@ class UserRepoEloquent
     {
         return User::query()->latest();
     }
+
+    public function findByEmail(string $email)
+    {
+        return User::query()->where('email', $email)->firstOrFail();
+    }
 }
