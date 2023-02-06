@@ -5,11 +5,9 @@ namespace Modules\Auth\Http\Controllers\Password;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\Routing\ResponseFactory;
 use Modules\Auth\Http\Requests\Password\CodeCheckRequest;
-use Modules\Auth\Models\ResetCodePassword;
 use Modules\Auth\Repositories\ResetCodePasswordRepoEloquent;
 use Modules\Auth\Services\ResetPasswordService;
 use Modules\Common\Http\Controllers\Controller;
-use Symfony\Component\HttpFoundation\Response;
 
 class CodeCheckController extends Controller
 {

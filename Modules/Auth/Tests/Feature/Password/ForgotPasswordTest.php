@@ -3,11 +3,8 @@
 namespace Modules\Auth\Tests\Feature\Password;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Support\Facades\Queue;
-use Modules\Auth\Jobs\SendCodeResetPasswordJob;
 use Modules\User\Models\User;
 use Tests\TestCase;
-use function PHPUnit\Framework\exactly;
 
 class ForgotPasswordTest extends TestCase
 {
