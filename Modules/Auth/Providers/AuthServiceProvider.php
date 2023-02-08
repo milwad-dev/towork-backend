@@ -2,6 +2,7 @@
 
 namespace Modules\Auth\Providers;
 
+use App\Providers\RouteServiceProvider;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
 
@@ -27,7 +28,7 @@ class AuthServiceProvider extends ServiceProvider
     private function registerRoutes(): void
     {
         Route::middleware('api')
-            ->prefix('api')
+            ->prefix('api/' . config('app.version'))
             ->group(__DIR__ . '/../Routes/auth_routes.php');
     }
 
