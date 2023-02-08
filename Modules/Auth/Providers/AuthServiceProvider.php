@@ -29,7 +29,7 @@ class AuthServiceProvider extends ServiceProvider
     {
         Route::middleware('api')
             ->prefix('api/' . config('app.version'))
-            ->group(__DIR__ . '/../Routes/auth_routes.php');
+            ->group(__DIR__ . '/../Routes/api.php');
     }
 
     /**
