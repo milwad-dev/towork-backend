@@ -36,7 +36,7 @@ class UserServiceProvider extends ServiceProvider
     private function registerRoutes(): void
     {
         Route::middleware('api')
-            ->prefix('api')
+            ->prefix('api/' . config('app.version'))
             ->group(__DIR__ . '/../Routes/api.php');
     }
 }
