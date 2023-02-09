@@ -5,7 +5,7 @@ use function Pest\Faker\faker;
 
 uses(RefreshDatabase::class);
 
-test('register test', function ()  {
+test('test user can register', function ()  {
     $name  = faker()->name;
     $email = faker()->email;
 
