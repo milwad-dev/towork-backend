@@ -32,7 +32,7 @@ test('test user can register', function ()   {
 });
 
 
-test('exists user can not register',  function ()   {
+test('test exists user can not register',  function ()   {
     $name  = 'Milwad';
     $email = 'milwad.dev@gmail.com';
 
