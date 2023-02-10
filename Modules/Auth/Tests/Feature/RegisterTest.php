@@ -13,7 +13,7 @@ use function Pest\Laravel\{assertDatabaseHas, assertDatabaseCount, assertDatabas
 uses(RefreshDatabase::class);
 
 /**
- * Use Tescase to add some requirments.
+ * Use Testcase to add some requirements.
  */
 uses(TestCase::class);
 

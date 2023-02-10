@@ -4,16 +4,20 @@ namespace Modules\User\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Modules\Common\Http\Controllers\Controller;
+use Modules\User\Http\Requests\UserUpdateRequest;
 use Modules\User\Http\Resources\UserCollectResource;
 use Modules\User\Repositories\UserRepoEloquent;
 use Modules\User\Services\UserService;
+use Symfony\Component\HttpFoundation\Response;
 
 class UserController extends Controller
 {
     public function __construct(
-        private readonly UserService $userService,
+        private readonly UserService      $userService,
         private readonly UserRepoEloquent $userRepoEloquent
-    ) {}
+    )
+    {
+    }
 
     /**
      * @OA\Get(
@@ -52,7 +56,7 @@ class UserController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -63,23 +67,38 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param UserUpdateRequest $request
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UserUpdateRequest $request,int $id)
     {
-        //
+        $this->userRepoEloquent->update($request->validated(), $id);
+
+        return response([
+            'data' => [
+                'message' => 'user updated successfully'
+            ],
+            'status' => 'success'
+        ], Response::HTTP_ACCEPTED);
+
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(int $id)
     {
-        //
+        $this->userRepoEloquent->destroy($id);
+
+        return response([
+            'data' => [
+                'message' => 'user deleted successfully'
+            ],
+            'status' => 'success'
+        ]);
     }
 }

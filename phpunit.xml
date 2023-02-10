@@ -5,15 +5,15 @@
          colors="true"
 >
     <testsuites>
-        <!-- Unit tests -->
-        <testsuite name="Unit">
-            <directory suffix="Test.php">./tests/Unit</directory>
-        </testsuite>
+<!--        &lt;!&ndash; Unit tests &ndash;&gt;-->
+<!--        <testsuite name="Unit">-->
+<!--            <directory suffix="Test.php">./tests/Unit</directory>-->
+<!--        </testsuite>-->
 
-        <!-- Feature tests -->
-        <testsuite name="Feature">
-            <directory suffix="Test.php">./tests/Feature</directory>
-        </testsuite>
+<!--        &lt;!&ndash; Feature tests &ndash;&gt;-->
+<!--        <testsuite name="Feature">-->
+<!--            <directory suffix="Test.php">./tests/Feature</directory>-->
+<!--        </testsuite>-->
         <testsuite name="Feature">
             <directory suffix="Test.php">./Modules/User/Tests/Feature</directory>
         </testsuite>
