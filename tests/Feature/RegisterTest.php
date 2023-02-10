@@ -3,11 +3,17 @@
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Modules\User\Models\User;
 use function Pest\Faker\faker;
-use function Pest\Laravel\{postJson};
-use function Pest\Laravel\{assertDatabaseHas, assertDatabaseCount, assertDatabaseMissing};
+use function Pest\Laravel\{postJson}; // Methods
+use function Pest\Laravel\{assertDatabaseHas, assertDatabaseCount, assertDatabaseMissing}; // DB Asserts
 
+/*
+ * Use refresh database for truncate database for each test.
+ */
 uses(RefreshDatabase::class);
 
+/*
+ * Test user can register with valid data.
+ */
 test('test user can register', function ()   {
     $name  = faker()->name;
     $email = faker()->email;
@@ -31,7 +37,9 @@ test('test user can register', function ()   {
     assertDatabaseCount('users', 1);
 });
 
-
+/*
+ * Test exists user can't register.
+ */
 test('test exists user can not register',  function ()   {
     $name  = 'Milwad';
     $email = 'milwad.dev@gmail.com';
