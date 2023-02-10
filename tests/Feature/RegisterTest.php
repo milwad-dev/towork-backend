@@ -2,14 +2,18 @@
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use function Pest\Faker\faker;
+use function Pest\Laravel\{postJson};
+use function Pest\Laravel\{assertDatabaseHas, assertDatabaseCount};
 
 uses(RefreshDatabase::class);
 
-test('test user can register', function ()  {
+
+
+test('test user can register', static function ()   {
     $name  = faker()->name;
     $email = faker()->email;
 
-    $response = $this->postJson(route('auth.register'), [
+    $response = postJson(route('auth.register'), [
         'name'      => $name,
         'email'     => $email,
         'phone'     => 1111111111,
@@ -23,4 +27,7 @@ test('test user can register', function ()  {
         ],
         'status'
     ]);
+
+    assertDatabaseHas('users', ['name' => $name, 'email' => $email]);
+    assertDatabaseCount('users', 1);
 });
