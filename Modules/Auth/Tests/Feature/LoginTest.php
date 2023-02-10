@@ -1,142 +1,147 @@
 <?php
 
-namespace Modules\Auth\Tests\Feature;
-
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\Hash;
 use Modules\User\Models\User;
 use Tests\TestCase;
+use function Pest\Faker\faker;
+use function Pest\Laravel\assertAuthenticated;
+use function Pest\Laravel\assertDatabaseCount;
+use function Pest\Laravel\assertDatabaseHas;
+use function Pest\Laravel\isAuthenticated;
+use function Pest\Laravel\postJson;
+use function PHPUnit\Framework\assertEquals;
 
-class LoginTest extends TestCase
+/*
+ * Use refresh database for truncate database for each test.
+ */
+uses(RefreshDatabase::class);
+
+/**
+ * Use Testcase to add some requirements.
+ */
+uses(TestCase::class);
+
+/**
+ * Test user can login with email.
+ *
+ * @test
+ * @return void
+ */
+test('user can login with email', function () {
+    $data = createUser();
+
+    $response = postJson(route('auth.login'), [
+        'email' => $data['email'],
+        'password' => $data['password']
+    ]);
+
+    $response->assertOk();
+    $response->assertJsonStructure([
+        'data' => [
+            'token',
+            'name',
+            'email'
+        ],
+        'status'
+    ]);
+
+    assertDatabaseHas('users', ['name' => $data['name'], 'email' => $data['email']]);
+    assertDatabaseCount('users', 1);
+    assertEquals($data['email'], auth()->user()->email);
+    assertAuthenticated();
+});
+
+/**
+ * Test user can login with phone when data is wrong .
+ *
+ * @test
+ * @return void
+ */
+test('user can not login with email with wrong data' , function (){
+    $response = postJson(route('auth.login'), [
+        'email' => 'milwad.dev@gmail.com',
+        'password' => 'Milwad123!'
+    ]);
+    $response->assertForbidden();
+    $response->assertJsonStructure([
+        'data' => [
+            'message'
+        ],
+        'status'
+    ]);
+    assertEquals(false, isAuthenticated());
+});
+
+/**
+ * Test user can login with phone.
+ *
+ * @test
+ * @return void
+ */
+test('test user can login with phone' , function (){
+    $data = createUser();
+
+    $response = postJson(route('auth.login'), [
+        'email' => $data['phone'],
+        'password' => $data['password']
+    ]);
+
+    $response->assertOk();
+    $response->assertJsonStructure([
+        'data' => [
+            'token',
+            'name',
+            'email'
+        ],
+        'status'
+    ]);
+
+    assertDatabaseHas('users', ['name' => $data['name'], 'email' => $data['email'] , 'phone' => $data['phone']]);
+    assertDatabaseCount('users', 1);
+    assertEquals($data['email'], auth()->user()->email);
+    assertEquals($data['phone'], auth()->user()->phone);
+    assertAuthenticated();
+});
+
+/**
+ * Test user can not login with phone when the data is wrong.
+ *
+ * @test
+ * @return void
+ */
+test('user can not login with phone with wrong data' , function (){
+    $response = postJson(route('auth.login'), [
+        'email' =>  111111111,
+        'password' => 'Milwad123!'
+    ]);
+    $response->assertForbidden();
+    $response->assertJsonStructure([
+        'data' => [
+            'message'
+        ],
+        'status'
+    ]);
+    assertEquals(false, isAuthenticated());
+});
+
+/**
+ * Create new user.
+ *
+ * @return array
+ */
+function createUser(): array
 {
-    use WithFaker;
-    use RefreshDatabase;
+    $password = 'Milwad123!';
 
-    /**
-     * Test user can login with email.
-     *
-     * @test
-     * @return void
-     */
-    public function user_can_login_with_email()
-    {
-        list($name, $email, $password, $user, $phone) = $this->createUser();
+    $user = User::factory()->create([
+        'name' => faker()->name,
+        'email' => faker()->email,
+        'phone' => '09' . faker()->numerify(),
+        'password' => Hash::make($password),
+    ])->toArray();
 
-        $response = $this->postJson(route('auth.login'), [
-            'email'     => $email,
-            'password'  => $password
-        ]);
-        $response->assertOk();
-        $response->assertJsonStructure([
-            'data' => [
-                'token',
-                'name',
-                'email'
-            ],
-            'status'
-        ]);
+    $user['password'] = $password;
 
-        $this->assertDatabaseHas('users', ['name' => $name, 'email' => $email]);
-        $this->assertDatabaseCount('users', 1);
-        $this->assertEquals($user->email, auth()->user()->email);
-        $this->assertAuthenticated();
-    }
-
-    /**
-     * Test user can not login with email.
-     *
-     * @test
-     * @return void
-     */
-    public function user_can_not_login_with_email()
-    {
-        $response = $this->postJson(route('auth.login'), [
-            'email'     => 'milwad.dev@gmail.com',
-            'password'  => 'Milwad123!'
-        ]);
-        $response->assertForbidden();
-        $response->assertJsonStructure([
-            'data' => [
-                'message'
-            ],
-            'status'
-        ]);
-
-        $this->assertEquals(false, $this->isAuthenticated());
-    }
-
-
-    /**
-     * Test user can login with phone.
-     *
-     * @test
-     * @return void
-     */
-    public function user_can_login_with_phone()
-    {
-        [$name, $email, $password, $user, $phone] = $this->createUser();
-
-        $response = $this->postJson(route('auth.login'), [
-            'email'     => $phone,
-            'password'  => $password
-        ]);
-        $response->assertOk();
-        $response->assertJsonStructure([
-            'data' => [
-                'token',
-                'name',
-                'email'
-            ],
-            'status'
-        ]);
-
-        $this->assertDatabaseHas('users', ['name' => $name, 'email' => $email, 'phone' => $phone]);
-        $this->assertDatabaseCount('users', 1);
-        $this->assertEquals($user->email, auth()->user()->email);
-        $this->assertEquals($user->phone, auth()->user()->phone);
-        $this->assertAuthenticated();
-    }
-
-    /**
-     * Test user can not login with phone.
-     *
-     * @test
-     * @return void
-     */
-    public function user_can_not_login_with_phone()
-    {
-        $response = $this->postJson(route('auth.login'), [
-            'email'     => 111111111,
-            'password'  => 'Milwad123!'
-        ]);
-        $response->assertForbidden();
-        $response->assertJsonStructure([
-            'data' => [
-                'message'
-            ],
-            'status'
-        ]);
-
-        $this->assertEquals(false, $this->isAuthenticated());
-    }
-
-    /**
-     * Create user.
-     *
-     * @return array
-     */
-    private function createUser(): array
-    {
-        $password = 'Milwad123!';
-
-        $user = User::factory()->create([
-            'name'      => $name = $this->faker->name,
-            'email'     => $email = $this->faker->email,
-            'phone'     => $phone = 1111111111,
-            'password'  => Hash::make($password)
-        ]);
-
-        return array($name, $email, $password, $user, $phone);
-    }
+    return $user;
 }
