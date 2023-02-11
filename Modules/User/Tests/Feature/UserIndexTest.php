@@ -1,57 +1,34 @@
 <?php
 
-namespace Modules\User\Tests\Feature;
-
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Modules\User\Models\User;
 use Tests\TestCase;
+use function Pest\Laravel\actingAs;
 
-class UserIndexTest extends TestCase
-{
-    use RefreshDatabase;
 
-    /**
-     * Test admin user can see get all users.
-     *
-     * @test
-     * @return void
-     */
-    public function admin_user_can_see_get_all_users()
-    {
-        // TODO Add role
-        $user = User::factory()->create();
+/*
+ * Use refresh database for truncate database for each test.
+ */
+uses(RefreshDatabase::class);
 
-        $response = $this->actingAs($user)->getJson(route('users.index'));
-        $response->assertOk();
-        $response->assertJsonStructure([
-            'data' => [
-                '*' => [
-                    'name',
-                    'email',
-                    'phone',
-                ]
+/**
+ * Use Testcase to add some requirements.
+ */
+uses(TestCase::class);
+
+
+test('admin user can see get all users' , function (){
+    $user = User::factory()->create();
+
+    $response = actingAs($user)->getJson(route('users.index'));
+    $response->assertOk();
+    $response->assertJsonStructure([
+        'data' => [
+            '*' => [
+                'name',
+                'email',
+                'phone',
             ]
-        ]);
-    }
-
-    /**
-     * Test guest user can not see get all users.
-     *
-     * @test
-     * @return void
-     */
-//    public function guest_user_can_not_see_get_all_users()
-//    {
-//        // TODO Add role
-//        $response = $this->getJson(route('users.index'));
-//        $response->assertJsonStructure([
-//            'data' => [
-//                '*' => [
-//                    'name',
-//                    'email',
-//                    'phone',
-//                ]
-//            ]
-//        ]);
-//    }
-}
+        ]
+    ]);
+});
