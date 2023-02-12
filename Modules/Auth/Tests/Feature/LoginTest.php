@@ -29,11 +29,11 @@ uses(TestCase::class);
  * @return void
  */
 test('user can login with email', function () {
-    $data = createUser();
+    [$data, $password] = createUser();
 
     $response = postJson(route('auth.login'), [
         'email' => $data['email'],
-        'password' => $data['password']
+        'password' => $password
     ]);
 
     $response->assertOk();
@@ -48,7 +48,7 @@ test('user can login with email', function () {
 
     assertDatabaseHas('users', ['name' => $data['name'], 'email' => $data['email']]);
     assertDatabaseCount('users', 1);
-    assertEquals($data['email'], auth()->user()->email);
+    assertEquals($data['email'], auth('sanctum')->user()->email);
     assertAuthenticated();
 });
 
@@ -58,7 +58,7 @@ test('user can login with email', function () {
  * @test
  * @return void
  */
-test('user can not login with email with wrong data' , function (){
+test('user can not login with email with wrong data', function () {
     $response = postJson(route('auth.login'), [
         'email' => 'milwad.dev@gmail.com',
         'password' => 'Milwad123!'
@@ -79,12 +79,12 @@ test('user can not login with email with wrong data' , function (){
  * @test
  * @return void
  */
-test('test user can login with phone' , function (){
-    $data = createUser();
+test('test user can login with phone', function () {
+    [$data, $password] = createUser();
 
     $response = postJson(route('auth.login'), [
         'email' => $data['phone'],
-        'password' => $data['password']
+        'password' => $password
     ]);
 
     $response->assertOk();
@@ -97,7 +97,11 @@ test('test user can login with phone' , function (){
         'status'
     ]);
 
-    assertDatabaseHas('users', ['name' => $data['name'], 'email' => $data['email'] , 'phone' => $data['phone']]);
+    assertDatabaseHas('users', [
+        'name' => $data['name'],
+        'email' => $data['email'],
+        'phone' => $data['phone']
+    ]);
     assertDatabaseCount('users', 1);
     assertEquals($data['email'], auth()->user()->email);
     assertEquals($data['phone'], auth()->user()->phone);
@@ -110,9 +114,9 @@ test('test user can login with phone' , function (){
  * @test
  * @return void
  */
-test('user can not login with phone with wrong data' , function (){
+test('user can not login with phone with wrong data', function () {
     $response = postJson(route('auth.login'), [
-        'email' =>  111111111,
+        'email' => 111111111,
         'password' => 'Milwad123!'
     ]);
     $response->assertForbidden();
@@ -122,6 +126,7 @@ test('user can not login with phone with wrong data' , function (){
         ],
         'status'
     ]);
+
     assertEquals(false, isAuthenticated());
 });
 
@@ -141,7 +146,5 @@ function createUser(): array
         'password' => Hash::make($password),
     ])->toArray();
 
-    $user['password'] = $password;
-
-    return $user;
+    return [$user, $password];
 }
