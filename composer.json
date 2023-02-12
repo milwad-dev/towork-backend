@@ -22,7 +22,6 @@
         "pestphp/pest": "^1.22",
         "pestphp/pest-plugin-faker": "^1.0",
         "pestphp/pest-plugin-laravel": "^1.4",
-        "phpunit/phpunit": "^9.5.10",
         "spatie/laravel-ignition": "^1.0"
     },
     "autoload": {
@@ -53,8 +52,7 @@
         ],
         "post-create-project-cmd": [
             "@php artisan key:generate --ansi"
-        ],
-        "test-coverage": "vendor/bin/phpunit --coverage-html coverage"
+        ]
     },
     "extra": {
         "laravel": {
