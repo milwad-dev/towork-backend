@@ -3,49 +3,54 @@
 namespace Modules\Auth\Tests\Feature\Password;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Hash;
 use Modules\Auth\Models\ResetCodePassword;
 use Modules\User\Models\User;
 use Tests\TestCase;
+use function Pest\Laravel\assertDatabaseCount;
+use function Pest\Laravel\postJson;
+use function PHPUnit\Framework\assertFalse;
+use function PHPUnit\Framework\assertTrue;
 
-class ResetPasswordTest extends TestCase
-{
-    use RefreshDatabase;
+uses(TestCase::class);
+uses(RefreshDatabase::class);
 
-    /**
-     * Test guest user can change reset password with valid code.
-     *
-     * @test
-     * @return void
-     */
-    public function guest_user_can_change_reset_password_with_valid_code()
-    {
-        User::factory()->create(['email' => $email = 'milwad.dev@gmail.com']);
+test('test guest user can reset password with valid code', function () {
 
-        // Forgot password
-        $this->postJson(route('auth.forgot_password'), ['email' => $email]);
+    $user = User::factory()->create();
+    $resetCodePassword = ResetCodePassword::factory()->create(['email' => $user->email]);
 
-        // Check code
-        $code = ResetCodePassword::query()->value('code');
-        $this->postJson(route('auth.forgot_password'), ['code' => $code]);
+    $response = postJson(route('auth.reset_password'), [
+        'code' => $resetCodePassword->code,
+        'password' => $password = fake()->password . 'Aa1@'
+    ]);
 
-        $response = $this->postJson(route('auth.reset_password'), [
-            'email' => $email,
-            'code'  => $code
-        ]);
-        $response->assertOk();
-        $response->assertJsonStructure([
-            'data' => [
-                'message'
-            ],
-            'status'
-        ]);
+    $response->assertJsonStructure([
+        'data' => [
+            'message',
+        ],
+        'status'
+    ]);
 
-        // DB count asserts
-//        $this->assertDatabaseCount('reset_code_passwords', 0);
-        $this->assertDatabaseCount('users', 1);
+    assertTrue(Hash::check($password, $user->fresh()->password));
 
-        // DB check asserts
-//        $this->assertDatabaseMissing('reset_code_passwords', ['code' => $code, 'email' => $email]);
-        $this->assertDatabaseHas('users', ['email' => $email]);
-    }
-}
+    assertDatabaseCount('users', 1);
+    assertDatabaseCount('reset_code_passwords', 0);
+});
+
+test('test guest user can  not reset password with invalid code', function () {
+
+    $user = User::factory()->create();
+    $resetCodePassword = ResetCodePassword::factory()->create();
+
+    postJson(route('auth.reset_password'), [
+        'code' => $resetCodePassword->code,
+        'password' => $password = fake()->password . 'Aa1@'
+    ]);
+
+
+    assertFalse(Hash::check($password, $user->fresh()->password));
+
+    assertDatabaseCount('users', 1);
+    assertDatabaseCount('reset_code_passwords', 1);
+});
