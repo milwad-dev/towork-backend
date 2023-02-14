@@ -22,7 +22,7 @@ class CodeCheckController extends Controller
         $resetCodePassword = resolve(ResetCodePasswordRepoEloquent::class)->findByCode($request->code); // Find code
 
         if ($resetCodePassword->created_at > now()->addHour()) { // Check
-            return resolve(ResetPasswordService::class)->deleteResetCodePasswordWithReturnResponse($resetCodePassword);
+            return resolve(ResetPasswordService::class)->deleteResetCodePasswordWithReturnResponse($resetCodePassword->code);
         }
 
         return response([

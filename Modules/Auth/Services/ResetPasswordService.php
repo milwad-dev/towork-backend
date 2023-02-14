@@ -44,8 +44,8 @@ class ResetPasswordService
     public function store(array $data)
     {
         return ResetCodePassword::query()->create([
-            'email'      => $data['email'],
-            'code'       => $data['code'],
+            'email' => $data['email'],
+            'code' => $data['code'],
             'created_at' => now()
         ]);
     }
@@ -53,16 +53,16 @@ class ResetPasswordService
     /**
      * Delete reset code with return response.
      *
-     * @param ResetCodePassword $resetCodePassword
+     * @param int $resetCodePasswordCode
      * @return Application|ResponseFactory|\Illuminate\Http\Response
      */
-    public function deleteResetCodePasswordWithReturnResponse(ResetCodePassword $resetCodePassword)
+    public function deleteResetCodePasswordWithReturnResponse(int $resetCodePasswordCode)
     {
-        $resetCodePassword->delete();
+        ResetCodePassword::query()->where('code', $resetCodePasswordCode)->delete();
 
         return response([
-            'message'   => 'The code has expired.',
-            'status'    => 'error'
+            'message' => 'The code has expired.',
+            'status' => 'error'
         ], Response::HTTP_GONE);
     }
 }
