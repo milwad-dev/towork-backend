@@ -26,7 +26,7 @@ class ResetPasswordController extends Controller
         }
 
         $user = resolve(UserRepoEloquent::class)->findByEmail($resetCodePassword->email); // Find user
-        $user->update(['password' => $request->only('password')]); // Update password
+        $user->update(['password' => $request->input('password')]); // Update password
 
         $resetCodePassword->delete(); // Delete reset code password
 
