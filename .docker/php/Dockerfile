@@ -19,9 +19,6 @@ RUN apt-get clean && rm -rf /var/lib/apt/lists/*
 # Install PHP extensions
 RUN docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd
 
-# Install Postgre PDO
-RUN apt-get update && apt-get install -y libpq-dev && docker-php-ext-install pdo pdo_pgsql
-
 # Get latest Composer
 COPY --from=composer:latest /usr/bin/composer /usr/local/bin/composer
 
@@ -40,6 +37,6 @@ USER ${USER}
 # Copy permission to selected user
 COPY --chown=${USER}:${GROUP} . .
 
-EXPOSE 9000
+EXPOSE 8000
 
-CMD ["php-fpm"]
+CMD ["php-fpm", "php artisan serve"]

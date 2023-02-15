@@ -7,15 +7,15 @@ volumes:
     app-data:
 
 services:
-    webserver:
+    nginx:
         image: nginx:1.21.6-alpine
-        container_name: webserver
+        container_name: nginx
         restart: unless-stopped
         ports:
             - "80:80"
         volumes:
             - ./:/var/www
-            - .docker/nginx/default.conf:/etc/nginx/conf.d
+            - .docker/nginx:/etc/nginx/conf.d
         networks:
             app-network:
 
