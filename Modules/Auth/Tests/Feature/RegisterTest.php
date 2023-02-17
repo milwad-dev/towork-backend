@@ -4,8 +4,11 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Modules\User\Models\User;
 use Tests\TestCase;
 use function Pest\Faker\faker;
-use function Pest\Laravel\{postJson}; // Methods
-use function Pest\Laravel\{assertDatabaseHas, assertDatabaseCount, assertDatabaseMissing}; // DB Asserts
+use function Pest\Laravel\{postJson};
+use function Pest\Laravel\{assertDatabaseCount, assertDatabaseHas, assertDatabaseMissing};
+
+// Methods
+// DB Asserts
 
 /*
  * Use refresh database for truncate database for each test.

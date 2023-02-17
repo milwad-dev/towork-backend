@@ -2,7 +2,6 @@
 
 namespace Modules\Auth\Providers;
 
-use App\Providers\RouteServiceProvider;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
 

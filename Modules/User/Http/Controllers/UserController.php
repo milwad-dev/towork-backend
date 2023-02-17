@@ -2,7 +2,6 @@
 
 namespace Modules\User\Http\Controllers;
 
-use Illuminate\Http\Request;
 use Modules\Common\Http\Controllers\Controller;
 use Modules\User\Http\Requests\UserUpdateRequest;
 use Modules\User\Http\Resources\UserCollectResource;
