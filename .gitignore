@@ -16,3 +16,4 @@ yarn-error.log
 /.vscode
 composer.lock
 /coverage
+/database/database-tests.sqllite
