@@ -7,10 +7,7 @@
     <testsuites>
         <!-- Feature tests -->
         <testsuite name="Feature">
-            <directory suffix="Test.php">./Modules/User/Tests/Feature</directory>
-
-            <directory suffix="Test.php">./Modules/Auth/Tests/Feature</directory>
-            <directory suffix="Test.php">./Modules/Auth/Tests/Feature/Password</directory>
+            <directory suffix="Test.php">./Modules</directory>
         </testsuite>
     </testsuites>
 
