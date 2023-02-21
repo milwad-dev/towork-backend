@@ -16,7 +16,6 @@ uses(TestCase::class);
 uses(RefreshDatabase::class);
 
 test('test guest user can reset password with valid code', function () {
-
     $user = User::factory()->create();
     $resetCodePassword = ResetCodePassword::factory()->create(['email' => $user->email]);
 
@@ -33,13 +32,11 @@ test('test guest user can reset password with valid code', function () {
     ]);
 
     assertTrue(Hash::check($password, $user->fresh()->password));
-
     assertDatabaseCount('users', 1);
     assertDatabaseCount('reset_code_passwords', 0);
 });
 
 test('test guest user can  not reset password with invalid code', function () {
-
     $user = User::factory()->create();
     $resetCodePassword = ResetCodePassword::factory()->create();
 
@@ -48,9 +45,7 @@ test('test guest user can  not reset password with invalid code', function () {
         'password' => $password = fake()->password . 'Aa1@'
     ]);
 
-
     assertFalse(Hash::check($password, $user->fresh()->password));
-
     assertDatabaseCount('users', 1);
     assertDatabaseCount('reset_code_passwords', 1);
 });
