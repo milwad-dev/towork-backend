@@ -6,6 +6,7 @@ use Modules\Auth\Http\Controllers\Password\CodeCheckController;
 use Modules\Auth\Http\Controllers\Password\ForgotPasswordController;
 use Modules\Auth\Http\Controllers\Password\ResetPasswordController;
 use Modules\Auth\Http\Controllers\RegisterController;
+use Modules\Auth\Http\Controllers\Verify\Email\EmailVerifyController;
 
 Route::group(['middleware' => 'guest:sanctum', 'as' => 'auth.'], static function ($router) {
     // Register
@@ -19,5 +20,6 @@ Route::group(['middleware' => 'guest:sanctum', 'as' => 'auth.'], static function
     $router->post('password/code/check', CodeCheckController::class)->name('check_code_password');
     $router->post('password/reset', ResetPasswordController::class)->name('reset_password');
 
-    $router->post('email/verify', null)->name('email.verify');
+    $router->post('email/verify', EmailVerifyController::class)
+        ->name('email.verify');
 });
