@@ -8,8 +8,10 @@ use Modules\Auth\Http\Controllers\Password\ResetPasswordController;
 use Modules\Auth\Http\Controllers\RegisterController;
 
 Route::group(['middleware' => 'guest:sanctum', 'as' => 'auth.'], static function ($router) {
+    // Register
     $router->post('register', RegisterController::class)->name('register');
 
+    // Login
     $router->post('login', LoginController::class)->name('login');
 
     // Password
