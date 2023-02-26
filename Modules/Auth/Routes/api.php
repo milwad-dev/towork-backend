@@ -21,5 +21,7 @@ Route::group(['middleware' => 'guest:sanctum', 'as' => 'auth.'], static function
     $router->post('password/reset', ResetPasswordController::class)->name('reset_password');
 
     $router->post('email/verify', EmailVerifyController::class)
-        ->name('email.verify');
+        ->name('email.verify')
+        ->middleware('auth:sanctum')
+        ->withoutMiddleware('guest');
 });
