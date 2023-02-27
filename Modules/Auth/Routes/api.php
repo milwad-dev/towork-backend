@@ -20,12 +20,8 @@ Route::group(['middleware' => 'guest:sanctum', 'as' => 'auth.'], static function
     $router->post('password/code/check', CodeCheckController::class)->name('check_code_password');
     $router->post('password/reset', ResetPasswordController::class)->name('reset_password');
 
-    $router->post('email/verify', [EmailVerifyController::class, 'verify'])
-        ->name('email.verify')
-        ->middleware('auth:sanctum')
-        ->withoutMiddleware('guest');
-    $router->post('email/verify/resend', [EmailVerifyController::class, 'resend'])
-        ->name('email.verify.resend')
-        ->middleware('auth:sanctum')
-        ->withoutMiddleware('guest');
+    $router->group(['middleware' => ['auth:sanctum', 'throttle:5,1'], 'withoutMiddleware' => 'guest'], static function ($routerGroup) {
+        $routerGroup->post('email/verify', [EmailVerifyController::class, 'verify'])->name('email.verify');
+        $routerGroup->post('email/verify/resend', [EmailVerifyController::class, 'resend'])->name('email.verify.resend');
+    });
 });
