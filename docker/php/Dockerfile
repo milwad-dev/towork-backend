@@ -30,7 +30,7 @@ COPY --from=composer:latest /usr/bin/composer /usr/local/bin/composer
 RUN set -eux; \
     composer clear-cache
 
-COPY ./docker-entrypoint.sh /docker-entrypoint.sh
+COPY docker-entrypoint.sh /docker-entrypoint.sh
 
 RUN chmod +x /docker-entrypoint.sh
 
