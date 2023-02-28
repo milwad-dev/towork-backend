@@ -42,13 +42,13 @@ First you can make use of our repository from GitHub by cloning this in your new
 git clone https://github.com/milwad-dev/towork-backend.git
 ```
 
-After you use `docker` to set up:
+After, you use `docker` to set up:
 
 ```shell
 docker-compose up --build
 ```
 
-When all operation complete, you can see project is live on address: <a href="http://localhost" target="blank">http://localhost</a>
+When all operation complete, you can see project is live on an address: <a href="http://localhost" target="blank">http://localhost</a>
 
 ## Contributors
 This project exists thanks to all the people who contribute.
