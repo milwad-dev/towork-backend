@@ -4,7 +4,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Hash;
 use Modules\User\Models\User;
 use Tests\TestCase;
-use function Pest\Faker\faker;
+use function Pest\Faker\fake;
 use function Pest\Laravel\assertAuthenticated;
 use function Pest\Laravel\assertDatabaseCount;
 use function Pest\Laravel\assertDatabaseHas;
@@ -140,9 +140,9 @@ function createUser(): array
     $password = 'Milwad123!';
 
     $user = User::factory()->create([
-        'name' => faker()->name,
-        'email' => faker()->email,
-        'phone' => '09' . faker()->numerify(),
+        'name' => fake()->name,
+        'email' => fake()->email,
+        'phone' => '09' . fake()->numerify(),
         'password' => Hash::make($password),
     ])->toArray();
 

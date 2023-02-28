@@ -3,7 +3,7 @@
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Modules\User\Models\User;
 use Tests\TestCase;
-use function Pest\Faker\faker;
+use function Pest\Faker\fake;
 use function Pest\Laravel\{postJson};
 use function Pest\Laravel\{assertDatabaseCount, assertDatabaseHas, assertDatabaseMissing};
 
@@ -24,8 +24,8 @@ uses(TestCase::class);
  * Test user can register with valid data.
  */
 test('test user can register', function ()   {
-    $name  = faker()->name;
-    $email = faker()->email;
+    $name  = fake()->name;
+    $email = fake()->email;
 
     $response = postJson(route('auth.register'), [
         'name'      => $name,

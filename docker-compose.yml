@@ -1,0 +1,64 @@
+version: '3.8'
+
+services:
+    app:
+        container_name: dockerize-laravel-app
+        build: .docker/php/Dockerfile
+        volumes:
+            - '.:/srv/app'
+        command: ["webapp"]
+        depends_on:
+            - mysql
+        networks:
+            - dockerize-laravel
+
+    nginx:
+        container_name: dockerize-laravel-nginx
+        image: 'nginx:1.23.3-alpine'
+        depends_on:
+            - app
+        networks:
+            - dockerize-laravel
+        ports:
+            - '80:80'
+            - '443:443'
+        volumes:
+            - '.docker/nginx/conf.d:/etc/nginx/conf.d:ro'
+            - './:/srv/app:ro'
+
+    mysql:
+        image: mysql:8.0.32
+        container_name: dockerize-laravel-mysql
+        ports:
+            - '3306:3306'
+        env_file:
+            - ./.env
+        environment:
+            MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+            MYSQL_DATABASE: ${DB_DATABASE}
+            MYSQL_USER: ${DB_USERNAME}
+            MYSQL_PASSWORD: ${DB_PASSWORD}
+        networks:
+            - dockerize-laravel
+        volumes:
+            - dockerize-laravel-db-data:/var/lib/postgresql/data
+
+    redis:
+        image: redis:7.0.8-alpine3.17
+        container_name: dockerize-laravel-redis
+        ports:
+            - '6379:6379'
+        volumes:
+            - dockerize-laravel-redis-data:/data
+        networks:
+            - dockerize-laravel
+        healthcheck:
+            test: [ "CMD", "redis-cli", "ping" ]
+
+volumes:
+    dockerize-laravel-db-data: {}
+    dockerize-laravel-redis-data: {}
+
+networks:
+    dockerize-laravel:
+        driver: bridge
