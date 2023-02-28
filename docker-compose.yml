@@ -3,10 +3,10 @@ version: '3.8'
 services:
     app:
         container_name: dockerize-laravel-app
-        build: .docker/php/Dockerfile
+        build: .docker/php/.
         volumes:
             - '.:/srv/app'
-        command: ["webapp"]
+        command: ["webapp", "php artisan serve --host=0.0.0.0 --port=8000"]
         depends_on:
             - mysql
         networks:
