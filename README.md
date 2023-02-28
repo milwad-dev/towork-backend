@@ -7,6 +7,7 @@ You can improve your knowledge by ToWork. <br>
 If you are Backend developer or Frontend developer you can work with towork and Gain professional experience.
 
 ## Features
+
 ✅ Modular architecture \
 ✅ Rest-API \
 ✅ Elasticsearch \
@@ -30,7 +31,24 @@ If you are Backend developer or Frontend developer you can work with towork and 
 ✅ Always the latest update
 
 ## Demos
+
 🟢 Comming soon 🟢
+
+## Installation
+
+First you can make use of our repository from GitHub by cloning this in your new directory:
+
+```shell
+git clone https://github.com/milwad-dev/towork-backend.git
+```
+
+After you use `docker` to set up:
+
+```shell
+docker-compose up --build
+```
+
+When all operation complete, you can see project is live on address: <a href="http://localhost" target="blank">http://localhost</a>
 
 ## Contributors
 This project exists thanks to all the people who contribute.

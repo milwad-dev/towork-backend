@@ -23,7 +23,7 @@ services:
             - '80:80'
             - '443:443'
         volumes:
-            - '.docker/nginx/conf.d:/etc/nginx/conf.d:ro'
+            - './docker/nginx/conf.d:/etc/nginx/conf.d:ro'
             - './:/srv/app:ro'
 
     mysql:
