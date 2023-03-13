@@ -61,4 +61,4 @@ This project exists thanks to all the people who contribute.
 If you have a problem, you can create an <a href="https://github.com/milwad-dev/towork-backend/issues">issue</a> to solve your problem.
 
 ## License
-ToWork is an open-source that will always be free under the [MIT License](https://github.com/bagisto/bagisto/blob/master/LICENSE).
+ToWork is an open-source that will always be free under the [MIT License](https://github.com/milwad-dev/towork-backend/blob/main/LICENSE).
