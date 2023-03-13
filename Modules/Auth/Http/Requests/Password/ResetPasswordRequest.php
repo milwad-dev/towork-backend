@@ -31,7 +31,7 @@ class ResetPasswordRequest extends FormRequest
     {
         return [
             'code'      => ['required', 'numeric', 'between:100000,999999', 'exists:reset_code_passwords,code'],
-            'password'  => ['required', 'string', 'min:8', 'max:250', new ValidStrongPassword()]
+            'password'  => ['required', 'string', 'min:8', 'max:250', new ValidStrongPassword()],
         ];
     }
 
@@ -43,7 +43,7 @@ class ResetPasswordRequest extends FormRequest
     protected function prepareForValidation()
     {
         $this->merge([
-            'password' => Hash::make($this->password)
+            'password' => Hash::make($this->password),
         ]);
     }
 }

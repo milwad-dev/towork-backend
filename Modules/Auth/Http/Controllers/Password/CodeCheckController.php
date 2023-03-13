@@ -14,7 +14,8 @@ class CodeCheckController extends Controller
     /**
      * Check reset password code is valid.
      *
-     * @param  CodeCheckRequest $request
+     * @param CodeCheckRequest $request
+     *
      * @return Application|ResponseFactory|\Illuminate\Http\Response
      */
     public function __invoke(CodeCheckRequest $request)
@@ -28,9 +29,9 @@ class CodeCheckController extends Controller
         return response([
             'data' => [
                 'code'      => $resetCodePassword->code,
-                'message'   => 'The code is valid.'
+                'message'   => 'The code is valid.',
             ],
-            'status' => 'success'
+            'status' => 'success',
         ]);
     }
 }

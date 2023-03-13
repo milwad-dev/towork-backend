@@ -29,7 +29,7 @@ class UserStoreRequest extends FormRequest
             'name'      => ['required', 'string', 'min:3', 'max:250'],
             'email'     => ['required', 'email', 'min:3', 'max:255', 'unique:users,email'],
             'phone'     => ['required', 'numeric', 'unique:users,phone', new ValidPhoneNumber()],
-            'password'  => ['required', 'string', new ValidStrongPassword()]
+            'password'  => ['required', 'string', new ValidStrongPassword()],
         ];
     }
 }

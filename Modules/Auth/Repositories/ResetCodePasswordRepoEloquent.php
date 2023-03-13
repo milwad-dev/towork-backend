@@ -9,7 +9,8 @@ class ResetCodePasswordRepoEloquent
     /**
      * Find by code.
      *
-     * @param  string $code
+     * @param string $code
+     *
      * @return \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Eloquent\Model
      */
     public function findByCode(string $code)

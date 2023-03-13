@@ -12,7 +12,8 @@ class ForgotPasswordController extends Controller
      * Send code for reset password.
      *
      * @param ForgotPasswordRequest $request
-     * @param ResetPasswordService $resetPasswordService
+     * @param ResetPasswordService  $resetPasswordService
+     *
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response
      */
     public function __invoke(ForgotPasswordRequest $request, ResetPasswordService $resetPasswordService)
@@ -22,8 +23,8 @@ class ForgotPasswordController extends Controller
 //        SendCodeResetPasswordJob::dispatch($request->email, $code->code); // Send email
 
         return response([
-            'data' => ['message' => 'Forgot password email sent successfully.'],
-            'status' => 'success'
+            'data'   => ['message' => 'Forgot password email sent successfully.'],
+            'status' => 'success',
         ]);
     }
 }

@@ -9,7 +9,8 @@ class UserCollectResource extends ResourceCollection
     /**
      * Transform the resource collection into an array.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
+     *
      * @return array|\Illuminate\Contracts\Support\Arrayable|\JsonSerializable
      */
     public function toArray($request)
@@ -21,7 +22,7 @@ class UserCollectResource extends ResourceCollection
                     'email' => $user->email,
                     'phone' => $user->phone,
                 ];
-            })
+            }),
         ];
     }
 
@@ -29,6 +30,7 @@ class UserCollectResource extends ResourceCollection
      * With response.
      *
      * @param $request
+     *
      * @return array
      */
     public function with($request)

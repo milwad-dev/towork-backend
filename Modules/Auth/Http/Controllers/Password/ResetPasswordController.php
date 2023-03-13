@@ -13,7 +13,8 @@ class ResetPasswordController extends Controller
     /**
      * Reset password.
      *
-     * @param  ResetPasswordRequest $request
+     * @param ResetPasswordRequest $request
+     *
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response
      */
     public function __invoke(ResetPasswordRequest $request)
@@ -32,9 +33,9 @@ class ResetPasswordController extends Controller
 
         return response([
             'data' => [
-                'message' => 'Password has been successfully updated'
+                'message' => 'Password has been successfully updated',
             ],
-            'status' => 'success'
+            'status' => 'success',
         ]);
     }
 }

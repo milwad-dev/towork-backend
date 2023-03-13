@@ -20,8 +20,8 @@ class ResetCodePasswordFactory extends Factory
     public function definition()
     {
         return [
-            'email' => fake()->safeEmail(),
-            'code' => fake()->numberBetween(100000 , 999999),
+            'email'      => fake()->safeEmail(),
+            'code'       => fake()->numberBetween(100000, 999999),
             'created_at' => now(),
         ];
     }

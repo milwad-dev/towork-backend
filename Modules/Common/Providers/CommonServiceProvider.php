@@ -51,7 +51,7 @@ class CommonServiceProvider extends ServiceProvider
     private function registerFactories()
     {
         Factory::guessFactoryNamesUsing(static function (string $modelName) {
-            return 'Modules\Common\Database\\Factories\\' . class_basename($modelName) . 'Factory';
+            return 'Modules\Common\Database\\Factories\\'.class_basename($modelName).'Factory';
         });
     }
 }

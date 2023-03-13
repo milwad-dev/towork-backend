@@ -11,6 +11,7 @@ class UserService
      * Create user by array of data.
      *
      * @param array $data
+     *
      * @return User
      */
     public function create(array $data): User
@@ -19,7 +20,7 @@ class UserService
             'name'      => $data['name'],
             'email'     => $data['email'],
             'phone'     => $data['phone'],
-            'password'  => $data['password']
+            'password'  => $data['password'],
         ]);
     }
 
@@ -27,7 +28,8 @@ class UserService
      * Update user by array of data and id.
      *
      * @param array $data
-     * @param int $id
+     * @param int   $id
+     *
      * @return int
      */
     public function update(array $data, int $id)
@@ -36,15 +38,16 @@ class UserService
             'name'      => $data['name'],
             'email'     => $data['email'],
             'phone'     => $data['phone'],
-            'password'  => Hash::make($data['password'])
+            'password'  => Hash::make($data['password']),
         ]);
     }
 
     /**
      * Generate token.
      *
-     * @param User $user
+     * @param User   $user
      * @param string $name
+     *
      * @return string
      */
     public function generateToken(User $user, string $name = 'create-user')

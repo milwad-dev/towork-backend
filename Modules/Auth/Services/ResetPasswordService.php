@@ -15,6 +15,7 @@ class ResetPasswordService
      * Delete by email.
      *
      * @param string $email
+     *
      * @return mixed
      */
     public function deleteByEmail(string $email)
@@ -27,8 +28,9 @@ class ResetPasswordService
     /**
      * Generate code.
      *
-     * @return int
      * @throws \Exception
+     *
+     * @return int
      */
     public function generateCode()
     {
@@ -39,6 +41,7 @@ class ResetPasswordService
      * Store reset password by array of data.
      *
      * @param array $data
+     *
      * @return Builder|Model
      */
     public function store(array $data)
@@ -46,7 +49,7 @@ class ResetPasswordService
         return ResetCodePassword::query()->create([
             'email'      => $data['email'],
             'code'       => $data['code'],
-            'created_at' => now()
+            'created_at' => now(),
         ]);
     }
 
@@ -54,6 +57,7 @@ class ResetPasswordService
      * Delete reset code with return response.
      *
      * @param ResetCodePassword $resetCodePassword
+     *
      * @return Application|ResponseFactory|\Illuminate\Http\Response
      */
     public function deleteResetCodePasswordWithReturnResponse(ResetCodePassword $resetCodePassword)
@@ -62,7 +66,7 @@ class ResetPasswordService
 
         return response([
             'message'   => 'The code has expired.',
-            'status'    => 'error'
+            'status'    => 'error',
         ], Response::HTTP_GONE);
     }
 }

@@ -29,7 +29,7 @@ class LoginRequest extends FormRequest
     {
         return [
             'email'     => ['required', 'min:3', 'max:250'],
-            'password'  => ['required', 'string', 'max:250']
+            'password'  => ['required', 'string', 'max:250'],
         ];
     }
 }
