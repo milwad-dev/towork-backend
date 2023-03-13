@@ -10,13 +10,6 @@ use Symfony\Component\HttpFoundation\Response;
 class RegisterController extends Controller
 {
     /**
-     * @QA\Post(
-     *  path="/api/register",
-     *  operationId="registerUser",
-     *  tags=["Auth"],
-     *  summary="Register user"
-     * )
-     *
      * Register user.
      *
      * @param RegisterRequest $request
