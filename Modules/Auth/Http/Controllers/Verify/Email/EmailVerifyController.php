@@ -6,8 +6,13 @@ use Modules\Common\Http\Controllers\Controller;
 
 class EmailVerifyController extends Controller
 {
-    public function __invoke()
+    public function verify()
     {
         // TODO: Implement __invoke() method.
+    }
+
+    public function resend()
+    {
+
     }
 }
