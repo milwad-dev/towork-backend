@@ -10,8 +10,9 @@ class JsonResponse
      * Return success json response.
      *
      * @param array|string|int|object $data
-     * @param array $headers
-     * @param int $options
+     * @param array                   $headers
+     * @param int                     $options
+     *
      * @return \Illuminate\Http\JsonResponse
      */
     public function successResponse(array|string|int|object $data, array $headers = [], int $options = 0)
@@ -23,8 +24,9 @@ class JsonResponse
      * Return forbidden json response.
      *
      * @param array|string|int|object $data
-     * @param array $headers
-     * @param int $options
+     * @param array                   $headers
+     * @param int                     $options
+     *
      * @return \Illuminate\Http\JsonResponse
      */
     public function forbiddenResponse(array|string|int|object $data, array $headers = [], int $options = 0)
@@ -41,8 +43,9 @@ class JsonResponse
      * Return no-content json response.
      *
      * @param array|string|int|object $data
-     * @param array $headers
-     * @param int $options
+     * @param array                   $headers
+     * @param int                     $options
+     *
      * @return \Illuminate\Http\JsonResponse
      */
     public function noContentResponse(array|string|int|object $data, array $headers = [], int $options = 0)

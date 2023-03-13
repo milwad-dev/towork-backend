@@ -27,8 +27,8 @@ class AuthServiceProvider extends ServiceProvider
     private function registerRoutes(): void
     {
         Route::middleware('api')
-            ->prefix('api/' . config('app.version'))
-            ->group(__DIR__ . '/../Routes/api.php');
+            ->prefix('api/'.config('app.version'))
+            ->group(__DIR__.'/../Routes/api.php');
     }
 
     /**
@@ -38,7 +38,7 @@ class AuthServiceProvider extends ServiceProvider
      */
     private function registerMigrations(): void
     {
-        $this->loadMigrationsFrom(__DIR__ . '/../Database/Migrations');
+        $this->loadMigrationsFrom(__DIR__.'/../Database/Migrations');
     }
 
     /**
@@ -48,6 +48,6 @@ class AuthServiceProvider extends ServiceProvider
      */
     private function registerViews(): void
     {
-        $this->loadViewsFrom(__DIR__ . '/../Resources/Views', 'Auth');
+        $this->loadViewsFrom(__DIR__.'/../Resources/Views', 'Auth');
     }
 }

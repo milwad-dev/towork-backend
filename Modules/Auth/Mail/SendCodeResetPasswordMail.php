@@ -10,14 +10,17 @@ use Illuminate\Queue\SerializesModels;
 
 class SendCodeResetPasswordMail extends Mailable
 {
-    use Queueable, SerializesModels;
+    use Queueable;
+    use SerializesModels;
 
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct(public int $code) {}
+    public function __construct(public int $code)
+    {
+    }
 
     /**
      * Get the message envelope.

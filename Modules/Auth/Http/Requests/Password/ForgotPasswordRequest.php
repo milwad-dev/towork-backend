@@ -35,13 +35,14 @@ class ForgotPasswordRequest extends FormRequest
     /**
      * Prepand for validation.
      *
-     * @return void
      * @throws \Exception
+     *
+     * @return void
      */
     protected function prepareForValidation()
     {
         $this->merge([
-            'code' => resolve(ResetPasswordService::class)->generateCode()
+            'code' => resolve(ResetPasswordService::class)->generateCode(),
         ]);
     }
 }

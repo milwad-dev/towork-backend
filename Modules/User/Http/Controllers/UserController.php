@@ -12,10 +12,9 @@ use Symfony\Component\HttpFoundation\Response;
 class UserController extends Controller
 {
     public function __construct(
-        private readonly UserService      $userService,
+        private readonly UserService $userService,
         private readonly UserRepoEloquent $userRepoEloquent
-    )
-    {
+    ) {
     }
 
     /**
@@ -34,6 +33,7 @@ class UserController extends Controller
      * Display the specified resource.
      *
      * @param int $id
+     *
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -45,26 +45,27 @@ class UserController extends Controller
      * Update the specified resource in storage.
      *
      * @param UserUpdateRequest $request
-     * @param int $id
+     * @param int               $id
+     *
      * @return \Illuminate\Http\Response
      */
-    public function update(UserUpdateRequest $request,int $id)
+    public function update(UserUpdateRequest $request, int $id)
     {
         $this->userRepoEloquent->update($request->validated(), $id);
 
         return response([
             'data' => [
-                'message' => 'user updated successfully'
+                'message' => 'user updated successfully',
             ],
-            'status' => 'success'
+            'status' => 'success',
         ], Response::HTTP_ACCEPTED);
-
     }
 
     /**
      * Remove the specified resource from storage.
      *
      * @param int $id
+     *
      * @return \Illuminate\Http\Response
      */
     public function destroy(int $id)
@@ -73,9 +74,9 @@ class UserController extends Controller
 
         return response([
             'data' => [
-                'message' => 'user deleted successfully'
+                'message' => 'user deleted successfully',
             ],
-            'status' => 'success'
+            'status' => 'success',
         ]);
     }
 }

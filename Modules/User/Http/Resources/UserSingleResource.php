@@ -9,17 +9,18 @@ class UserSingleResource extends JsonResource
     /**
      * Transform the resource into an array.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
+     *
      * @return array|\Illuminate\Contracts\Support\Arrayable|\JsonSerializable
      */
     public function toArray($request)
     {
         return [
             'data' => [
-                'name' => $this->name,
+                'name'  => $this->name,
                 'email' => $this->email,
                 'phone' => $this->phone,
-            ]
+            ],
         ];
     }
 
@@ -27,6 +28,7 @@ class UserSingleResource extends JsonResource
      * With response.
      *
      * @param $request
+     *
      * @return array
      */
     public function with($request)

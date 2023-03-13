@@ -3,8 +3,8 @@
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Modules\User\Models\User;
 use Tests\TestCase;
-use function Pest\Laravel\actingAs;
 
+use function Pest\Laravel\actingAs;
 
 /*
  * Use refresh database for truncate database for each test.
@@ -16,8 +16,7 @@ uses(RefreshDatabase::class);
  */
 uses(TestCase::class);
 
-
-test('admin user can see get all users' , function (){
+test('admin user can see get all users', function () {
     $user = User::factory()->create();
 
     $response = actingAs($user)->getJson(route('users.index'));
@@ -28,7 +27,7 @@ test('admin user can see get all users' , function (){
                 'name',
                 'email',
                 'phone',
-            ]
-        ]
+            ],
+        ],
     ]);
 });

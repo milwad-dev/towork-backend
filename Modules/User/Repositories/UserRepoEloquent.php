@@ -13,7 +13,6 @@ class UserRepoEloquent
      *
      * @return Builder|Model
      */
-
     public function query()
     {
         return new User();
@@ -29,13 +28,13 @@ class UserRepoEloquent
         return $this->query()->where('email', $email)->firstOrFail();
     }
 
-    public function update(array $data , int $id): void
+    public function update(array $data, int $id): void
     {
-        $model = $this->query()->where('id' , $id)->firstOrFail();
+        $model = $this->query()->where('id', $id)->firstOrFail();
 
-        if (!isset($data['password'])){
+        if (!isset($data['password'])) {
             $data['password'] = $model->password;
-        }else{
+        } else {
             $data['password'] = bcrypt($data['password']);
         }
 
@@ -44,6 +43,6 @@ class UserRepoEloquent
 
     public function destroy(int $id)
     {
-        $this->query()->where('id' , $id)->delete();
+        $this->query()->where('id', $id)->delete();
     }
 }

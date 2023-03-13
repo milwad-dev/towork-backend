@@ -33,7 +33,7 @@ class RegisterRequest extends FormRequest
             'name'      => ['required', 'string', 'min:3', 'max:250', 'unique:users,name'],
             'email'     => ['required', 'email', 'min:3', 'max:250', 'unique:users,email'],
             'phone'     => ['required', 'numeric', new ValidPhoneNumber()],
-            'password'  => ['required', 'string', 'min:8', 'max:250', new ValidStrongPassword()]
+            'password'  => ['required', 'string', 'min:8', 'max:250', new ValidStrongPassword()],
         ];
     }
 
@@ -45,7 +45,7 @@ class RegisterRequest extends FormRequest
     protected function prepareForValidation()
     {
         $this->merge([
-            'password' => Hash::make($this->password)
+            'password' => Hash::make($this->password),
         ]);
     }
 }

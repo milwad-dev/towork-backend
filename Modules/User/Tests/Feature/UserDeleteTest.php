@@ -1,9 +1,9 @@
 <?php
 
-
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Modules\User\Models\User;
 use Tests\TestCase;
+
 use function Pest\Laravel\{actingAs, assertDatabaseCount, assertDatabaseMissing};
 
 // Methods
@@ -20,7 +20,7 @@ uses(RefreshDatabase::class);
  */
 uses(TestCase::class);
 
-test('test admin user can delete user' , function (){
+test('test admin user can delete user', function () {
     $user = User::factory()->create();
 
     $deleteUser = User::factory()->create(['email' => $email = 'delete@gmail.com']);
@@ -31,4 +31,3 @@ test('test admin user can delete user' , function (){
     assertDatabaseMissing('users', ['email' => $email]);
     assertDatabaseCount('users', 1);
 });
-

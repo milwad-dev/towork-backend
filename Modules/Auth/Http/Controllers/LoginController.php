@@ -14,6 +14,7 @@ class LoginController extends Controller
      * Login user.
      *
      * @param LoginRequest $request
+     *
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response
      */
     public function __invoke(LoginRequest $request)
@@ -21,21 +22,22 @@ class LoginController extends Controller
         $field = $request->email;
         $correctField = $this->filterField($field);
 
-        if (! Auth::attempt([$correctField => $field, 'password' => $request->password])) {
+        if (!Auth::attempt([$correctField => $field, 'password' => $request->password])) {
             return response([
-                'data' => ['message' => 'Unauthorised.'],
-                'status' => 'error'
+                'data'   => ['message' => 'Unauthorised.'],
+                'status' => 'error',
             ], Response::HTTP_FORBIDDEN);
         }
 
         $user = Auth::user();
+
         return response([
             'data' => [
                 'token' => resolve(UserService::class)->generateToken($user, 'login-user'),
                 'name'  => $user->name,
-                'email' => $user->email
+                'email' => $user->email,
             ],
-            'status' => 'success'
+            'status' => 'success',
         ]);
     }
 
@@ -43,6 +45,7 @@ class LoginController extends Controller
      * Filter field by email or phone.
      *
      * @param string $field
+     *
      * @return string
      */
     private function filterField(string $field): string

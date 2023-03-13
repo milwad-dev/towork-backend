@@ -4,7 +4,6 @@ namespace Modules\Common\Console\Commands;
 
 use File;
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\Route;
 
 class MakeModule extends Command
 {
@@ -61,7 +60,7 @@ class {$argument}ServiceProvider extends ServiceProvider
     }
 }
 ";
-// -------------------------------------------------------------------------------------
+        // -------------------------------------------------------------------------------------
         $pathRepo = "<?php
 
 namespace Modules\\$argument\Repositories;
@@ -137,38 +136,38 @@ class {$argument}Service implements ServicesInterface
 }
         ";
 
-        File::makeDirectory('Modules/' . $argument);
+        File::makeDirectory('Modules/'.$argument);
 
         // Databases
-        File::makeDirectory('Modules/' . $argument . '/Database');
-        File::makeDirectory('Modules/' . $argument . '/Database/Migrations');
+        File::makeDirectory('Modules/'.$argument.'/Database');
+        File::makeDirectory('Modules/'.$argument.'/Database/Migrations');
 
         // Providers
-        File::makeDirectory('Modules/' . $argument . '/Providers');
-        File::put('Modules/' . $argument . '/Providers/' . $argument . 'ServiceProvider.php', $pathServiceProvider);
+        File::makeDirectory('Modules/'.$argument.'/Providers');
+        File::put('Modules/'.$argument.'/Providers/'.$argument.'ServiceProvider.php', $pathServiceProvider);
 
         // Repositories
-        File::makeDirectory('Modules/' . $argument . '/Repositories');
-        File::put('Modules/' . $argument . '/Repositories/' . $argument . 'Repo.php', $pathRepo);
+        File::makeDirectory('Modules/'.$argument.'/Repositories');
+        File::put('Modules/'.$argument.'/Repositories/'.$argument.'Repo.php', $pathRepo);
 
         // Http
-        File::makeDirectory('Modules/' . $argument . '/Http');
-        File::makeDirectory('Modules/' . $argument . '/Http/Controllers');
+        File::makeDirectory('Modules/'.$argument.'/Http');
+        File::makeDirectory('Modules/'.$argument.'/Http/Controllers');
 
         // Models
-        File::makeDirectory('Modules/' . $argument . '/Models');
+        File::makeDirectory('Modules/'.$argument.'/Models');
 
         // routes
-        File::makeDirectory('Modules/' . $argument . '/routes');
-        File::put('Modules/' . $argument . '/routes/' . strtolower($argument) . '_routes.php', $route);
+        File::makeDirectory('Modules/'.$argument.'/routes');
+        File::put('Modules/'.$argument.'/routes/'.strtolower($argument).'_routes.php', $route);
 
         // Services
-        File::makeDirectory('Modules/' . $argument . '/Services');
-        File::put('Modules/' . $argument . '/Services/' . $argument . 'Service.php', $service);
+        File::makeDirectory('Modules/'.$argument.'/Services');
+        File::put('Modules/'.$argument.'/Services/'.$argument.'Service.php', $service);
 
         // Views
-        File::makeDirectory('Modules/' . $argument . '/Resources');
-        File::makeDirectory('Modules/' . $argument . '/Resources/Views');
+        File::makeDirectory('Modules/'.$argument.'/Resources');
+        File::makeDirectory('Modules/'.$argument.'/Resources/Views');
 
         $this->info("Your Module {$argument} Make Successfully");
     }
