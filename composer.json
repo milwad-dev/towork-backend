@@ -11,7 +11,8 @@
         "laravel/framework": "^10.0",
         "laravel/sanctum": "^3.2",
         "laravel/tinker": "^2.7",
-        "milwad/laravel-validate": "^1.3"
+        "milwad/laravel-validate": "^1.3",
+        "rakutentech/laravel-request-docs": "^2.12"
     },
     "require-dev": {
         "fakerphp/faker": "^1.9.1",
