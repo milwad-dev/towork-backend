@@ -21,9 +21,8 @@ test('test login user can see all own categories', function () {
     $response->assertStatus(200);
     $response->assertJsonStructure([
         'data' => [
-            'categories'
+            'categories',
         ],
-        'status'
+        'status',
     ]);
 });
-

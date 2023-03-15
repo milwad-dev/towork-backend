@@ -14,7 +14,7 @@ class Category extends Model
      */
     protected $fillable = ['title', 'user_id'];
 
-    # Relations
+    // Relations
 
     /**
      * Relation one-to-many, User model.
