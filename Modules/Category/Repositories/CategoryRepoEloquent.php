@@ -10,6 +10,7 @@ class CategoryRepoEloquent
      * Get the latest categories with filter by user_id.
      *
      * @param int|string $user_id
+     *
      * @return \Illuminate\Database\Eloquent\Builder
      */
     public function getLatest(int|string $user_id)

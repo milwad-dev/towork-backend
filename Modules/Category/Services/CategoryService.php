@@ -4,5 +4,4 @@ namespace Modules\Category\Services;
 
 class CategoryService
 {
-
 }

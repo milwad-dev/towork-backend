@@ -2,7 +2,6 @@
 
 namespace Modules\Category\Http\Controllers;
 
-use Illuminate\Http\Request;
 use Modules\Category\Repositories\CategoryRepoEloquent;
 use Modules\Common\Http\Controllers\Controller;
 
@@ -17,9 +16,9 @@ class CategoryController extends Controller
 
         return response()->json([
             'data' => [
-                $categories
+                $categories,
             ],
-            'status' => 'success'
+            'status' => 'success',
         ]);
     }
 }
