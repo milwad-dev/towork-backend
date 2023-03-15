@@ -6,10 +6,6 @@ use Tests\TestCase;
 
 use function Pest\Laravel\{actingAs, assertDatabaseCount, assertDatabaseMissing};
 
-// Methods
-
-// DB Asserts
-
 /*
  * Use refresh database for truncate database for each test.
  */
