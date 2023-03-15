@@ -8,7 +8,7 @@ use Modules\Auth\Http\Controllers\Password\ResetPasswordController;
 use Modules\Auth\Http\Controllers\RegisterController;
 use Modules\Auth\Http\Controllers\Verify\Email\EmailVerifyController;
 
-Route::group(['middleware' => 'guest:sanctum', 'as' => 'auth.'], static function ($router) {
+Route::group(['middleware' => ['guest:sanctum', 'throttle:5,1'], 'as' => 'auth.'], static function ($router) {
     // Register
     $router->post('register', RegisterController::class)->name('register');
 
@@ -21,7 +21,7 @@ Route::group(['middleware' => 'guest:sanctum', 'as' => 'auth.'], static function
     $router->post('password/reset', ResetPasswordController::class)->name('reset_password');
 
     // Verify
-    $router->group(['middleware' => ['auth:sanctum', 'throttle:5,1'], 'withoutMiddleware' => 'guest'], static function ($routerGroup) {
+    $router->group(['middleware' => 'auth:sanctum', 'withoutMiddleware' => 'guest'], static function ($routerGroup) {
         $routerGroup->post('email/verify', [EmailVerifyController::class, 'verify'])->name('email.verify');
         $routerGroup->post('email/verify/resend', [EmailVerifyController::class, 'resend'])->name('email.verify.resend');
     });
