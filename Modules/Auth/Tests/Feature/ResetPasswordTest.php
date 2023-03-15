@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Hash;
 use Modules\Auth\Models\ResetCodePassword;
 use Modules\User\Models\User;
 use Tests\TestCase;
+
 use function Pest\Laravel\assertDatabaseCount;
 use function Pest\Laravel\postJson;
 use function PHPUnit\Framework\assertFalse;
