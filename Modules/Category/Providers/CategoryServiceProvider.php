@@ -2,6 +2,7 @@
 
 namespace Modules\Category\Providers;
 
+use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
 
 class CategoryServiceProvider extends ServiceProvider
@@ -13,16 +14,18 @@ class CategoryServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        $this->registerRoutes();
     }
 
     /**
-     * Bootstrap any application services.
+     *  Load route files.
      *
      * @return void
      */
-    public function boot()
+    public function registerRoutes(): void
     {
-        //
+        Route::middleware('api')
+            ->prefix('api/' . config('app.version'))
+            ->group(__DIR__ . '/../Routes/api.php');
     }
 }
