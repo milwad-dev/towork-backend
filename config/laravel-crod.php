@@ -7,14 +7,14 @@ return [
      * This is a word that move into the latest name of repository file, for ex: ProductRepo.
      * If this value is changed, any repos that are created will be renamed, for ex: ProductRepository.
     */
-    'repository_namespace' => 'Repo',
+    'repository_namespace' => 'RepoEloquent',
 
     /*
      * Get main controller.
      *
      * This is a namespace of main controller that default path is `App\Http\Controllers\Controller`.
      */
-    'main_controller' => 'App\Http\Controllers\Controller',
+    'main_controller' => \Modules\Common\Http\Controllers\Controller::class,
 
     /*
      * Modules config.
@@ -23,7 +23,7 @@ return [
      */
     'modules' => [
         'module_namespace' => 'Modules', // This value is for the name of the folder that the modules are in.
-        'model_path' => 'Entities', // This value is for the name of the folder that contains the module models.
+        'model_path' => 'Models', // This value is for the name of the folder that contains the module models.
         'migration_path' => 'Database\Migrations', // This value is for the name of the folder that contains the module migrations.
         'controller_path' => 'Http\Controllers', // This value is for the name of the folder that contains the module controllers.
         'request_path' => 'Http\Requests', // This value is for the name of the folder that contains the module requests-form.
