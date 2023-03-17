@@ -5,6 +5,7 @@ namespace Modules\Category\Tests\Feature\Models;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Modules\User\Models\User;
 use Tests\TestCase;
+
 use function Pest\Laravel\{assertDatabaseCount, assertDatabaseHas, assertDatabaseMissing};
 
 /*
@@ -22,7 +23,7 @@ test('test login user can store category', function () {
     $title = 'Implicit Title';
 
     $this->actingAs($user)->post(route('categories.store'), [
-        'title' => $title
+        'title' => $title,
     ])->assertOk();
 
     assertDatabaseCount('categories', 1);
@@ -33,7 +34,7 @@ test('test guest user can not store category', function () {
     $title = 'Implicit Title';
 
     $this->post(route('categories.store'), [
-        'title' => $title
+        'title' => $title,
     ])->assertRedirect();
 
     assertDatabaseCount('categories', 0);
