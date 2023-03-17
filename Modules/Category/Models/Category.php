@@ -3,6 +3,7 @@
 namespace Modules\Category\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Modules\Category\Database\Factories\CategoryFactory;
 use Modules\User\Models\User;
 
 class Category extends Model
@@ -13,6 +14,11 @@ class Category extends Model
      * @var string[]
      */
     protected $fillable = ['title', 'user_id'];
+
+    public static  function factory(): CategoryFactory
+    {
+        return new CategoryFactory();
+    }
 
     // Relations
 
