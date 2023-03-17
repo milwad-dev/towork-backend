@@ -24,7 +24,7 @@ class CategoryStoreRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'title' => 'required|string|min:3|max:250|unique:categories,title,' . auth()->id()
         ];
     }
 }
