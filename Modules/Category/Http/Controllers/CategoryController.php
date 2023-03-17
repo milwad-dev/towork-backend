@@ -4,6 +4,7 @@ namespace Modules\Category\Http\Controllers;
 
 use Modules\Category\Http\Requests\CategoryStoreRequest;
 use Modules\Category\Repositories\CategoryRepoEloquent;
+use Modules\Category\Services\CategoryService;
 use Modules\Common\Http\Controllers\Controller;
 
 class CategoryController extends Controller
@@ -23,8 +24,21 @@ class CategoryController extends Controller
         ]);
     }
 
+    /**
+     * Store category by request.
+     *
+     * @param  CategoryStoreRequest $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function store(CategoryStoreRequest $request)
     {
+        $category = resolve(CategoryService::class)->store($request->validated());
 
+        return response()->json([
+            'data' => [
+                $category,
+            ],
+            'status' => 'success',
+        ]);
     }
 }
