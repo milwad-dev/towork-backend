@@ -1,12 +1,12 @@
 <?php
- namespace Modules\Category\Tests\Feature\Models;
+
+namespace Modules\Category\Tests\Feature\Models;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Modules\Category\Models\Category;
 use Modules\User\Models\User;
 use Tests\TestCase;
-use function Pest\Laravel\assertDatabaseCount;
-use function Pest\Laravel\assertDatabaseHas;
+use function Pest\Laravel\{assertDatabaseCount, assertDatabaseHas};
 use function PHPUnit\Framework\assertInstanceOf;
 use function PHPUnit\Framework\assertTrue;
 
@@ -20,20 +20,17 @@ uses(RefreshDatabase::class);
  */
 uses(TestCase::class);
 
-test('test insert data', function () {
-    $data = Category::factory()->make()->toArray();
-
-    Category::create($data);
-
-    assertDatabaseCount('categories' , 1);
-    assertDatabaseHas('categories' , $data);
-});
-
-test('test category relation with user', function () {
+test('test login user can store category', function () {
     $user = User::factory()->create();
-    $category = Category::factory()->for($user)->create();
+    $title = 'Implicit Title';
 
-    assertInstanceOf(User::class , $category->user );
-    assertTrue(isset($category->user->id));
+    $this->actingAs($user)->post(route('categories.store'), [
+        'title' => $title
+    ]);
+
+    assertDatabaseCount('categories', 1);
+    assertDatabaseHas('categories', ['title' => $title]);
 });
+
+
 
