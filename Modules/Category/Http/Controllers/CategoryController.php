@@ -2,6 +2,7 @@
 
 namespace Modules\Category\Http\Controllers;
 
+use Modules\Category\Http\Requests\CategoryStoreRequest;
 use Modules\Category\Repositories\CategoryRepoEloquent;
 use Modules\Common\Http\Controllers\Controller;
 
@@ -20,5 +21,10 @@ class CategoryController extends Controller
             ],
             'status' => 'success',
         ]);
+    }
+
+    public function store(CategoryStoreRequest $request)
+    {
+
     }
 }
