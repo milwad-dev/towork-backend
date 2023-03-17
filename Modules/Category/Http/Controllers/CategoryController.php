@@ -27,7 +27,8 @@ class CategoryController extends Controller
     /**
      * Store category by request.
      *
-     * @param  CategoryStoreRequest $request
+     * @param CategoryStoreRequest $request
+     *
      * @return \Illuminate\Http\JsonResponse
      */
     public function store(CategoryStoreRequest $request)
