@@ -15,7 +15,7 @@ class CategoryFactory extends Factory
         return
             [
                 'title' => $this->faker->title,
-                'user_id' => User::factory(),
+                'user_id' => User::factory()->create()->id,
             ];
     }
 }
