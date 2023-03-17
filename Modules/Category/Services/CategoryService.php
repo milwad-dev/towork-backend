@@ -2,6 +2,8 @@
 
 namespace Modules\Category\Services;
 
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 use Modules\Category\Models\Category;
 
 class CategoryService
@@ -16,6 +18,21 @@ class CategoryService
     public function store(array $data)
     {
         return Category::query()->create([
+            'title'   => $data['title'],
+            'user_id' => auth()->id(),
+        ]);
+    }
+
+    /**
+     * update category by array of data.
+     *
+     * @param array $data
+     * @param int $id
+     * @return Builder|Model
+     */
+    public function update(int $id , array $data)
+    {
+        return tap(Category::query()->where('id' , $id))->update([
             'title'   => $data['title'],
             'user_id' => auth()->id(),
         ]);

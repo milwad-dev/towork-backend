@@ -3,6 +3,7 @@
 namespace Modules\Category\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class CategoryStoreRequest extends FormRequest
 {
@@ -21,10 +22,12 @@ class CategoryStoreRequest extends FormRequest
      *
      * @return array<string, mixed>
      */
-    public function rules()
+    public function rules(): array
     {
         return [
-            'title' => 'required|string|min:3|max:250|unique:categories,title,'.auth()->id(),
+            'title' =>  [ 'required' , 'string' , 'min:3' ,  'max:250' , Rule::unique('categories' , 'title') ],
+            'user_id' =>  [ 'required' , 'numeric' , Rule::exists('users' ,'id') ],
+
         ];
     }
 }
