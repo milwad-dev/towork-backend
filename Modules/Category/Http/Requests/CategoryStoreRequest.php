@@ -26,8 +26,6 @@ class CategoryStoreRequest extends FormRequest
     {
         return [
             'title' =>  [ 'required' , 'string' , 'min:3' ,  'max:250' , Rule::unique('categories' , 'title') ],
-            'user_id' =>  [ 'required' , 'numeric' , Rule::exists('users' ,'id') ],
-
         ];
     }
 }

@@ -31,7 +31,6 @@ test('test login user can update category', function () {
 
     actingAs($user)->patchJson(route('categories.update', $category->id), [
         'title' => $title,
-        'user_id' => $user->id,
     ])->assertOk();
 
     assertDatabaseCount('categories', 1);
@@ -46,7 +45,6 @@ test('test guest user can not update category', function () {
 
     patchJson(route('categories.update' ,$category->id), [
         'title' => $title,
-        'user_id' => $user->id,
     ])->assertUnauthorized();
 
     assertDatabaseCount('categories', 1);

@@ -24,7 +24,6 @@ test('test login user can store category', function () {
 
     actingAs($user)->post(route('categories.store'), [
         'title' => $title,
-        'user_id' => $user->id,
     ])->assertOk();
 
     assertDatabaseCount('categories', 1);
@@ -32,12 +31,10 @@ test('test login user can store category', function () {
 });
 
 test('test guest user can not store category', function () {
-    $user = User::factory()->create();
     $title = 'Implicit Title';
 
     post(route('categories.store'), [
         'title' => $title,
-        'user_id' => $user->id,
     ])->assertRedirect();
 
     assertDatabaseCount('categories', 0);
