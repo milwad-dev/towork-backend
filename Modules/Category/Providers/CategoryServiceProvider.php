@@ -15,9 +15,7 @@ class CategoryServiceProvider extends ServiceProvider
     public function register()
     {
         $this->registerMigrations();
-        $this->registerRoutes(
-
-        );
+        $this->registerRoutes();
     }
 
     /**
@@ -25,13 +23,18 @@ class CategoryServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function registerRoutes(): void
+    private function registerRoutes(): void
     {
         Route::middleware('api')
             ->prefix('api/'.config('app.version'))
             ->group(__DIR__.'/../Routes/api.php');
     }
 
+    /**
+     * Load migration files.
+     *
+     * @return void
+     */
     private function registerMigrations(): void
     {
         $this->loadMigrationsFrom(__DIR__ . '/../Database/Migrations');
