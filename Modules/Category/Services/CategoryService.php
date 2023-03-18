@@ -38,4 +38,18 @@ class CategoryService
             'user_id' => auth()->id(),
         ]);
     }
+
+    /**
+     * Delete category by id.
+     *
+     * @param int $id
+     *
+     * @return bool
+     */
+    public function delete(int $id)
+    {
+        Category::query()->where('id', $id)->delete();
+
+        return true;
+    }
 }
