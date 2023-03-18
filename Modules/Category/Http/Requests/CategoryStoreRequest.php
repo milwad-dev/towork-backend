@@ -30,7 +30,7 @@ class CategoryStoreRequest extends FormRequest
                 'string',
                 'min:3',
                 'max:250',
-                'unique:categories,title' . auth()->id() // Need user_id, becuase we want to check unique by user.
+                'unique:categories,title'.auth()->id(), // Need user_id, becuase we want to check unique by user.
             ],
         ];
     }

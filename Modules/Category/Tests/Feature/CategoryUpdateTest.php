@@ -56,14 +56,14 @@ test('test guest user can not update category', function () {
 /**
  * Create category.
  *
- * @param  int $userId
+ * @param int $userId
  *
  * @return Category
  */
 function createCategory(int $userId)
 {
     return Category::create([
-        'title' => "::title::",
-        'user_id' => $userId
+        'title'   => '::title::',
+        'user_id' => $userId,
     ]);
 }

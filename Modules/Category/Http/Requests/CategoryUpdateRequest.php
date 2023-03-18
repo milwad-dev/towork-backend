@@ -30,7 +30,7 @@ class CategoryUpdateRequest extends FormRequest
                 'string',
                 'min:3',
                 'max:250',
-                Rule::unique('categories', 'title')->ignore($this->route()->parameter('category')) // TODO: Improve validation
+                Rule::unique('categories', 'title')->ignore($this->route()->parameter('category')), // TODO: Improve validation
             ],
         ];
     }
