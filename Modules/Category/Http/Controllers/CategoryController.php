@@ -8,6 +8,7 @@ use Modules\Category\Http\Requests\CategoryUpdateRequest;
 use Modules\Category\Repositories\CategoryRepoEloquent;
 use Modules\Category\Services\CategoryService;
 use Modules\Common\Http\Controllers\Controller;
+use Symfony\Component\HttpFoundation\Response;
 
 class CategoryController extends Controller
 {
@@ -81,6 +82,6 @@ class CategoryController extends Controller
                 'message' => 'Category deleted successfully.',
             ],
             'status' => 'success',
-        ]);
+        ], Response::HTTP_NO_CONTENT);
     }
 }
