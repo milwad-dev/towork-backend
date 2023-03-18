@@ -64,4 +64,16 @@ class CategoryController extends Controller
             'status' => 'success',
         ]);
     }
+
+    public function destroy(int $id)
+    {
+        resolve(CategoryService::class)->delete($id);
+
+        return response()->json([
+            'data' => [
+                'message' => 'Category deleted successfully.',
+            ],
+            'status' => 'success',
+        ]);
+    }
 }
