@@ -24,16 +24,17 @@ class CategoryService
     }
 
     /**
-     * update category by array of data.
+     * Update category by array of data.
      *
-     * @param array $data
-     * @param int $id
+     * @param  array $data
+     * @param  int $id
+     *
      * @return Builder|Model
      */
-    public function update(int $id , array $data)
+    public function update(int $id, array $data)
     {
-        return tap(Category::query()->where('id' , $id))->update([
-            'title'   => $data['title'],
+        return tap(Category::query()->where('id', $id))->update([
+            'title' => $data['title'],
             'user_id' => auth()->id(),
         ]);
     }

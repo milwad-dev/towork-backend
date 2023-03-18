@@ -11,8 +11,8 @@ use function Pest\Laravel\{actingAs,
     assertDatabaseCount,
     assertDatabaseHas,
     assertDatabaseMissing,
-    patchJson,
-    };
+    patchJson
+};
 
 /*
  * Use refresh database for truncate database for each test.
@@ -23,6 +23,7 @@ uses(RefreshDatabase::class);
  * Use Testcase to add some requirements.
  */
 uses(TestCase::class);
+
 test('test login user can update category', function () {
     $user = User::factory()->create();
     $category = createCategory($user->id);
@@ -43,7 +44,7 @@ test('test guest user can not update category', function () {
 
     $title = 'Implicit Title';
 
-    patchJson(route('categories.update' ,$category->id), [
+    patchJson(route('categories.update', $category->id), [
         'title' => $title,
     ])->assertUnauthorized();
 
@@ -52,9 +53,17 @@ test('test guest user can not update category', function () {
     assertDatabaseHas('categories', ['title' => $category->title]);
 });
 
-function createCategory($userId){
+/**
+ * Create category.
+ *
+ * @param  int $userId
+ *
+ * @return Category
+ */
+function createCategory(int $userId)
+{
     return Category::create([
-        'title' => "::title::" ,
+        'title' => "::title::",
         'user_id' => $userId
     ]);
 }
