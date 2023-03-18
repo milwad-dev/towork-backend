@@ -25,8 +25,12 @@ class CategoryUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title' => ['required', 'string', 'min:3', 'max:250',
-                Rule::unique('categories', 'title')->ignore($this->route()->parameter('category'))
+            'title' => [
+                'required',
+                'string',
+                'min:3',
+                'max:250',
+                Rule::unique('categories', 'title')->ignore($this->route()->parameter('category')), // TODO: Improve validation
             ],
         ];
     }

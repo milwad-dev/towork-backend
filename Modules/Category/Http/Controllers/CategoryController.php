@@ -46,20 +46,20 @@ class CategoryController extends Controller
     }
 
     /**
-     * update category by request.
+     * Update category by request.
      *
-     * @param int $id
+     * @param int                   $id
      * @param CategoryUpdateRequest $request
      *
      * @return JsonResponse
      */
-    public function update(int $id ,CategoryUpdateRequest $request)
+    public function update(CategoryUpdateRequest $request, int $id)
     {
-        $category = resolve(CategoryService::class)->update($id , $request->validated());
+        resolve(CategoryService::class)->update($id, $request->validated());
 
         return response()->json([
             'data' => [
-                $category,
+                'message' => 'Category updated successfully.',
             ],
             'status' => 'success',
         ]);
