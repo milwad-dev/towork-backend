@@ -6,7 +6,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Modules\User\Models\User;
 use Tests\TestCase;
 
-use function Pest\Laravel\{assertDatabaseCount, assertDatabaseHas, assertDatabaseMissing};
+use function Pest\Laravel\{actingAs, assertDatabaseCount, assertDatabaseHas, assertDatabaseMissing, post};
 
 /*
  * Use refresh database for truncate database for each test.
@@ -22,7 +22,7 @@ test('test login user can store category', function () {
     $user = User::factory()->create();
     $title = 'Implicit Title';
 
-    $this->actingAs($user)->post(route('categories.store'), [
+    actingAs($user)->post(route('categories.store'), [
         'title' => $title,
     ])->assertOk();
 
@@ -33,7 +33,7 @@ test('test login user can store category', function () {
 test('test guest user can not store category', function () {
     $title = 'Implicit Title';
 
-    $this->post(route('categories.store'), [
+    post(route('categories.store'), [
         'title' => $title,
     ])->assertRedirect();
 
