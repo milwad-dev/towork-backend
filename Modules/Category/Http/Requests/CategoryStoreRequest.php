@@ -25,7 +25,13 @@ class CategoryStoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title' =>  [ 'required' , 'string' , 'min:3' ,  'max:250' , Rule::unique('categories' , 'title') ],
+            'title' => [
+                'required',
+                'string',
+                'min:3',
+                'max:250',
+                'unique:categories,title' . auth()->id() // Need user_id, becuase we want to check unique by user.
+            ],
         ];
     }
 }
