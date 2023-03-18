@@ -65,6 +65,13 @@ class CategoryController extends Controller
         ]);
     }
 
+    /**
+     * Delete category by id.
+     *
+     * @param int $id
+     *
+     * @return JsonResponse
+     */
     public function destroy(int $id)
     {
         resolve(CategoryService::class)->delete($id);
