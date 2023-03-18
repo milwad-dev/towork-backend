@@ -7,7 +7,7 @@ use Modules\Category\Models\Category;
 use Modules\User\Models\User;
 use Tests\TestCase;
 
-use function Pest\Laravel\{actingAs, assertDatabaseCount, assertDatabaseMissing, deleteJson};
+use function Pest\Laravel\{actingAs, assertDatabaseCount, assertDatabaseHas, assertDatabaseMissing, deleteJson};
 
 /*
  * Use refresh database for truncate database for each test.
@@ -32,8 +32,8 @@ test('test login user can delete category', function () {
 test('test guest user can not delete category', function () {
     $category = Category::factory()->create();
 
-    deleteJson(route('categories.destroy', $category->id))->assertRedirect();
+    deleteJson(route('categories.destroy', $category->id))->assertUnauthorized();
 
-    assertDatabaseCount('categories', 0);
-    assertDatabaseMissing('categories', ['title' => $category->title]);
+    assertDatabaseCount('categories', 1);
+    assertDatabaseHas('categories', ['title' => $category->title]);
 });
