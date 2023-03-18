@@ -48,8 +48,8 @@ class CategoryController extends Controller
     /**
      * Update category by request.
      *
-    * @param int                   $id
-    * @param CategoryUpdateRequest $request
+     * @param int                   $id
+     * @param CategoryUpdateRequest $request
      *
      * @return JsonResponse
      */
