@@ -13,6 +13,8 @@ use Symfony\Component\HttpFoundation\Response;
 class CategoryController extends Controller
 {
     /**
+     * Get latest categories and return json response.
+     *
      * @return \Illuminate\Http\JsonResponse
      */
     public function index()
@@ -47,7 +49,7 @@ class CategoryController extends Controller
     }
 
     /**
-     * Update category by request.
+     * Update category by request and id.
      *
      * @param int                   $id
      * @param CategoryUpdateRequest $request
