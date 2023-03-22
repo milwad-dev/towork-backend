@@ -55,7 +55,7 @@
             "@php artisan key:generate --ansi"
         ],
         "test": "vendor\\bin\\pest",
-        "test-coverage": "vendor\\bin\\pest --coverage-html /coverage"
+        "test-coverage": "vendor\\bin\\pest --coverage-html ./coverage"
     },
     "extra": {
         "laravel": {
