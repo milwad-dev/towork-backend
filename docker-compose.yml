@@ -20,7 +20,7 @@ services:
         networks:
             - dockerize-laravel
         ports:
-            - '80:80'
+            - '8000:8000'
             - '443:443'
         volumes:
             - './docker/nginx/conf.d:/etc/nginx/conf.d:ro'
