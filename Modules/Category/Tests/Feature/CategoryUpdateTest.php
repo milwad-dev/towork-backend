@@ -6,13 +6,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Modules\Category\Models\Category;
 use Modules\User\Models\User;
 use Tests\TestCase;
-
-use function Pest\Laravel\{actingAs,
-    assertDatabaseCount,
-    assertDatabaseHas,
-    assertDatabaseMissing,
-    patchJson
-};
+use function Pest\Laravel\{actingAs, assertDatabaseCount, assertDatabaseHas, assertDatabaseMissing, patchJson};
 
 /*
  * Use refresh database for truncate database for each test.

@@ -1,10 +1,10 @@
 <?php
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Schema;
 use Modules\Category\Models\Category;
 use Modules\User\Models\User;
 use Tests\TestCase;
-use Illuminate\Support\Facades\Schema;
 
 /*
  * Use refresh database for truncate database for each test.
