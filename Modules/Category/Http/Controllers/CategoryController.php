@@ -8,6 +8,7 @@ use Modules\Category\Http\Requests\CategoryUpdateRequest;
 use Modules\Category\Repositories\CategoryRepoEloquent;
 use Modules\Category\Services\CategoryService;
 use Modules\Common\Http\Controllers\Controller;
+use Symfony\Component\HttpFoundation\Response;
 
 class CategoryController extends Controller
 {
@@ -63,5 +64,24 @@ class CategoryController extends Controller
             ],
             'status' => 'success',
         ]);
+    }
+
+    /**
+     * Delete category by id.
+     *
+     * @param int $id
+     *
+     * @return JsonResponse
+     */
+    public function destroy(int $id)
+    {
+        resolve(CategoryService::class)->delete($id);
+
+        return response()->json([
+            'data' => [
+                'message' => 'Category deleted successfully.',
+            ],
+            'status' => 'success',
+        ], Response::HTTP_NO_CONTENT);
     }
 }

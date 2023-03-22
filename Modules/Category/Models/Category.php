@@ -4,11 +4,22 @@ namespace Modules\Category\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Modules\Category\Database\Factories\CategoryFactory;
 use Modules\User\Models\User;
 
 class Category extends Model
 {
     use HasFactory;
+
+    /**
+     * Set factory.
+     *
+     * @return CategoryFactory
+     */
+    protected static function newFactory()
+    {
+        return CategoryFactory::new();
+    }
 
     /**
      * Fillable columns.
