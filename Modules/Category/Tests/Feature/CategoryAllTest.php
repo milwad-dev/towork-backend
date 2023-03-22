@@ -1,8 +1,10 @@
 <?php
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Modules\Category\Models\Category;
 use Modules\User\Models\User;
 use Tests\TestCase;
+use Illuminate\Support\Facades\Schema;
 
 /*
  * Use refresh database for truncate database for each test.
@@ -25,6 +27,12 @@ test('test login user can see all own categories', function () {
         ],
         'status',
     ]);
+
+    $has = Schema::hasColumns((new Category)->getTable(), [
+        'id', 'title', 'user_id', 'created_at', 'updated_at'
+    ]);
+
+    $this->assertTrue($has, 1);
 });
 
 test('test guest user can see all own categories', function () {
