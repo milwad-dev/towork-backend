@@ -26,3 +26,7 @@ test('test login user can see all own categories', function () {
         'status',
     ]);
 });
+
+test('test guest user can see all own categories', function () {
+    $this->getJson(route('categories.index'))->assertUnauthorized();
+});
