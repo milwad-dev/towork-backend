@@ -18,7 +18,6 @@ class CommonServiceProvider extends ServiceProvider
     {
         $this->bindJsonResponseFacade();
         $this->registerCommands();
-        $this->registerFactories();
     }
 
     /**
@@ -41,17 +40,5 @@ class CommonServiceProvider extends ServiceProvider
     private function registerCommands(): void
     {
         $this->commands(MakeModule::class);
-    }
-
-    /**
-     * Load factories.
-     *
-     * @return void
-     */
-    private function registerFactories()
-    {
-        Factory::guessFactoryNamesUsing(static function (string $modelName) {
-            return 'Modules\Common\Database\\Factories\\'.class_basename($modelName).'Factory';
-        });
     }
 }
