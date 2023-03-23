@@ -20,11 +20,6 @@ class CommonServiceProvider extends ServiceProvider
         $this->registerCommands();
     }
 
-    public function boot()
-    {
-        $this->routeMacro();
-    }
-
     /**
      * Bind json response facade.
      *
@@ -45,19 +40,5 @@ class CommonServiceProvider extends ServiceProvider
     private function registerCommands(): void
     {
         $this->commands(MakeModule::class);
-    }
-
-    /**
-     * Add macro-ability to route.
-     *
-     * @return void
-     */
-    private function routeMacro(): void
-    {
-        Route::macro('apiRoute', function (string $route) {
-            $this->middleware('api')
-                ->prefix('api/' . config('app.version'))
-                ->group($route);
-        });
     }
 }
