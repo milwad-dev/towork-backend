@@ -4,7 +4,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Modules\User\Models\User;
 use Tests\TestCase;
 
-use function Pest\Laravel\actingAs;
+use function Pest\Laravel\{actingAs, getJson};
 
 /*
  * Use refresh database for truncate database for each test.
@@ -30,4 +30,8 @@ test('admin user can see get all users', function () {
             ],
         ],
     ]);
+});
+
+test('guest user can not see get all users', function () {
+    getJson(route('users.index'))->assertUnauthorized();
 });
