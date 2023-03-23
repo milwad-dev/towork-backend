@@ -11,7 +11,7 @@ class UserRepoEloquent
     /**
      * Get latest users.
      *
-     * @return Builder|Model
+     * @return User|Model
      */
     public function query()
     {
@@ -26,19 +26,6 @@ class UserRepoEloquent
     public function findByEmail(string $email)
     {
         return $this->query()->where('email', $email)->firstOrFail();
-    }
-
-    public function update(array $data, int $id): void
-    {
-        $model = $this->query()->where('id', $id)->firstOrFail();
-
-        if (!isset($data['password'])) {
-            $data['password'] = $model->password;
-        } else {
-            $data['password'] = bcrypt($data['password']);
-        }
-
-        $model->update($data);
     }
 
     /**
