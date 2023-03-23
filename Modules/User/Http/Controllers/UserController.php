@@ -15,8 +15,7 @@ class UserController extends Controller
     public function __construct(
         private readonly UserService $userService,
         private readonly UserRepoEloquent $userRepoEloquent
-    ) {
-    }
+    ) {}
 
     /**
      * Display a listing of the resource.
