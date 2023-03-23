@@ -2,7 +2,6 @@
 
 namespace Modules\User\Repositories;
 
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Modules\User\Models\User;
 
