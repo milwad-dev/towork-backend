@@ -52,9 +52,4 @@ class UserRepoEloquent
     {
         return $this->query()->findOrFail($id);
     }
-
-    public function destroy(int $id)
-    {
-        $this->query()->where('id', $id)->delete();
-    }
 }

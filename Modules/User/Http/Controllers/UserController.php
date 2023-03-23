@@ -40,7 +40,7 @@ class UserController extends Controller
     public function show(int $id)
     {
         $user = $this->userRepoEloquent->findById($id);
-        
+
         return new UserSingleResource($user);
     }
 
@@ -54,7 +54,7 @@ class UserController extends Controller
      */
     public function update(UserUpdateRequest $request, int $id)
     {
-        $this->userRepoEloquent->update($request->validated(), $id);
+        $this->userService->update($request->validated(), $id);
 
         return response([
             'data' => [
@@ -73,7 +73,7 @@ class UserController extends Controller
      */
     public function destroy(int $id)
     {
-        $this->userRepoEloquent->destroy($id);
+        $this->userService->destroy($id);
 
         return response([
             'data' => [

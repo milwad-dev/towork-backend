@@ -43,6 +43,18 @@ class UserService
     }
 
     /**
+     * Delete user by id.
+     *
+     * @param  int  $id
+     *
+     * @return void
+     */
+    public function destroy(int $id)
+    {
+        return User::query()->where('id', $id)->delete();
+    }
+
+    /**
      * Generate token.
      *
      * @param User   $user
