@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Modules\User\Database\Factories\UserFactory;
 
 class User extends Authenticatable
 {
@@ -44,4 +45,14 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    /**
+     * Set new factory.
+     *
+     * @return UserFactory
+     */
+    protected static function newFactory()
+    {
+        return new UserFactory();
+    }
 }
