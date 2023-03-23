@@ -2,7 +2,6 @@
 
 namespace Modules\Common\Providers;
 
-use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
 use Modules\Common\Console\Commands\MakeModule;
 use Modules\Common\Responses\JsonResponse;

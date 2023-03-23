@@ -30,7 +30,7 @@ class UserRepoEloquent
     /**
      * Find user by email.
      *
-     * @param  string  $email
+     * @param string $email
      *
      * @return User
      */
@@ -42,7 +42,7 @@ class UserRepoEloquent
     /**
      * Find user by id.
      *
-     * @param  int  $id
+     * @param int $id
      *
      * @return bool|mixed|null
      */

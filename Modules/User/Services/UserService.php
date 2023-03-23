@@ -45,7 +45,7 @@ class UserService
     /**
      * Delete user by id.
      *
-     * @param  int  $id
+     * @param int $id
      *
      * @return void
      */
