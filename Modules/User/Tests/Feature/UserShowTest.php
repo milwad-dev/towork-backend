@@ -22,8 +22,13 @@ test('test admin user can show special user by id', function () {
 
     $response = actingAs($adminUser)->getJson(route('users.show', $implcitUser->id));
     $response->assertOk();
-    $response->assertJsonStructure();
-    $response->assertJsonCount(1, 'data');
+    $response->assertJsonStructure([
+        'data' => [
+            'name',
+            'email',
+            'phone',
+        ],
+    ]);
 
     // DB asserts
     assertDatabaseHas('users', ['name' => $adminUser->name]);
