@@ -4,7 +4,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Modules\User\Models\User;
 use Tests\TestCase;
 
-use function Pest\Laravel\{actingAs, assertDatabaseCount, assertDatabaseHas};
+use function Pest\Laravel\{actingAs, assertDatabaseCount, assertDatabaseHas, getJson};
 
 /*
  * Use refresh database for truncate database for each test.
@@ -34,4 +34,15 @@ test('test admin user can show special user by id', function () {
     assertDatabaseHas('users', ['name' => $adminUser->name]);
     assertDatabaseHas('users', ['name' => $implcitUser->name]);
     assertDatabaseCount('users', 2);
+});
+
+test('test guest user can not show special user by id', function () {
+    $implcitUser = User::factory()->create();
+
+    $response = getJson(route('users.show', $implcitUser->id));
+    $response->assertUnauthorized();
+
+    // DB asserts
+    assertDatabaseHas('users', ['name' => $implcitUser->name]);
+    assertDatabaseCount('users', 1);
 });
