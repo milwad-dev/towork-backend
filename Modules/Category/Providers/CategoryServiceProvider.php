@@ -19,7 +19,7 @@ class CategoryServiceProvider extends ServiceProvider
     }
 
     /**
-     *  Load route files.
+     * Load route files.
      *
      * @return void
      */

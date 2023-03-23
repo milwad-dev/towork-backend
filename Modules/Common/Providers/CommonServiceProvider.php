@@ -2,7 +2,7 @@
 
 namespace Modules\Common\Providers;
 
-use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
 use Modules\Common\Console\Commands\MakeModule;
 use Modules\Common\Responses\JsonResponse;
@@ -18,6 +18,11 @@ class CommonServiceProvider extends ServiceProvider
     {
         $this->bindJsonResponseFacade();
         $this->registerCommands();
+    }
+
+    public function boot()
+    {
+        $this->routeMacro();
     }
 
     /**
@@ -40,5 +45,19 @@ class CommonServiceProvider extends ServiceProvider
     private function registerCommands(): void
     {
         $this->commands(MakeModule::class);
+    }
+
+    /**
+     * Add macro-ability to route.
+     *
+     * @return void
+     */
+    private function routeMacro(): void
+    {
+        Route::macro('apiRoute', function (string $route) {
+            $this->middleware('api')
+                ->prefix('api/' . config('app.version'))
+                ->group($route);
+        });
     }
 }
