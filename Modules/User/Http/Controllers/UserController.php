@@ -5,6 +5,7 @@ namespace Modules\User\Http\Controllers;
 use Modules\Common\Http\Controllers\Controller;
 use Modules\User\Http\Requests\UserUpdateRequest;
 use Modules\User\Http\Resources\UserCollectResource;
+use Modules\User\Http\Resources\UserSingleResource;
 use Modules\User\Repositories\UserRepoEloquent;
 use Modules\User\Services\UserService;
 use Symfony\Component\HttpFoundation\Response;
@@ -34,11 +35,13 @@ class UserController extends Controller
      *
      * @param int $id
      *
-     * @return \Illuminate\Http\Response
+     * @return UserSingleResource
      */
-    public function show($id)
+    public function show(int $id)
     {
-        //
+        $user = $this->userRepoEloquent->findById($id);
+        
+        return new UserSingleResource($user);
     }
 
     /**

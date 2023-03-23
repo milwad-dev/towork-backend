@@ -41,6 +41,18 @@ class UserRepoEloquent
         $model->update($data);
     }
 
+    /**
+     * Find user by id.
+     *
+     * @param  int  $id
+     *
+     * @return bool|mixed|null
+     */
+    public function findById(int $id)
+    {
+        return $this->query()->findOrFail($id);
+    }
+
     public function destroy(int $id)
     {
         $this->query()->where('id', $id)->delete();
