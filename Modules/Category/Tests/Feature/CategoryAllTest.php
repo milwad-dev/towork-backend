@@ -34,7 +34,7 @@ test('test guest user can see all own categories', function () {
 });
 
 test('test field of categories table is correct', function () {
-    $has = Schema::hasColumns((new Category)->getTable(), [
+    $has = Schema::hasColumns((new Category())->getTable(), [
         'id', 'title', 'user_id', 'created_at', 'updated_at',
     ]);
 
