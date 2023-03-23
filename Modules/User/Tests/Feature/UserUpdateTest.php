@@ -4,11 +4,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Modules\User\Models\User;
 use Tests\TestCase;
 
-use function Pest\Laravel\{actingAs, assertDatabaseCount, assertDatabaseMissing};
-
-// Methods
-
-// DB Asserts
+use function Pest\Laravel\{actingAs, assertDatabaseCount, assertDatabaseMissing, assertDatabaseHas};
 
 /*
  * Use refresh database for truncate database for each test.
@@ -29,8 +25,8 @@ test('test admin user can update user', function () {
     $data['password'] = fake()->password.'Aa1@';
 
     $response = actingAs($user)->patchJson(route('users.update', $updateUser->id), $data);
-
     $response->assertJson(['status' => 'success']);
+
     // DB asserts
     assertDatabaseCount('users', 2);
     assertDatabaseMissing('users', $data);
@@ -39,18 +35,17 @@ test('test admin user can update user', function () {
 test('test admin user can update user when password is not filled', function () {
     $user = User::factory()->create();
 
-    $updateUser = User::factory()->create();
-
     $data = User::factory()->make()->toArray();
     $data['password'] = null;
 
-    $response = actingAs($user)->patchJson(route('users.update', $updateUser->id), $data);
+    $response = actingAs($user)->patchJson(route('users.update', User::factory()->create()->id), $data);
+    $response->assertJson(['status' => 'success']);
 
     $updatedUser = $user->fresh();
     $this->assertEquals($user->password, $updatedUser['password']);
-    $response->assertJson(['status' => 'success']);
 
     // DB asserts
     assertDatabaseCount('users', 2);
     assertDatabaseMissing('users', $data);
+    assertDatabaseHas('users', ['name' => $data['name']]);
 });
