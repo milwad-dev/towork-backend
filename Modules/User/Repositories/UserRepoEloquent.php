@@ -18,11 +18,23 @@ class UserRepoEloquent
         return new User();
     }
 
+    /**
+     * Get the latest users.
+     *
+     * @return Model|User
+     */
     public function getLatest()
     {
         return $this->query()->latest();
     }
 
+    /**
+     * Find user by email.
+     *
+     * @param  string  $email
+     *
+     * @return User
+     */
     public function findByEmail(string $email)
     {
         return $this->query()->where('email', $email)->firstOrFail();
