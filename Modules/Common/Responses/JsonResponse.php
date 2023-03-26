@@ -9,13 +9,13 @@ class JsonResponse
     /**
      * Return success json response.
      *
-     * @param array|string|int|object $data
+     * @param array|string|int $data
      * @param array                   $headers
      * @param int                     $options
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function successResponse(array|string|int|object $data, array $headers = [], int $options = 0)
+    public function successResponse(array|string|int $data, array $headers = [], int $options = 0)
     {
         return response()->json(data: $data, headers: $headers, options: $options);
     }
@@ -23,13 +23,13 @@ class JsonResponse
     /**
      * Return forbidden json response.
      *
-     * @param array|string|int|object $data
+     * @param array|string|int $data
      * @param array                   $headers
      * @param int                     $options
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function forbiddenResponse(array|string|int|object $data, array $headers = [], int $options = 0)
+    public function forbiddenResponse(array|string|int $data, array $headers = [], int $options = 0)
     {
         return response()->json(
             data: $data,
@@ -42,13 +42,13 @@ class JsonResponse
     /**
      * Return no-content json response.
      *
-     * @param array|string|int|object $data
+     * @param array|string|int $data
      * @param array                   $headers
      * @param int                     $options
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function noContentResponse(array|string|int|object $data, array $headers = [], int $options = 0)
+    public function noContentResponse(array|string|int $data, array $headers = [], int $options = 0)
     {
         return response()->json(
             data: $data,
