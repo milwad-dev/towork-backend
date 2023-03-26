@@ -3,6 +3,7 @@
 namespace Modules\Auth\Http\Controllers\Verify\Email;
 
 use Illuminate\Http\Request;
+use Modules\Auth\Jobs\SendCodeEmailVerifyJob;
 use Modules\Common\Http\Controllers\Controller;
 use Modules\Common\Responses\JsonResponseFacade;
 
@@ -43,6 +44,6 @@ class EmailVerifyController extends Controller
      */
     private function sendVerifyEmail()
     {
-
+        SendCodeEmailVerifyJob::dispatch(, auth()->user()->email);
     }
 }

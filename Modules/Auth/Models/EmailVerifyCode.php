@@ -4,9 +4,8 @@ namespace Modules\Auth\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Modules\Auth\Database\Factories\ResetCodePasswordFactory;
 
-class ResetCodePassword extends Model
+class EmailVerifyCode extends Model
 {
     use HasFactory;
 
