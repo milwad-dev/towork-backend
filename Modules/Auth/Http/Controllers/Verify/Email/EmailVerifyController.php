@@ -37,4 +37,12 @@ class EmailVerifyController extends Controller
     public function resend()
     {
     }
+
+    /**
+     * @return void
+     */
+    private function sendVerifyEmail()
+    {
+
+    }
 }
