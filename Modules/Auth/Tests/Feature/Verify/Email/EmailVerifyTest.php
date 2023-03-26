@@ -14,7 +14,7 @@ uses(TestCase::class);
 test('test user verify account by email', function () {
     $user = User::factory()->create(['email_verified_at' => null]);
 
-    $response = actingAs($user)->postJson(route('auth.verify.email'));
+    $response = actingAs($user)->postJson(route('auth.email.request'));
     $response->assertOk();
     $response->assertJsonStructure([
         'data' => [

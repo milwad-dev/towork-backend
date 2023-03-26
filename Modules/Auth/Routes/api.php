@@ -22,6 +22,7 @@ Route::group(['middleware' => ['guest:sanctum', 'throttle:5,1'], 'as' => 'auth.'
 
     // Verify
     $router->group(['middleware' => 'auth:sanctum', 'withoutMiddleware' => 'guest'], static function ($routerGroup) {
+        $routerGroup->post('email/verify/request', [EmailVerifyController::class, 'request'])->name('email.request');
         $routerGroup->post('email/verify', [EmailVerifyController::class, 'verify'])->name('email.verify');
         $routerGroup->post('email/verify/resend', [EmailVerifyController::class, 'resend'])->name('email.verify.resend');
     });
