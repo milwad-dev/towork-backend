@@ -4,6 +4,7 @@ namespace Modules\Auth\Http\Controllers\Verify\Email;
 
 use Illuminate\Http\Request;
 use Modules\Auth\Jobs\SendCodeEmailVerifyJob;
+use Modules\Auth\Services\EmailVerifyService;
 use Modules\Common\Http\Controllers\Controller;
 use Modules\Common\Responses\JsonResponseFacade;
 
@@ -40,10 +41,16 @@ class EmailVerifyController extends Controller
     }
 
     /**
+     * Send email verify.
+     *
      * @return void
+     *
+     * @throws \Exception
      */
     private function sendVerifyEmail()
     {
-        SendCodeEmailVerifyJob::dispatch(, auth()->user()->email);
+        $code = resolve(EmailVerifyService::class)->generateCode();
+
+        SendCodeEmailVerifyJob::dispatch($code, auth()->user()->email);
     }
 }

@@ -4,6 +4,7 @@ namespace Modules\Auth\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Modules\Auth\Database\Factories\EmailVerifyCodeFactory;
 
 class EmailVerifyCode extends Model
 {
@@ -23,8 +24,13 @@ class EmailVerifyCode extends Model
      */
     public $timestamps = false;
 
-    public static function factory(): ResetCodePasswordFactory
+    /**
+     * Set factory.
+     *
+     * @return EmailVerifyCodeFactory
+     */
+    public static function factory(): EmailVerifyCodeFactory
     {
-        return new ResetCodePasswordFactory();
+        return new EmailVerifyCodeFactory();
     }
 }
