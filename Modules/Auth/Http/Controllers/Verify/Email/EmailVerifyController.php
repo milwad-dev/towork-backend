@@ -10,14 +10,23 @@ class EmailVerifyController extends Controller
 {
     public function request(Request $request)
     {
-        return $request->user()->hasVerifiedEmail() && $request->expectsJson() ?
-            JsonResponseFacade::forbiddenResponse([
+        if ($request->user()->hasVerifiedEmail()) {
+            return JsonResponseFacade::forbiddenResponse([
                 'data' => [
                     'message' => 'You already verified'
                 ],
                 'status' => 'error'
-            ]) :
-            $this->sendVerifyEmail();
+            ]);
+        }
+
+        $this->sendVerifyEmail();
+
+        return JsonResponseFacade::successResponse([
+            'data' => [
+                'message' => 'Email verify send successfully'
+            ],
+            'status' => 'success'
+        ]);
     }
 
     public function verify()
