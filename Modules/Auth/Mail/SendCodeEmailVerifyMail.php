@@ -18,7 +18,7 @@ class SendCodeEmailVerifyMail extends Mailable
      *
      * @return void
      */
-    public function __construct(public int $code)
+    public function __construct(public string $code)
     {
     }
 

@@ -24,7 +24,7 @@ class SendCodeEmailVerifyJob implements ShouldQueue
      */
     public function __construct(
         public string $email,
-        public int $code
+        public string $code
     ) {
     }
 
