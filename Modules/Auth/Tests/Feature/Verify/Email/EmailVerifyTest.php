@@ -5,6 +5,7 @@ namespace Modules\Auth\Tests\Feature\Password;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Modules\User\Models\User;
 use Tests\TestCase;
+
 use function Pest\Laravel\{actingAs};
 
 uses(RefreshDatabase::class);
@@ -17,8 +18,8 @@ test('test user verify account by email', function () {
     $response->assertOk();
     $response->assertJsonStructure([
         'data' => [
-            'message'
+            'message',
         ],
-        'status'
+        'status',
     ]);
 });

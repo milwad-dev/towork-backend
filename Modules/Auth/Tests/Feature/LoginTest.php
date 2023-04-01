@@ -4,6 +4,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Hash;
 use Modules\User\Models\User;
 use Tests\TestCase;
+
 use function Pest\Faker\fake;
 use function Pest\Laravel\assertAuthenticated;
 use function Pest\Laravel\assertDatabaseCount;
