@@ -20,18 +20,18 @@ class EmailVerifyController extends Controller
      *
      * @param Request $request
      *
-     * @return \Illuminate\Http\JsonResponse
-     *
      * @throws \Exception
+     *
+     * @return \Illuminate\Http\JsonResponse
      */
     public function request(Request $request)
     {
         if ($request->user()->hasVerifiedEmail()) {
             return JsonResponseFacade::forbiddenResponse([ // Already status code is 403
                 'data' => [
-                    'message' => 'You already verified'
+                    'message' => 'You already verified',
                 ],
-                'status' => 'error'
+                'status' => 'error',
             ]);
         }
 
@@ -39,9 +39,9 @@ class EmailVerifyController extends Controller
 
         return JsonResponseFacade::successResponse([
             'data' => [
-                'message' => 'Email verify send successfully'
+                'message' => 'Email verify send successfully',
             ],
-            'status' => 'success'
+            'status' => 'success',
         ]);
     }
 
@@ -76,9 +76,9 @@ class EmailVerifyController extends Controller
     /**
      * Resend email verify code.
      *
-     * @return Application|ResponseFactory|\Illuminate\Foundation\Application|\Illuminate\Http\Response
-     *
      * @throws \Exception
+     *
+     * @return Application|ResponseFactory|\Illuminate\Foundation\Application|\Illuminate\Http\Response
      */
     public function resend()
     {
@@ -87,9 +87,9 @@ class EmailVerifyController extends Controller
         if (is_null($verifyCode)) {
             return response([
                 'data' => [
-                    'message' => "You aren't need to verify!!!"
+                    'message' => "You aren't need to verify!!!",
                 ],
-                'status' => 'error'
+                'status' => 'error',
             ], Response::HTTP_FORBIDDEN);
         }
 
@@ -98,18 +98,18 @@ class EmailVerifyController extends Controller
 
         return response([
             'data' => [
-                'message' => 'Verification code sent successfully.'
+                'message' => 'Verification code sent successfully.',
             ],
-            'status' => 'success'
+            'status' => 'success',
         ]);
     }
 
     /**
      * Send email verify.
      *
-     * @return void
-     *
      * @throws \Exception
+     *
+     * @return void
      */
     private function sendVerifyEmail()
     {
