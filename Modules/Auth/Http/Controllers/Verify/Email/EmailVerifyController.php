@@ -6,13 +6,21 @@ use Illuminate\Http\Request;
 use Modules\Auth\Jobs\SendCodeEmailVerifyJob;
 use Modules\Auth\Repositories\VerifyCodeRepoEloquent;
 use Modules\Auth\Services\EmailVerifyService;
-use Modules\Auth\Services\ResetPasswordService;
 use Modules\Common\Http\Controllers\Controller;
 use Modules\Common\Responses\JsonResponseFacade;
 use Modules\User\Repositories\UserRepoEloquent;
 
 class EmailVerifyController extends Controller
 {
+    /**
+     * Send verify email if user is not verify.
+     *
+     * @param Request $request
+     *
+     * @return \Illuminate\Http\JsonResponse
+     *
+     * @throws \Exception
+     */
     public function request(Request $request)
     {
         if ($request->user()->hasVerifiedEmail()) {
@@ -34,6 +42,13 @@ class EmailVerifyController extends Controller
         ]);
     }
 
+    /**
+     * Verify user.
+     *
+     * @param Request $request
+     *
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Foundation\Application|\Illuminate\Http\Response
+     */
     public function verify(Request $request)
     {
         $verifyCode = resolve(VerifyCodeRepoEloquent::class)->findByCode($request->code); // Find code
@@ -56,8 +71,14 @@ class EmailVerifyController extends Controller
         ]);
     }
 
+    /**
+     * Resend email verify code.
+     *
+     * @return void
+     */
     public function resend()
     {
+
     }
 
     /**

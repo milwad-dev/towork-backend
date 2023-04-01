@@ -19,4 +19,17 @@ class VerifyCodeRepoEloquent
             ->where('code', $code)
             ->firstOrFail();
     }
+
+    /**
+     * Get last verify code from login user.
+     *
+     * @return \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Eloquent\Model|object|null
+     */
+    public function getLastVerifyCodeFromUser()
+    {
+        return EmailVerifyCode::query()
+            ->where('email', auth()->user()->email)
+            ->latest()
+            ->first();
+    }
 }
