@@ -4,16 +4,19 @@ namespace Modules\Auth\Http\Controllers\Verify\Email;
 
 use Illuminate\Http\Request;
 use Modules\Auth\Jobs\SendCodeEmailVerifyJob;
+use Modules\Auth\Repositories\VerifyCodeRepoEloquent;
 use Modules\Auth\Services\EmailVerifyService;
+use Modules\Auth\Services\ResetPasswordService;
 use Modules\Common\Http\Controllers\Controller;
 use Modules\Common\Responses\JsonResponseFacade;
+use Modules\User\Repositories\UserRepoEloquent;
 
 class EmailVerifyController extends Controller
 {
     public function request(Request $request)
     {
         if ($request->user()->hasVerifiedEmail()) {
-            return JsonResponseFacade::forbiddenResponse([
+            return JsonResponseFacade::forbiddenResponse([ // Already status code is 403
                 'data' => [
                     'message' => 'You already verified'
                 ],
@@ -31,9 +34,26 @@ class EmailVerifyController extends Controller
         ]);
     }
 
-    public function verify()
+    public function verify(Request $request)
     {
-        // TODO: Implement __invoke() method.
+        $verifyCode = resolve(VerifyCodeRepoEloquent::class)->findByCode($request->code); // Find code
+
+        if ($verifyCode->created_at > now()->addHour()) { // Check code is expire
+            return resolve(EmailVerifyService::class)->deleteEmailVerifyCodeWithReturnResponse($verifyCode);
+        }
+
+        $user = resolve(UserRepoEloquent::class)->findByEmail($verifyCode->email); // Find user
+        $user->email_verified_at = now();
+        $user->save();
+
+        $verifyCode->delete(); // Delete verify code
+
+        return response([
+            'data' => [
+                'message' => 'You have been successfully verified!',
+            ],
+            'status' => 'success',
+        ]);
     }
 
     public function resend()
