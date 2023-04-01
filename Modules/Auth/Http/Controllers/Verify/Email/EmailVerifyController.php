@@ -2,6 +2,8 @@
 
 namespace Modules\Auth\Http\Controllers\Verify\Email;
 
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Http\Request;
 use Modules\Auth\Jobs\SendCodeEmailVerifyJob;
 use Modules\Auth\Repositories\VerifyCodeRepoEloquent;
@@ -9,6 +11,7 @@ use Modules\Auth\Services\EmailVerifyService;
 use Modules\Common\Http\Controllers\Controller;
 use Modules\Common\Responses\JsonResponseFacade;
 use Modules\User\Repositories\UserRepoEloquent;
+use Symfony\Component\HttpFoundation\Response;
 
 class EmailVerifyController extends Controller
 {
@@ -74,11 +77,32 @@ class EmailVerifyController extends Controller
     /**
      * Resend email verify code.
      *
-     * @return void
+     * @return Application|ResponseFactory|\Illuminate\Foundation\Application|\Illuminate\Http\Response
+     *
+     * @throws \Exception
      */
     public function resend()
     {
+        $verifyCode = resolve(VerifyCodeRepoEloquent::class)->getLastVerifyCodeFromUser(); // Find code
 
+        if (is_null($verifyCode)) {
+            return response([
+                'data' => [
+                    'message' => "You aren't need to verify!!!"
+                ],
+                'status' => 'error'
+            ], Response::HTTP_FORBIDDEN);
+        }
+
+        $verifyCode->delete(); // Delete verify code
+        $this->sendVerifyEmail();
+
+        return response([
+            'data' => [
+                'message' => 'Verification code sent successfully.'
+            ],
+            'status' => 'success'
+        ]);
     }
 
     /**
