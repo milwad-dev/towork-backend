@@ -23,7 +23,7 @@ class SendCodeEmailVerifyJob implements ShouldQueue
      * @return void
      */
     public function __construct(
-        public string $email,
+        public mixed $user,
         public string $code
     ) {
     }
@@ -35,6 +35,6 @@ class SendCodeEmailVerifyJob implements ShouldQueue
      */
     public function handle()
     {
-        Mail::to($this->email)->send(new SendCodeEmailVerifyMail($this->code));
+        Mail::to($this->user)->send(new SendCodeEmailVerifyMail($this->code));
     }
 }

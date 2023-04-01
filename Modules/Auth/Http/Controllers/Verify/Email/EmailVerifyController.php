@@ -115,6 +115,6 @@ class EmailVerifyController extends Controller
     {
         $code = resolve(EmailVerifyService::class)->generateCode();
 
-        SendCodeEmailVerifyJob::dispatch($code, auth()->user()->email);
+        SendCodeEmailVerifyJob::dispatch(auth()->user(), $code);
     }
 }
