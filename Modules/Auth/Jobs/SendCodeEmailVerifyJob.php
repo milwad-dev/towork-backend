@@ -9,7 +9,6 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Mail;
 use Modules\Auth\Mail\SendCodeEmailVerifyMail;
-use Modules\Auth\Mail\SendCodeResetPasswordMail;
 
 class SendCodeEmailVerifyJob implements ShouldQueue
 {
