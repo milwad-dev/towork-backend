@@ -61,8 +61,7 @@ class EmailVerifyController extends Controller
         }
 
         $user = resolve(UserRepoEloquent::class)->findByEmail($verifyCode->email); // Find user
-        $user->email_verified_at = now();
-        $user->save();
+        $user->markEmailAsVerified(); // Verify user
 
         $verifyCode->delete(); // Delete verify code
 
