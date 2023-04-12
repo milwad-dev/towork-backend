@@ -51,7 +51,7 @@ class CategoryController extends Controller
     /**
      * Find category by id and return json response.
      *
-     * @param  int $id
+     * @param int $id
      *
      * @return JsonResponse
      */
@@ -61,9 +61,9 @@ class CategoryController extends Controller
 
         return response()->json([
             'data' => [
-                'category' => $category
+                'category' => $category,
             ],
-            'status' => 'success'
+            'status' => 'success',
         ]);
     }
 

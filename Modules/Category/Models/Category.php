@@ -36,7 +36,7 @@ class Category extends Model
      */
     protected static function booted()
     {
-        static::addGlobalScope(new FilterUserIdScope);
+        static::addGlobalScope(new FilterUserIdScope());
     }
 
     // Relations
