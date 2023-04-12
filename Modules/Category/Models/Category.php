@@ -5,6 +5,7 @@ namespace Modules\Category\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Modules\Category\Database\Factories\CategoryFactory;
+use Modules\Category\Scopes\FilterUserIdScope;
 use Modules\User\Models\User;
 
 class Category extends Model
@@ -27,6 +28,16 @@ class Category extends Model
      * @var string[]
      */
     protected $fillable = ['title', 'user_id'];
+
+    /**
+     * The "booted" method of the model.
+     *
+     * @return void
+     */
+    protected static function booted()
+    {
+        static::addGlobalScope(new FilterUserIdScope);
+    }
 
     // Relations
 

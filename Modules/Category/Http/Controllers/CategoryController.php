@@ -19,7 +19,7 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $categories = resolve(CategoryRepoEloquent::class)->getLatest((int) auth()->id())->get();
+        $categories = resolve(CategoryRepoEloquent::class)->getLatest()->get();
 
         return response()->json([
             'data' => [

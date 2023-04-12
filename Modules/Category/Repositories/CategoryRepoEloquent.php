@@ -11,15 +11,12 @@ class CategoryRepoEloquent
     /**
      * Get the latest categories with filter by user_id.
      *
-     * @param int $user_id
-     *
      * @return Builder
      */
-    public function getLatest(int $user_id)
+    public function getLatest()
     {
         return Category::query()
             ->with('user')
-            ->where('user_id', $user_id)
             ->latest();
     }
 
