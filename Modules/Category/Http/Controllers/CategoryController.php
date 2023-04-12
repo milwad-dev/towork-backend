@@ -48,6 +48,18 @@ class CategoryController extends Controller
         ]);
     }
 
+    public function show(int $id)
+    {
+        $category = resolve(CategoryRepoEloquent::class)->findById($id);
+
+        return response()->json([
+            'data' => [
+                'category' => $category
+            ],
+            'status' => 'success'
+        ]);
+    }
+
     /**
      * Update category by request and id.
      *
