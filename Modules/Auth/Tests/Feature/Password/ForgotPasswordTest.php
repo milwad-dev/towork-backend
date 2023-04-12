@@ -6,7 +6,6 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Modules\Auth\Models\ResetCodePassword;
 use Modules\User\Models\User;
 use Tests\TestCase;
-
 use function Pest\Laravel\actingAs;
 use function Pest\Laravel\assertDatabaseCount;
 use function Pest\Laravel\assertDatabaseMissing;
