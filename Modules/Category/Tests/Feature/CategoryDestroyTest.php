@@ -20,7 +20,7 @@ uses(TestCase::class);
 
 test('test login user can delete category', function () {
     $user = User::factory()->create();
-    $category = Category::factory()->create();
+    $category = Category::factory()->create(['user_id' => $user->id]);
 
     actingAs($user)->deleteJson(route('categories.destroy', $category->id))->assertNoContent();
 
