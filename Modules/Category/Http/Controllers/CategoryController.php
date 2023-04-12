@@ -48,6 +48,13 @@ class CategoryController extends Controller
         ]);
     }
 
+    /**
+     * Find category by id and return json response.
+     *
+     * @param  int $id
+     *
+     * @return JsonResponse
+     */
     public function show(int $id)
     {
         $category = resolve(CategoryRepoEloquent::class)->findById($id);
