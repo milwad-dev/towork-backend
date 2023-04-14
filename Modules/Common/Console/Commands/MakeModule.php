@@ -4,14 +4,14 @@ namespace Modules\Common\Console\Commands;
 
 use File;
 use Illuminate\Console\Command;
-use Modules\Common\Console\Commands\Traits\MakeModuleTraits\{ServiceProviderTrait, RepositoryTrait, ServiceTrait};
+use Modules\Common\Console\Commands\Traits\MakeModuleTraits\{ServiceProviderTrait, RepositoryTrait, ServiceTrait, RouteTrait};
 
 class MakeModule extends Command
 {
     use ServiceProviderTrait;
     use RepositoryTrait;
     use ServiceTrait;
-    use RepositoryTrait;
+    use RouteTrait;
 
     /**
      * The name and signature of the console command.
@@ -45,17 +45,6 @@ class MakeModule extends Command
     public function handle()
     {
         $argument = $this->argument('name');
-        $router = '$router';
-
-        // -------------------------------------------------------------------------------------
-        $route = "<?php
-
-use Illuminate\Support\Facades\Route;
-
-Route::group([], function ($router) {
-
-});
-        ";
 
         File::makeDirectory('Modules/'.$argument);
 
@@ -80,7 +69,7 @@ Route::group([], function ($router) {
 
         // routes
         File::makeDirectory('Modules/'.$argument.'/routes');
-        File::put('Modules/'.$argument.'/routes/'.strtolower($argument).'_routes.php', $route);
+        File::put('Modules/'.$argument.'/routes/'.strtolower($argument).'_routes.php', $this->getRouteBodyData($argument));
 
         // Services
         File::makeDirectory('Modules/'.$argument.'/Services');
