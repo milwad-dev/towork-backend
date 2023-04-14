@@ -7,6 +7,8 @@ use Illuminate\Console\Command;
 
 class MakeModule extends Command
 {
+    use \Modules\Common\Console\Commands\Traits\MakeModuleTraits\ServiceProviderTrait;
+
     /**
      * The name and signature of the console command.
      *
@@ -40,8 +42,6 @@ class MakeModule extends Command
     {
         $argument = $this->argument('name');
         $router = '$router';
-
-        $pathServiceProvider = $this->pathServiceProvider($argument);
 
         // -------------------------------------------------------------------------------------
         $pathRepo = "<?php
@@ -127,7 +127,7 @@ class {$argument}Service implements ServicesInterface
 
         // Providers
         File::makeDirectory('Modules/'.$argument.'/Providers');
-        File::put('Modules/'.$argument.'/Providers/'.$argument.'ServiceProvider.php', $pathServiceProvider);
+        File::put('Modules/'.$argument.'/Providers/'.$argument.'ServiceProvider.php', $this->pathServiceProvider($argument));
 
         // Repositories
         File::makeDirectory('Modules/'.$argument.'/Repositories');
@@ -153,28 +153,5 @@ class {$argument}Service implements ServicesInterface
         File::makeDirectory('Modules/'.$argument.'/Resources/Views');
 
         $this->info("Your Module $argument Make Successfully");
-    }
-
-    private function pathServiceProvider(string $argument)
-    {
-        return "<?php
-
-namespace Modules\\$argument\Providers;
-
-use Illuminate\Support\ServiceProvider;
-use Illuminate\Support\Facades\Route;
-
-class {$argument}ServiceProvider extends ServiceProvider
-{
-    public $/namespace = 'Modules\\$argument\Http\Controllers';
-
-    public function register()
-    {
-        $/this->loadMigrationsFrom(__DIR__ . '/../Database/Migrations');
-        $/this->loadViewsFrom(__DIR__ . '/../Resources/Views/', '{$argument}');
-        Route::middleware('web')->namespace($/this->namespace)->group(__DIR__ . '/../routes/{$argument}_routes.php');
-    }
-}
-";
     }
 }
