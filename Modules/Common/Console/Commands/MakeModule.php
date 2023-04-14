@@ -41,25 +41,8 @@ class MakeModule extends Command
         $argument = $this->argument('name');
         $router = '$router';
 
-        $pathServiceProvider = "<?php
+        $pathServiceProvider = $this->pathServiceProvider($argument);
 
-namespace Modules\\$argument\Providers;
-
-use Illuminate\Support\ServiceProvider;
-use Illuminate\Support\Facades\Route;
-
-class {$argument}ServiceProvider extends ServiceProvider
-{
-    public $/namespace = 'Modules\\$argument\Http\Controllers';
-
-    public function register()
-    {
-        $/this->loadMigrationsFrom(__DIR__ . '/../Database/Migrations');
-        $/this->loadViewsFrom(__DIR__ . '/../Resources/Views/', '{$argument}');
-        Route::middleware('web')->namespace($/this->namespace)->group(__DIR__ . '/../routes/{$argument}_routes.php');
-    }
-}
-";
         // -------------------------------------------------------------------------------------
         $pathRepo = "<?php
 
@@ -169,6 +152,29 @@ class {$argument}Service implements ServicesInterface
         File::makeDirectory('Modules/'.$argument.'/Resources');
         File::makeDirectory('Modules/'.$argument.'/Resources/Views');
 
-        $this->info("Your Module {$argument} Make Successfully");
+        $this->info("Your Module $argument Make Successfully");
+    }
+
+    private function pathServiceProvider(string $argument)
+    {
+        return "<?php
+
+namespace Modules\\$argument\Providers;
+
+use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Facades\Route;
+
+class {$argument}ServiceProvider extends ServiceProvider
+{
+    public $/namespace = 'Modules\\$argument\Http\Controllers';
+
+    public function register()
+    {
+        $/this->loadMigrationsFrom(__DIR__ . '/../Database/Migrations');
+        $/this->loadViewsFrom(__DIR__ . '/../Resources/Views/', '{$argument}');
+        Route::middleware('web')->namespace($/this->namespace)->group(__DIR__ . '/../routes/{$argument}_routes.php');
+    }
+}
+";
     }
 }
