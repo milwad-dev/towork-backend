@@ -4,11 +4,13 @@ namespace Modules\Common\Console\Commands;
 
 use File;
 use Illuminate\Console\Command;
-use Modules\Common\Console\Commands\Traits\MakeModuleTraits\{ServiceProviderTrait, RepositoryTrait};
+use Modules\Common\Console\Commands\Traits\MakeModuleTraits\{ServiceProviderTrait, RepositoryTrait, ServiceTrait};
 
 class MakeModule extends Command
 {
     use ServiceProviderTrait;
+    use RepositoryTrait;
+    use ServiceTrait;
     use RepositoryTrait;
 
     /**
@@ -55,39 +57,6 @@ Route::group([], function ($router) {
 });
         ";
 
-        $service = "<?php
-
-namespace Modules\\{$argument}\Services;
-
-use Modules\Common\Contracts\Interface\ServicesInterface;
-use Modules\\{$argument}\Models\\{$argument};
-use Modules\Common\Repositories\CommonRepoEloquent;
-
-class {$argument}Service implements ServicesInterface
-{
-    private \$class = {$argument}::class;
-
-    public function store(\$request)
-    {
-        return \$this->query()->create([
-
-        ]);
-    }
-
-    public function update(\$request, \$id)
-    {
-         return \$this->query()->whereId(\$id)->update([
-
-        ]);
-    }
-
-    private function query()
-    {
-        return CommonRepoEloquent::query(\$this->class);
-    }
-}
-        ";
-
         File::makeDirectory('Modules/'.$argument);
 
         // Databases
@@ -115,7 +84,7 @@ class {$argument}Service implements ServicesInterface
 
         // Services
         File::makeDirectory('Modules/'.$argument.'/Services');
-        File::put('Modules/'.$argument.'/Services/'.$argument.'Service.php', $service);
+        File::put('Modules/'.$argument.'/Services/'.$argument.'Service.php', $this->getServiceBodyData($argument));
 
         // Views
         File::makeDirectory('Modules/'.$argument.'/Resources');
