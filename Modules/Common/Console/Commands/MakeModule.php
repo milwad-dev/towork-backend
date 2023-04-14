@@ -4,7 +4,10 @@ namespace Modules\Common\Console\Commands;
 
 use File;
 use Illuminate\Console\Command;
-use Modules\Common\Console\Commands\Traits\MakeModuleTraits\{ServiceProviderTrait, RepositoryTrait, ServiceTrait, RouteTrait};
+use Modules\Common\Console\Commands\Traits\MakeModuleTraits\{RepositoryTrait,
+    RouteTrait,
+    ServiceProviderTrait,
+    ServiceTrait};
 
 class MakeModule extends Command
 {
