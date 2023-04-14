@@ -4,10 +4,12 @@ namespace Modules\Common\Console\Commands;
 
 use File;
 use Illuminate\Console\Command;
+use Modules\Common\Console\Commands\Traits\MakeModuleTraits\{ServiceProviderTrait, RepositoryTrait};
 
 class MakeModule extends Command
 {
-    use \Modules\Common\Console\Commands\Traits\MakeModuleTraits\ServiceProviderTrait;
+    use ServiceProviderTrait;
+    use RepositoryTrait;
 
     /**
      * The name and signature of the console command.
@@ -44,39 +46,6 @@ class MakeModule extends Command
         $router = '$router';
 
         // -------------------------------------------------------------------------------------
-        $pathRepo = "<?php
-
-namespace Modules\\$argument\Repositories;
-
-use Modules\Common\Contracts\Interface\RepositoriesInterface;
-use Modules\Common\Repositories\CommonRepoEloquent;
-use Modules\\$argument\Models\\$argument;
-
-class {$argument}Repo implements RepositoriesInterface
-{
-    private \$class = $argument::class;
-
-    public function index()
-    {
-
-    }
-
-    public function findById(\$id)
-    {
-
-    }
-
-    public function delete(\$id)
-    {
-
-    }
-
-    private function query()
-    {
-        return CommonRepoEloquent::query(\$this->class);
-    }
-}
-";
         $route = "<?php
 
 use Illuminate\Support\Facades\Route;
@@ -131,7 +100,7 @@ class {$argument}Service implements ServicesInterface
 
         // Repositories
         File::makeDirectory('Modules/'.$argument.'/Repositories');
-        File::put('Modules/'.$argument.'/Repositories/'.$argument.'Repo.php', $pathRepo);
+        File::put('Modules/'.$argument.'/Repositories/'.$argument.'Repo.php', $this->getRepoBodyData($argument));
 
         // Http
         File::makeDirectory('Modules/'.$argument.'/Http');
