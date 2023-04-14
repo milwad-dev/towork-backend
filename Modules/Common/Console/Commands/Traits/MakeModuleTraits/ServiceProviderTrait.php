@@ -4,7 +4,7 @@ namespace Modules\Common\Console\Commands\Traits\MakeModuleTraits;
 
 trait ServiceProviderTrait
 {
-    private function pathServiceProvider(string $argument)
+    private function getServiceProviderBodyData(string $argument)
     {
         return "<?php
 

@@ -54,7 +54,7 @@ class MakeModule extends Command
 
         // Providers
         File::makeDirectory('Modules/'.$argument.'/Providers');
-        File::put('Modules/'.$argument.'/Providers/'.$argument.'ServiceProvider.php', $this->pathServiceProvider($argument));
+        File::put('Modules/'.$argument.'/Providers/'.$argument.'ServiceProvider.php', $this->getServiceProviderBodyData($argument));
 
         // Repositories
         File::makeDirectory('Modules/'.$argument.'/Repositories');
@@ -69,7 +69,7 @@ class MakeModule extends Command
 
         // routes
         File::makeDirectory('Modules/'.$argument.'/routes');
-        File::put('Modules/'.$argument.'/routes/'.strtolower($argument).'_routes.php', $this->getRouteBodyData($argument));
+        File::put('Modules/'.$argument.'/routes/'.strtolower($argument).'_routes.php', $this->getRouteBodyData());
 
         // Services
         File::makeDirectory('Modules/'.$argument.'/Services');
