@@ -213,6 +213,7 @@ return [
         Modules\Common\Providers\CommonServiceProvider::class,
         Modules\Auth\Providers\AuthServiceProvider::class,
         Modules\Category\Providers\CategoryServiceProvider::class,
+        Modules\RolePermission\Providers\RolePermissionServiceProvider::class,
 
         /*
          * Package Service Providers...

@@ -32,7 +32,8 @@
             "Modules\\User\\": "Modules/User/",
             "Modules\\Common\\": "Modules/Common/",
             "Modules\\Auth\\": "Modules/Auth/",
-            "Modules\\Category\\": "Modules/Category/"
+            "Modules\\Category\\": "Modules/Category/",
+            "Modules\\RolePermission\\": "Modules/RolePermission/"
         }
     },
     "autoload-dev": {
