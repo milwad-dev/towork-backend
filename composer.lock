@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b257afa7955ffbe8ae996283febe0e3a",
+    "content-hash": "0f00bd3a97467a82a5eed9ef00cf603c",
     "packages": [
         {
             "name": "beberlei/assert",
@@ -7095,21 +7095,21 @@
         },
         {
             "name": "pestphp/pest",
-            "version": "2.x-dev",
+            "version": "v2.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/pestphp/pest.git",
-                "reference": "99d3ee448ce1ed0689b0eda1990079cf8d5978ac"
+                "reference": "5ae061d2080ea09608fe37fb05ebadcd183cef85"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/pestphp/pest/zipball/99d3ee448ce1ed0689b0eda1990079cf8d5978ac",
-                "reference": "99d3ee448ce1ed0689b0eda1990079cf8d5978ac",
+                "url": "https://api.github.com/repos/pestphp/pest/zipball/5ae061d2080ea09608fe37fb05ebadcd183cef85",
+                "reference": "5ae061d2080ea09608fe37fb05ebadcd183cef85",
                 "shasum": ""
             },
             "require": {
                 "brianium/paratest": "^7.1.2",
-                "nunomaduro/collision": "^7.4.0",
+                "nunomaduro/collision": "^7.3.3",
                 "nunomaduro/termwind": "^1.15.1",
                 "pestphp/pest-plugin": "^2.0.1",
                 "pestphp/pest-plugin-arch": "^2.0.2",
@@ -7121,10 +7121,9 @@
                 "webmozart/assert": "<1.11.0"
             },
             "require-dev": {
-                "pestphp/pest-dev-tools": "^2.6.0",
+                "pestphp/pest-dev-tools": "^2.5.0",
                 "symfony/process": "^6.2.7"
             },
-            "default-branch": true,
             "bin": [
                 "bin/pest"
             ],
@@ -7179,7 +7178,7 @@
             ],
             "support": {
                 "issues": "https://github.com/pestphp/pest/issues",
-                "source": "https://github.com/pestphp/pest/tree/2.x"
+                "source": "https://github.com/pestphp/pest/tree/v2.3.0"
             },
             "funding": [
                 {
@@ -7191,7 +7190,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2023-04-01T05:47:14+00:00"
+            "time": "2023-03-28T09:16:29+00:00"
         },
         {
             "name": "pestphp/pest-plugin",
@@ -9518,9 +9517,7 @@
     ],
     "aliases": [],
     "minimum-stability": "dev",
-    "stability-flags": {
-        "pestphp/pest": 20
-    },
+    "stability-flags": [],
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
