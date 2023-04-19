@@ -2,8 +2,8 @@
 
 namespace Modules\RolePermission\Providers;
 
-use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\ServiceProvider;
 
 class RolePermissionServiceProvider extends ServiceProvider
 {
@@ -11,10 +11,10 @@ class RolePermissionServiceProvider extends ServiceProvider
 
     public function register()
     {
-        $this->loadMigrationsFrom(__DIR__ . '/../Database/Migrations');
-        $this->loadViewsFrom(__DIR__ . '/../Resources/Views/', 'RolePermission');
+        $this->loadMigrationsFrom(__DIR__.'/../Database/Migrations');
+        $this->loadViewsFrom(__DIR__.'/../Resources/Views/', 'RolePermission');
         Route::middleware('web')
             ->namespace($this->namespace)
-            ->group(__DIR__ . '/../routes/RolePermission_routes.php');
+            ->group(__DIR__.'/../routes/RolePermission_routes.php');
     }
 }
