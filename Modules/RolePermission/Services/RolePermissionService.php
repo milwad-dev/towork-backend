@@ -3,8 +3,8 @@
 namespace Modules\RolePermission\Services;
 
 use Modules\Common\Contracts\Interface\ServicesInterface;
-use Modules\RolePermission\Models\RolePermission;
 use Modules\Common\Repositories\CommonRepoEloquent;
+use Modules\RolePermission\Models\RolePermission;
 
 class RolePermissionService implements ServicesInterface
 {
@@ -19,7 +19,7 @@ class RolePermissionService implements ServicesInterface
 
     public function update($request, $id)
     {
-         return $this->query()->whereId($id)->update([
+        return $this->query()->whereId($id)->update([
 
         ]);
     }
@@ -29,4 +29,3 @@ class RolePermissionService implements ServicesInterface
         return CommonRepoEloquent::query($this->class);
     }
 }
-        
