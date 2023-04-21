@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Modules\Task\Enums\TaskPriorityEnum;
 
 return new class extends Migration
 {
@@ -13,6 +14,11 @@ return new class extends Migration
     {
         Schema::create('tasks', function (Blueprint $table) {
             $table->id();
+            $table->string('title');
+            $table->longText('description');
+            $table->timestamp('remind_date')->nullable();
+            $table->enum('priority', get_enum_values(TaskPriorityEnum::cases()));
+            // TODO: Add label
             $table->timestamps();
         });
     }
