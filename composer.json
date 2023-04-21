@@ -35,7 +35,10 @@
             "Modules\\Category\\": "Modules/Category/",
             "Modules\\RolePermission\\": "Modules/RolePermission/",
             "Modules\\Task\\": "Modules/Task/"
-        }
+        },
+        "files": [
+            "Modules/Common/helpers.php"
+        ]
     },
     "autoload-dev": {
         "psr-4": {
