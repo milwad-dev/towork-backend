@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Route;
 use Modules\Category\Http\Controllers\CategoryController;
 
 /*
- * User routes.
+ * Category routes.
  */
 
 Route::group(['middleware' => 'auth:sanctum'], static function ($router) {
