@@ -13,6 +13,6 @@ class TaskServiceProvider extends ServiceProvider
     {
         $this->loadMigrationsFrom(__DIR__ . '/../Database/Migrations');
         $this->loadViewsFrom(__DIR__ . '/../Resources/Views/', 'Task');
-        Route::middleware('web')->namespace($this->namespace)->group(__DIR__ . '/../routes/Task_routes.php');
+        Route::middleware('web')->namespace($this->namespace)->group(__DIR__ . '/../routes/api.php');
     }
 }
