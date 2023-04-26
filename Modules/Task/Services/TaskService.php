@@ -11,10 +11,15 @@ class TaskService
      *
      * @param  array $data
      *
-     * @return Task
+     * @return \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Eloquent\Model
      */
-    public function store(array $data): Task
+    public function store(array $data)
     {
-
+        return Task::query()->create([
+            'title' => $data['title'],
+            'description' => $data['description'],
+            'remind_date' => $data['remind_date'],
+            'priority' => $data['priority'],
+        ]);
     }
 }
