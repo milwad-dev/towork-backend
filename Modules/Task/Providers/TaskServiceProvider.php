@@ -7,12 +7,36 @@ use Illuminate\Support\Facades\Route;
 
 class TaskServiceProvider extends ServiceProvider
 {
-    public $namespace = 'Modules\Task\Http\Controllers';
-
+    /**
+     * Register any application services.
+     *
+     * @return void
+     */
     public function register()
     {
-        $this->loadMigrationsFrom(__DIR__ . '/../Database/Migrations');
-        $this->loadViewsFrom(__DIR__ . '/../Resources/Views/', 'Task');
-        Route::middleware('web')->namespace($this->namespace)->group(__DIR__ . '/../routes/api.php');
+        $this->registerMigrations();
+        $this->registerRoutes();
+    }
+
+    /**
+     * Load route files.
+     *
+     * @return void
+     */
+    private function registerRoutes()
+    {
+        Route::middleware('api')
+            ->prefix('api/'.config('app.version'))
+            ->group(__DIR__.'/../Routes/api.php');
+    }
+
+    /**
+     * Load migration files.
+     *
+     * @return void
+     */
+    private function registerMigrations(): void
+    {
+        $this->loadMigrationsFrom(__DIR__.'/../Database/Migrations');
     }
 }
