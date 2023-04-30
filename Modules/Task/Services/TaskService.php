@@ -20,6 +20,7 @@ class TaskService
             'description' => $data['description'],
             'remind_date' => $data['remind_date'],
             'priority' => $data['priority'],
+            'status' => $data['status'],
         ]);
     }
 }
