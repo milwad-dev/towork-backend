@@ -1,6 +1,6 @@
 <?php
 
-if (! function_exists('get_enum_values')) {
+if (!function_exists('get_enum_values')) {
     /**
      * Get values from enum file.
      *
@@ -19,4 +19,3 @@ if (! function_exists('get_enum_values')) {
         return $values;
     }
 }
-
