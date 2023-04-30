@@ -2,7 +2,7 @@
 
 namespace Modules\Task\Enums;
 
-enum TaskPriorityEnum:int
+enum TaskPriorityEnum: int
 {
     case PRIORITY_ONE = 1;
     case PRIORITY_TWO = 2;

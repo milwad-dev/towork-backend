@@ -6,8 +6,7 @@ use Illuminate\Support\Facades\Schema;
 use Modules\Task\Enums\TaskPriorityEnum;
 use Modules\Task\Enums\TaskStatusEnum;
 
-return new class extends Migration
-{
+return new class() extends Migration {
     /**
      * Run the migrations.
      */
