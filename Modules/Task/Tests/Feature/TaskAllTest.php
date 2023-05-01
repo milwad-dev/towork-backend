@@ -21,8 +21,7 @@ test('test login user can see all own tasks', function () {
     $response = actingAs($user)->getJson(route('tasks.index'));
     $response->assertStatus(200);
     $response->assertJsonStructure([
-        'data' => [
-            'tasks'
-        ]
+        'data',
+        'status',
     ]);
 });

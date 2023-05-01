@@ -2,10 +2,12 @@
 
 namespace Modules\Task\Http\Controllers;
 
-use App\Http\Controllers\Controller;
+use Modules\Common\Http\Controllers\Controller;
 use Modules\Task\Http\Requests\StoreTaskRequest;
 use Modules\Task\Http\Requests\UpdateTaskRequest;
+use Modules\Task\Http\Resources\TaskCollectionResource;
 use Modules\Task\Models\Task;
+use Modules\Task\Repositories\TaskRepoEloquent;
 
 class TaskController extends Controller
 {
@@ -14,7 +16,9 @@ class TaskController extends Controller
      */
     public function index()
     {
-        //
+        $tasks = resolve(TaskRepoEloquent::class)->getLatest()->get();
+
+        return new TaskCollectionResource($tasks);
     }
 
     /**
