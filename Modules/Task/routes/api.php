@@ -10,4 +10,3 @@ use Modules\Task\Http\Controllers\TaskController;
 Route::group(['middleware' => 'auth:sanctum'], static function ($router) {
     $router->apiResource('tasks', TaskController::class);
 });
-
