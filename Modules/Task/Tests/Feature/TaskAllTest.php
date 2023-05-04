@@ -31,9 +31,9 @@ test('test guest user can not see all own tasks', function () {
     $response = getJson(route('tasks.index'));
     $response->assertUnauthorized();
     $response->assertJsonStructure([
-        'data' => [
-            'message'
-        ],
-        'status',
+        'message',
+    ]);
+    $response->assertExactJson([
+        'message' => 'Unauthenticated.',
     ]);
 });
