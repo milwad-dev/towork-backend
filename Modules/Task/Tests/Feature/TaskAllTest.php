@@ -4,6 +4,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Modules\User\Models\User;
 use Tests\TestCase;
 use function Pest\Laravel\actingAs;
+use function Pest\Laravel\getJson;
 
 /*
  * Use refresh database for truncate database for each test.
@@ -22,6 +23,17 @@ test('test login user can see all own tasks', function () {
     $response->assertStatus(200);
     $response->assertJsonStructure([
         'data',
+        'status',
+    ]);
+});
+
+test('test guest user can not see all own tasks', function () {
+    $response = getJson(route('tasks.index'));
+    $response->assertUnauthorized();
+    $response->assertJsonStructure([
+        'data' => [
+            'message'
+        ],
         'status',
     ]);
 });
