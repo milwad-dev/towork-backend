@@ -5,7 +5,7 @@ namespace Modules\Task\Http\Resources;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\ResourceCollection;
 
-class TaskCollectionResource extends ResourceCollection
+class TaskResource extends ResourceCollection
 {
     /**
      * Transform the resource into an array.
@@ -15,16 +15,12 @@ class TaskCollectionResource extends ResourceCollection
     public function toArray(Request $request): array
     {
         return [
-            'data' => $this->collection->map(function ($task) {
-                return [
-                    'id' => $task->id,
-                    'title' => $task->title,
-                    'description' => $task->description,
-                    'remind_date' => $task->remind_date,
-                    'priority' => $task->priority,
-                    'status' => $task->status
-                ];
-            })
+            'id' => $this->id,
+            'title' => $this->title,
+            'description' => $this->description,
+            'remind_date' => $this->remind_date,
+            'priority' => $this->priority,
+            'status' => $this->status,
         ];
     }
 
@@ -37,7 +33,7 @@ class TaskCollectionResource extends ResourceCollection
     public function with(Request $request)
     {
         return [
-            'status' => 'success'
+            'status' => 'success',
         ];
     }
 }

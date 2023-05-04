@@ -2,23 +2,27 @@
 
 namespace Modules\Task\Http\Controllers;
 
+use Illuminate\Http\Resources\Json\ResourceCollection;
 use Modules\Common\Http\Controllers\Controller;
 use Modules\Task\Http\Requests\StoreTaskRequest;
 use Modules\Task\Http\Requests\UpdateTaskRequest;
-use Modules\Task\Http\Resources\TaskCollectionResource;
+use Modules\Task\Http\Resources\TaskResource;
 use Modules\Task\Models\Task;
 use Modules\Task\Repositories\TaskRepoEloquent;
+use Modules\Task\Services\TaskService;
 
 class TaskController extends Controller
 {
     /**
      * Display a listing of the resource.
+     *
+     * @return ResourceCollection
      */
     public function index()
     {
         $tasks = resolve(TaskRepoEloquent::class)->getLatest()->get();
 
-        return new TaskCollectionResource($tasks);
+        return TaskResource::collection($tasks);
     }
 
     /**
@@ -26,7 +30,9 @@ class TaskController extends Controller
      */
     public function store(StoreTaskRequest $request)
     {
-        //
+        $task = resolve(TaskService::class)->store($request->validated());
+
+        return new TaskResource($task);
     }
 
     /**
@@ -36,7 +42,7 @@ class TaskController extends Controller
     {
         //
     }
-    
+
     /**
      * Update the specified resource in storage.
      */
