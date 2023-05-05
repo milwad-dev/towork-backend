@@ -3,6 +3,9 @@
 namespace Modules\Task\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rules\Enum;
+use Modules\Task\Enums\TaskPriorityEnum;
+use Modules\Task\Enums\TaskStatusEnum;
 
 class StoreTaskRequest extends FormRequest
 {
@@ -22,7 +25,11 @@ class StoreTaskRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'title'       => 'required|string|min:3|max:255',
+            'description' => 'required|string|min:3',
+            'remind_date' => 'required|string', // TODO: ADD MORE RULES
+            'priority'    => ['required', 'string', new Enum(TaskPriorityEnum::class), 'max:250'],
+            'status'      => ['required', 'string', new Enum(TaskStatusEnum::class), 'max:250'],
         ];
     }
 }
