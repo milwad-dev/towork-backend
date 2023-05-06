@@ -1,9 +1,5 @@
 <?php
 
-/*
- * Use refresh database for truncate database for each test.
- */
-
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Modules\Task\Enums\TaskPriorityEnum;
 use Modules\Task\Enums\TaskStatusEnum;
@@ -16,6 +12,9 @@ use function Pest\Laravel\assertDatabaseHas;
 use function Pest\Laravel\assertDatabaseMissing;
 use function Pest\Laravel\postJson;
 
+/*
+ * Use refresh database for truncate database for each test.
+ */
 uses(RefreshDatabase::class);
 
 /**
