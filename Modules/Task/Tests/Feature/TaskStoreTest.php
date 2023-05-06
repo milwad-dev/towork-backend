@@ -13,6 +13,8 @@ use Tests\TestCase;
 use function Pest\Laravel\actingAs;
 use function Pest\Laravel\assertDatabaseCount;
 use function Pest\Laravel\assertDatabaseHas;
+use function Pest\Laravel\assertDatabaseMissing;
+use function Pest\Laravel\postJson;
 
 uses(RefreshDatabase::class);
 
@@ -43,4 +45,27 @@ test('test login user can store tasks successfully', function () {
 
     assertDatabaseHas('users', $user);
     assertDatabaseHas('tasks', ['title' => $title]);
+});
+
+test('test guest user can not store tasks successfully', function () {
+    $response = postJson(route('tasks.store'), [
+        'title'       => fake()->title,
+        'description' => $title = fake()->text,
+        'remind_date' => now(),
+        'priority'    => (string) TaskPriorityEnum::PRIORITY_FOUR->value,
+        'status'      => (string) TaskStatusEnum::STATUS_ACTIVE->value,
+    ]);
+    $response->assertUnauthorized();
+    $response->assertJsonStructure([
+        'message',
+    ]);
+    $response->assertExactJson([
+        'message' => 'Unauthenticated.',
+    ]);
+
+    // DB Assertations
+    assertDatabaseCount('users', 0);
+    assertDatabaseCount('tasks', 0);
+
+    assertDatabaseMissing('tasks', ['title' => $title]);
 });
