@@ -35,7 +35,7 @@ test('test login user can store tasks successfully', function () {
     $response->assertCreated();
     $response->assertJsonStructure([
         'data',
-        'status'
+        'status',
     ]);
 
     // DB Assertations
