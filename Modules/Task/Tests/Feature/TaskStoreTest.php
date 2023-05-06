@@ -26,13 +26,13 @@ test('test login user can store tasks successfully', function () {
     $user = User::factory()->create();
 
     $response = actingAs($user)->postJson(route('tasks.store'), [
-        'title'       => fake()->title,
-        'description' => $title = fake()->text,
+        'title'       => $title = fake()->title,
+        'description' => fake()->text,
         'remind_date' => now(),
         'priority'    => (string) TaskPriorityEnum::PRIORITY_FOUR->value,
         'status'      => (string) TaskStatusEnum::STATUS_ACTIVE->value,
     ]);
-    $response->assertOk();
+    $response->assertCreated();
     $response->assertJsonStructure([
         'data',
         'status'
@@ -42,14 +42,14 @@ test('test login user can store tasks successfully', function () {
     assertDatabaseCount('users', 1);
     assertDatabaseCount('tasks', 1);
 
-    assertDatabaseHas('users', $user);
+    assertDatabaseHas('users', ['email' => $user->email]);
     assertDatabaseHas('tasks', ['title' => $title]);
 });
 
 test('test guest user can not store tasks successfully', function () {
     $response = postJson(route('tasks.store'), [
-        'title'       => fake()->title,
-        'description' => $title = fake()->text,
+        'title'       => $title = fake()->title,
+        'description' => fake()->text,
         'remind_date' => now(),
         'priority'    => (string) TaskPriorityEnum::PRIORITY_FOUR->value,
         'status'      => (string) TaskStatusEnum::STATUS_ACTIVE->value,

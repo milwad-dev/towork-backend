@@ -3,9 +3,9 @@
 namespace Modules\Task\Http\Resources;
 
 use Illuminate\Http\Request;
-use Illuminate\Http\Resources\Json\ResourceCollection;
+use Illuminate\Http\Resources\Json\JsonResource;
 
-class TaskResource extends ResourceCollection
+class TaskResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
