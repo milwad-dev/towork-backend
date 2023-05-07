@@ -50,7 +50,9 @@ class TaskController extends Controller
     {
         resolve(TaskService::class)->update($request->validated(), $task);
 
-        return new TaskResource($task); // TODO: Refresh new task
+        return (new TaskResource($task))
+            ->response()
+            ->setStatusCode(202); // TODO: Refresh new task
     }
 
     /**

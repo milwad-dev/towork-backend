@@ -3,6 +3,7 @@
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Modules\Task\Enums\TaskPriorityEnum;
 use Modules\Task\Enums\TaskStatusEnum;
+use Modules\Task\Models\Task;
 use Modules\User\Models\User;
 use Tests\TestCase;
 
@@ -22,17 +23,16 @@ uses(RefreshDatabase::class);
  */
 uses(TestCase::class);
 
-test('test login user can store tasks successfully', function () {
+test('test login user can update tasks successfully', function () {
     $user = User::factory()->create();
+    $task = Task::factory()->create();
 
-    $response = actingAs($user)->postJson(route('tasks.store'), [
+    $response = actingAs($user)->postJson(route('tasks.update', $task->id), [
         'title'       => $title = fake()->title,
-        'description' => fake()->text,
+        'description' => $description = fake()->text,
         'remind_date' => now(),
-        'priority'    => (string) TaskPriorityEnum::PRIORITY_FOUR->value,
-        'status'      => (string) TaskStatusEnum::STATUS_ACTIVE->value,
     ]);
-    $response->assertCreated();
+    $response->assertAccepted();
     $response->assertJsonStructure([
         'data',
         'status',
@@ -43,11 +43,11 @@ test('test login user can store tasks successfully', function () {
     assertDatabaseCount('tasks', 1);
 
     assertDatabaseHas('users', ['email' => $user->email]);
-    assertDatabaseHas('tasks', ['title' => $title]);
+    assertDatabaseHas('tasks', ['title' => $title, 'description' => $description]);
 });
 
-test('test guest user can not store tasks successfully', function () {
-    $response = postJson(route('tasks.store'), [
+test('test guest user can not update tasks successfully', function () {
+    $response = postJson(route('tasks.update'), [
         'title'       => $title = fake()->title,
         'description' => fake()->text,
         'remind_date' => now(),
