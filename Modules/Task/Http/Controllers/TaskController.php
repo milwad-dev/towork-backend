@@ -48,7 +48,9 @@ class TaskController extends Controller
      */
     public function update(UpdateTaskRequest $request, Task $task)
     {
-        //
+        resolve(TaskService::class)->update($request->validated(), $task);
+
+        return new TaskResource($task); // TODO: Refresh new task
     }
 
     /**
