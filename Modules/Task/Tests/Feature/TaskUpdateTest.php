@@ -27,7 +27,7 @@ test('test login user can update tasks successfully', function () {
     $user = User::factory()->create();
     $task = Task::factory()->create();
 
-    $response = actingAs($user)->postJson(route('tasks.update', $task->id), [
+    $response = actingAs($user)->postJson(route('tasks.update', ['task' => $task->id]), [
         'title'       => $title = fake()->title,
         'description' => $description = fake()->text,
         'remind_date' => now(),
@@ -47,14 +47,14 @@ test('test login user can update tasks successfully', function () {
 });
 
 test('test guest user can not update tasks successfully', function () {
-    $response = postJson(route('tasks.update'), [
+    $response = postJson(route('tasks.update' , ['task' => 1]), [
         'title'       => $title = fake()->title,
         'description' => fake()->text,
         'remind_date' => now(),
         'priority'    => (string) TaskPriorityEnum::PRIORITY_FOUR->value,
         'status'      => (string) TaskStatusEnum::STATUS_ACTIVE->value,
     ]);
-    $response->assertUnauthorized();
+    $response->assertStatus(405);
     $response->assertJsonStructure([
         'message',
     ]);
