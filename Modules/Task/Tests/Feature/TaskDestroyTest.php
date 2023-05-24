@@ -11,7 +11,7 @@ use function Pest\Laravel\actingAs;
 use function Pest\Laravel\assertDatabaseCount;
 use function Pest\Laravel\assertDatabaseHas;
 use function Pest\Laravel\assertDatabaseMissing;
-use function Pest\Laravel\postJson;
+use function Pest\Laravel\deleteJson;
 
 /*
  * Use refresh database for truncate database for each test.
@@ -37,26 +37,22 @@ test('test login user can destroy tasks successfully', function () {
     assertDatabaseHas('users', ['email' => $user->email]);
     assertDatabaseMissing('tasks', ['title' => $task->title]);
 });
-//
-//test('test guest user can not destroy tasks successfully', function () {
-//    $response = postJson(route('tasks.destroy'), [
-//        'title'       => $title = fake()->title,
-//        'description' => fake()->text,
-//        'remind_date' => now(),
-//        'priority'    => (string) TaskPriorityEnum::PRIORITY_FOUR->value,
-//        'status'      => (string) TaskStatusEnum::STATUS_ACTIVE->value,
-//    ]);
-//    $response->assertUnauthorized();
-//    $response->assertJsonStructure([
-//        'message',
-//    ]);
-//    $response->assertExactJson([
-//        'message' => 'Unauthenticated.',
-//    ]);
-//
-//    // DB Assertations
-//    assertDatabaseCount('users', 0);
-//    assertDatabaseCount('tasks', 0);
-//
-//    assertDatabaseMissing('tasks', ['title' => $title]);
-//});
+
+test('test guest user can not destroy tasks successfully', function () {
+    $task = Task::factory()->create();
+
+    $response = deleteJson(route('tasks.destroy', $task->id));
+    $response->assertUnauthorized();
+    $response->assertJsonStructure([
+        'message',
+    ]);
+    $response->assertExactJson([
+        'message' => 'Unauthenticated.',
+    ]);
+
+    // DB Assertations
+    assertDatabaseCount('users', 0);
+    assertDatabaseCount('tasks', 1);
+
+    assertDatabaseHas('tasks', ['title' => $task->title]);
+});
