@@ -22,11 +22,11 @@ class TaskFactory extends Factory
     public function definition(): array
     {
         return [
-            'title' => fake()->title,
+            'title'       => fake()->title,
             'description' => fake()->text,
             'remind_date' => now(),
-            'priority' => TaskPriorityEnum::PRIORITY_ONE->value,
-            'status' => TaskStatusEnum::STATUS_ACTIVE->value,
+            'priority'    => TaskPriorityEnum::PRIORITY_ONE->value,
+            'status'      => TaskStatusEnum::STATUS_ACTIVE->value,
         ];
     }
 }

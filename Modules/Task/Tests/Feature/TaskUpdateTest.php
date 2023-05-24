@@ -31,8 +31,8 @@ test('test login user can update tasks successfully', function () {
         'title'       => $title = fake()->title,
         'description' => $description = fake()->text,
         'remind_date' => now(),
-        'status' => (string) $task->status,
-        'priority' => (string) $task->priority,
+        'status'      => (string) $task->status,
+        'priority'    => (string) $task->priority,
     ]);
     $response->assertAccepted();
     $response->assertJsonStructure([
@@ -49,7 +49,7 @@ test('test login user can update tasks successfully', function () {
 });
 
 test('test guest user can not update tasks successfully', function () {
-    $response = patchJson(route('tasks.update' , ['task' => 1]), [
+    $response = patchJson(route('tasks.update', ['task' => 1]), [
         'title'       => $title = fake()->title,
         'description' => fake()->text,
         'remind_date' => now(),
