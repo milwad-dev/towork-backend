@@ -11,7 +11,7 @@ use function Pest\Laravel\actingAs;
 use function Pest\Laravel\assertDatabaseCount;
 use function Pest\Laravel\assertDatabaseHas;
 use function Pest\Laravel\assertDatabaseMissing;
-use function Pest\Laravel\postJson;
+use function Pest\Laravel\patchJson;
 
 /*
  * Use refresh database for truncate database for each test.
@@ -27,10 +27,12 @@ test('test login user can update tasks successfully', function () {
     $user = User::factory()->create();
     $task = Task::factory()->create();
 
-    $response = actingAs($user)->postJson(route('tasks.update', ['task' => $task->id]), [
+    $response = actingAs($user)->patchJson(route('tasks.update', ['task' => $task->id]), [
         'title'       => $title = fake()->title,
         'description' => $description = fake()->text,
         'remind_date' => now(),
+        'status' => (string) $task->status,
+        'priority' => (string) $task->priority,
     ]);
     $response->assertAccepted();
     $response->assertJsonStructure([
@@ -47,14 +49,14 @@ test('test login user can update tasks successfully', function () {
 });
 
 test('test guest user can not update tasks successfully', function () {
-    $response = postJson(route('tasks.update' , ['task' => 1]), [
+    $response = patchJson(route('tasks.update' , ['task' => 1]), [
         'title'       => $title = fake()->title,
         'description' => fake()->text,
         'remind_date' => now(),
         'priority'    => (string) TaskPriorityEnum::PRIORITY_FOUR->value,
         'status'      => (string) TaskStatusEnum::STATUS_ACTIVE->value,
     ]);
-    $response->assertStatus(405);
+    $response->assertUnauthorized();
     $response->assertJsonStructure([
         'message',
     ]);
