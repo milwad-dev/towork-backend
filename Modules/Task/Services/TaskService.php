@@ -28,7 +28,7 @@ class TaskService
      * Update task and return bool.
      *
      * @param array $data
-     * @param Task $task
+     * @param Task  $task
      *
      * @return bool
      */

@@ -1,8 +1,6 @@
 <?php
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Modules\Task\Enums\TaskPriorityEnum;
-use Modules\Task\Enums\TaskStatusEnum;
 use Modules\Task\Models\Task;
 use Modules\User\Models\User;
 use Tests\TestCase;
