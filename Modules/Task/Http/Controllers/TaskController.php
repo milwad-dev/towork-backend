@@ -10,6 +10,7 @@ use Modules\Task\Http\Resources\TaskResource;
 use Modules\Task\Models\Task;
 use Modules\Task\Repositories\TaskRepoEloquent;
 use Modules\Task\Services\TaskService;
+use Symfony\Component\HttpFoundation\Response;
 
 class TaskController extends Controller
 {
@@ -60,6 +61,9 @@ class TaskController extends Controller
      */
     public function destroy(Task $task)
     {
-        //
+        // TODO: Add some condition
+        $task->delete();
+
+        return response([], Response::HTTP_NO_CONTENT);
     }
 }

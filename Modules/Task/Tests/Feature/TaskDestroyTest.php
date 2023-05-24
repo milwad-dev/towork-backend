@@ -27,7 +27,7 @@ test('test login user can destroy tasks successfully', function () {
     $user = User::factory()->create();
     $task = Task::factory()->create();
 
-    $response = actingAs($user)->postJson(route('tasks.destroy', $task->id));
+    $response = actingAs($user)->deleteJson(route('tasks.destroy', $task->id));
     $response->assertNoContent();
 
     // DB Assertations
