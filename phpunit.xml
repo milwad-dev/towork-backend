@@ -8,7 +8,6 @@
   </testsuites>
   <coverage>
     <include>
-      <directory suffix=".php">./app</directory>
       <directory suffix=".php">./Modules</directory>
     </include>
   </coverage>
