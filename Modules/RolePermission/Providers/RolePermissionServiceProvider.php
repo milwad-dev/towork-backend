@@ -15,6 +15,6 @@ class RolePermissionServiceProvider extends ServiceProvider
         $this->loadViewsFrom(__DIR__.'/../Resources/Views/', 'RolePermission');
         Route::middleware('web')
             ->namespace($this->namespace)
-            ->group(__DIR__.'/../routes/RolePermission_routes.php');
+            ->group(__DIR__.'/../Routes/api.php');
     }
 }
