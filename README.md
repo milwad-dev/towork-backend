@@ -1,10 +1,10 @@
 ## Introduction
-The ToWork is an open-source free and advance TODO with [Laravel](https://github.com/laravel/laravel) framework. <br>
+The ToWork is an open-source free and advanced TODO with [Laravel](https://github.com/laravel/laravel) framework. <br>
 The ToWork can help you to make your TODO List. <br>
-The ToWork help to tutorial advance laravel. <br>
+The ToWork helps to tutorial advance laravel. <br>
 The ToWork (Backend) connected to <a href="https://github.com/milwad-dev/towork-frontend">ToWork-Frontend</a>.  <br>
 You can improve your knowledge by ToWork. <br>
-If you are Backend developer or Frontend developer you can work with towork and Gain professional experience.
+If you are a Backend developer or Frontend developer you can work with ToWork and Gain professional experience.
 
 ## Features
 
@@ -19,7 +19,7 @@ If you are Backend developer or Frontend developer you can work with towork and 
 ✅ Use Resources (Laravel) \
 ✅ <a href="https://pestphp.com">Pest</a> \
 ✅ TDD \
-✅ <a href="https://github.com/milwad-dev/laravel-validate">Laravel-validation</a> package \
+✅ <a href="https://github.com/milwad-dev/laravel-validate">Laravel-Validate</a> package \
 ✅ Role permission system \
 ✅ Custom helpers \
 ✅ Module maker command custom \
@@ -36,7 +36,7 @@ If you are Backend developer or Frontend developer you can work with towork and 
 
 ## Installation
 
-First you can make use of our repository from GitHub by cloning this in your new directory:
+First, you can make use of our repository from GitHub by cloning this in your new directory:
 
 ```shell
 git clone https://github.com/milwad-dev/towork-backend.git
@@ -48,11 +48,11 @@ After, you use `docker` to set up:
 docker-compose up --build
 ```
 
-When all operation complete, you can see project is live on an address: <a href="http://localhost" target="blank">http://localhost</a>
+When all operations are complete, you can see the project is live on an address: <a href="http://localhost" target="blank">http://localhost</a>
 
 ## Swagger | API Documentation
 
-If you want to see swagger, you must go to this url. <a href="http://localhost/request-docs">Swagger Documentation</a>
+If you want to see Swagger, you must go to this URL. <a href="http://localhost/request-docs">Swagger Documentation</a>
 
 ## Contributors
 This project exists thanks to all the people who contribute.
