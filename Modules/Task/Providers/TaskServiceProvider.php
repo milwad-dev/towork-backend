@@ -15,7 +15,7 @@ class TaskServiceProvider extends ServiceProvider
     public function register()
     {
         $this->registerMigrations();
-//        $this->registerRoutes();
+        $this->registerRoutes();
     }
 
     /**
