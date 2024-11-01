@@ -2,7 +2,6 @@
 
 namespace Modules\Task\Http\Controllers;
 
-use Illuminate\Http\Resources\Json\ResourceCollection;
 use Modules\Common\Http\Controllers\Controller;
 use Modules\Task\Http\Requests\StoreTaskRequest;
 use Modules\Task\Http\Requests\UpdateTaskRequest;
@@ -37,9 +36,13 @@ class TaskController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Task $task)
+    public function show(Task $task): \Illuminate\Http\JsonResponse|TaskResource
     {
-        //
+        if ($task->user()->isNot(auth()->user())) {
+            return response()->json(['data' => []], Response::HTTP_FORBIDDEN);
+        }
+
+        return new TaskResource($task);
     }
 
     /**
