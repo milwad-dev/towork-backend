@@ -9,10 +9,8 @@ class TaskServiceProvider extends ServiceProvider
 {
     /**
      * Register any application services.
-     *
-     * @return void
      */
-    public function register()
+    public function register(): void
     {
         $this->registerMigrations();
         $this->registerRoutes();
@@ -20,20 +18,16 @@ class TaskServiceProvider extends ServiceProvider
 
     /**
      * Load route files.
-     *
-     * @return void
      */
-    private function registerRoutes()
+    private function registerRoutes(): void
     {
         Route::middleware('api')
             ->prefix('api/'.config('app.version'))
-            ->group(__DIR__.'/../routes/api.php');
+            ->group(__DIR__ . '/../Routes/api.php');
     }
 
     /**
      * Load migration files.
-     *
-     * @return void
      */
     private function registerMigrations(): void
     {

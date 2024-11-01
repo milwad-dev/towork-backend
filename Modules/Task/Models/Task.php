@@ -5,6 +5,7 @@ namespace Modules\Task\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Modules\Task\Database\Factories\TaskFactory;
+use Modules\User\Models\User;
 
 class Task extends Model
 {
@@ -16,11 +17,12 @@ class Task extends Model
      * @var string[]
      */
     protected $fillable = [
+        'user_id',
         'title',
         'description',
         'remind_date',
         'priority',
-        'status'
+        'status',
     ];
 
     /**
@@ -29,5 +31,15 @@ class Task extends Model
     protected static function newFactory(): TaskFactory
     {
         return TaskFactory::new();
+    }
+
+    // Relations
+
+    /**
+     * Relation one-to-many, User model.
+     */
+    public function user(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(User::class, 'user_id');
     }
 }

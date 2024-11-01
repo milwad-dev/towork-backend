@@ -8,14 +8,11 @@ class TaskService
 {
     /**
      * Create task and return.
-     *
-     * @param array $data
-     *
-     * @return \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Eloquent\Model
      */
-    public function store(array $data)
+    public function store(array $data): Task
     {
         return Task::query()->create([
+            'user_id'     => auth()->id(),
             'title'       => $data['title'],
             'description' => $data['description'],
             'remind_date' => $data['remind_date'],
@@ -26,13 +23,8 @@ class TaskService
 
     /**
      * Update task and return bool.
-     *
-     * @param array $data
-     * @param Task  $task
-     *
-     * @return bool
      */
-    public function update(array $data, Task $task)
+    public function update(array $data, Task $task): bool
     {
         return $task->update([
             'title'       => $data['title'],

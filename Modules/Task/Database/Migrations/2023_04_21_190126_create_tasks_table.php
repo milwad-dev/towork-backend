@@ -15,6 +15,8 @@ return new class() extends Migration {
         Schema::create('tasks', function (Blueprint $table) {
             $table->id();
 
+            $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
+
             $table->string('title');
             $table->string('priority');
             $table->string('status')->nullable();
