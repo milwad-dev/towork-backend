@@ -19,15 +19,13 @@ class UpdateTaskRequest extends FormRequest
 
     /**
      * Get the validation rules that apply to the request.
-     *
-     * @return array<string, \Illuminate\Contracts\Validation\Rule|array|string>
      */
     public function rules(): array
     {
         return [
             'title'       => 'required|string|min:3|max:255',
             'description' => 'required|string|min:3',
-            'remind_date' => 'required|string', // TODO: ADD MORE RULES
+            'remind_date' => 'required|string',
             'priority'    => ['required', 'string', new Enum(TaskPriorityEnum::class), 'max:250'],
             'status'      => ['required', 'string', new Enum(TaskStatusEnum::class), 'max:250'],
         ];

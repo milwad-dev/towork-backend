@@ -14,11 +14,13 @@ return new class() extends Migration {
     {
         Schema::create('tasks', function (Blueprint $table) {
             $table->id();
+
             $table->string('title');
+            $table->string('priority');
+            $table->string('status')->nullable();
+
             $table->longText('description');
             $table->timestamp('remind_date')->nullable();
-            $table->enum('priority', get_enum_values(TaskPriorityEnum::cases()));
-            $table->enum('status', get_enum_values(TaskStatusEnum::cases()))->nullable();
             // TODO: Add label
             $table->timestamps();
         });

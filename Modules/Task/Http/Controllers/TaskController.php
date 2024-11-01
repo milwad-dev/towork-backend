@@ -47,21 +47,20 @@ class TaskController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateTaskRequest $request, Task $task)
+    public function update(UpdateTaskRequest $request, Task $task): \Illuminate\Http\JsonResponse
     {
         resolve(TaskService::class)->update($request->validated(), $task);
 
         return (new TaskResource($task))
             ->response()
-            ->setStatusCode(202); // TODO: Refresh new task
+            ->setStatusCode(204);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Task $task)
+    public function destroy(Task $task): \Illuminate\Foundation\Application|\Illuminate\Http\Response|\Illuminate\Contracts\Routing\ResponseFactory
     {
-        // TODO: Add some condition
         $task->delete();
 
         return response([], Response::HTTP_NO_CONTENT);

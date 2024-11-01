@@ -11,19 +11,23 @@ class Task extends Model
     use HasFactory;
 
     /**
-     * Set factory.
-     *
-     * @return TaskFactory
-     */
-    protected static function newFactory()
-    {
-        return TaskFactory::new();
-    }
-
-    /**
      * Fillable columns.
      *
      * @var string[]
      */
-    protected $fillable = ['title', 'description', 'remind_date', 'priority', 'status'];
+    protected $fillable = [
+        'title',
+        'description',
+        'remind_date',
+        'priority',
+        'status'
+    ];
+
+    /**
+     * Set factory for model.
+     */
+    protected static function newFactory(): TaskFactory
+    {
+        return TaskFactory::new();
+    }
 }
