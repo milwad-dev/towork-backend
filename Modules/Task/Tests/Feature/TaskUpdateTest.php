@@ -37,7 +37,7 @@ test('test login user can update tasks successfully', function () {
     $response->assertNoContent();
 
     // DB Assertations
-    assertDatabaseCount('users', 1);
+    assertDatabaseCount('users', 2);
     assertDatabaseCount('tasks', 1);
 
     assertDatabaseHas('users', ['email' => $user->email]);

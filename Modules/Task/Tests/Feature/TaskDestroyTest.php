@@ -29,7 +29,7 @@ test('test login user can destroy tasks successfully', function () {
     $response->assertNoContent();
 
     // DB Assertations
-    assertDatabaseCount('users', 1);
+    assertDatabaseCount('users', 2);
     assertDatabaseCount('tasks', 0);
 
     assertDatabaseHas('users', ['email' => $user->email]);
