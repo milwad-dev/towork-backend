@@ -16,10 +16,8 @@ class TaskController extends Controller
 {
     /**
      * Display a listing of the resource.
-     *
-     * @return ResourceCollection
      */
-    public function index()
+    public function index(): \Illuminate\Http\Resources\Json\AnonymousResourceCollection
     {
         $tasks = resolve(TaskRepoEloquent::class)->getLatest()->get();
 
@@ -29,7 +27,7 @@ class TaskController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreTaskRequest $request)
+    public function store(StoreTaskRequest $request): TaskResource
     {
         $task = resolve(TaskService::class)->store($request->validated());
 
