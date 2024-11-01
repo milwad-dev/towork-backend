@@ -12,8 +12,7 @@
         "laravel/tinker": "^2.10",
         "milwad/laravel-crod": "^1.4",
         "milwad/laravel-validate": "^1.8",
-        "rakutentech/laravel-request-docs": "^2.41",
-        "spatie/laravel-permission": "^6.9"
+        "rakutentech/laravel-request-docs": "^2.41"
     },
     "require-dev": {
         "fakerphp/faker": "^1.23",

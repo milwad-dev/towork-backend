@@ -8,14 +8,12 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Modules\User\Database\Factories\UserFactory;
-use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
 {
     use HasApiTokens;
     use HasFactory;
     use Notifiable;
-    use HasRoles;
 
     /**
      * The attributes that are mass assignable.
@@ -49,11 +47,9 @@ class User extends Authenticatable
     ];
 
     /**
-     * Set new factory.
-     *
-     * @return UserFactory
+     * Set new factory for model.
      */
-    protected static function newFactory()
+    protected static function newFactory(): UserFactory
     {
         return new UserFactory();
     }
