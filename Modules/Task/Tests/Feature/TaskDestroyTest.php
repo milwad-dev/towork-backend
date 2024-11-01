@@ -23,7 +23,7 @@ uses(TestCase::class);
 
 test('test login user can destroy tasks successfully', function () {
     $user = User::factory()->create();
-    $task = Task::factory()->create();
+    $task = Task::factory()->create(['user_id' => $user->id]);
 
     $response = actingAs($user)->deleteJson(route('tasks.destroy', $task->id));
     $response->assertNoContent();
@@ -49,7 +49,7 @@ test('test guest user can not destroy tasks successfully', function () {
     ]);
 
     // DB Assertations
-    assertDatabaseCount('users', 0);
+    assertDatabaseCount('users', 1);
     assertDatabaseCount('tasks', 1);
 
     assertDatabaseHas('tasks', ['title' => $task->title]);

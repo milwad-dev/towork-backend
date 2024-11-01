@@ -35,10 +35,6 @@ test('test login user can update tasks successfully', function () {
         'priority'    => (string) $task->priority,
     ]);
     $response->assertNoContent();
-    $response->assertJsonStructure([
-        'data',
-        'status',
-    ]);
 
     // DB Assertations
     assertDatabaseCount('users', 1);
