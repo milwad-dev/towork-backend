@@ -16,14 +16,14 @@ class TaskMarkAsDoneController extends Controller
     {
         if ($task->status !== TaskStatusEnum::STATUS_ACTIVE->value) {
             return response()->json([
-                'message' => 'You already done this task.'
+                'message' => 'You already done this task.',
             ], Response::HTTP_BAD_REQUEST);
         }
 
         $task->markAsDone();
 
         return response()->json([
-            'data' => 'The task mark as done successfully.'
+            'data' => 'The task mark as done successfully.',
         ], Response::HTTP_OK);
     }
 }
