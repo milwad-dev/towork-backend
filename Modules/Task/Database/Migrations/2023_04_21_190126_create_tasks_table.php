@@ -3,8 +3,6 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-use Modules\Task\Enums\TaskPriorityEnum;
-use Modules\Task\Enums\TaskStatusEnum;
 
 return new class() extends Migration {
     /**
