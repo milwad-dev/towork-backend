@@ -34,7 +34,7 @@ test('test login user can update tasks successfully', function () {
         'status'      => (string) $task->status,
         'priority'    => (string) $task->priority,
     ]);
-    $response->assertAccepted();
+    $response->assertNoContent();
     $response->assertJsonStructure([
         'data',
         'status',
