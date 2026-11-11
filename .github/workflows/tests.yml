@@ -3,8 +3,6 @@ name: Tests
 on:
   push:
   pull_request:
-  schedule:
-    - cron: '0 0 * * *'
 
 permissions:
   contents: read
@@ -16,29 +14,33 @@ jobs:
     strategy:
       fail-fast: true
       matrix:
-        php: [8.2]
+        php: ['8.4', '8.5']
 
     name: PHP ${{ matrix.php }}
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
           php-version: ${{ matrix.php }}
-          extensions: dom, curl, libxml, mbstring, zip, pcntl, pdo, sqlite, pdo_sqlite
+          extensions: dom, curl, libxml, mbstring, zip, pcntl, pdo, sqlite, pdo_sqlite, intl
           coverage: none
 
       - name: Install Composer dependencies
         run: composer install --prefer-dist --no-interaction --no-progress
 
-      - name: Copy environment file
-        run: cp .env.example .env
+      - name: Code style
+        run: vendor/bin/pint --test
 
-      - name: Generate app key
-        run: php artisan key:generate
-
-      - name: Execute tests
+      - name: Tests
         run: vendor/bin/pest
+
+  docker:
+    runs-on: ubuntu-latest
+    name: Docker build
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build images
+        run: docker compose build
