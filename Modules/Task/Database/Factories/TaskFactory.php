@@ -18,13 +18,13 @@ class TaskFactory extends Factory
     public function definition(): array
     {
         return [
-            'user_id' => User::factory(),
-            'title' => rtrim(fake()->sentence(fake()->numberBetween(3, 7)), '.'),
+            'user_id'     => User::factory(),
+            'title'       => rtrim(fake()->sentence(fake()->numberBetween(3, 7)), '.'),
             'description' => fake()->optional(0.6)->paragraph(),
-            'status' => TaskStatusEnum::Todo,
-            'priority' => fake()->randomElement(TaskPriorityEnum::cases()),
-            'due_date' => fake()->optional(0.7)->dateTimeBetween('-5 days', '+20 days')?->format('Y-m-d'),
-            'position' => 0,
+            'status'      => TaskStatusEnum::Todo,
+            'priority'    => fake()->randomElement(TaskPriorityEnum::cases()),
+            'due_date'    => fake()->optional(0.7)->dateTimeBetween('-5 days', '+20 days')?->format('Y-m-d'),
+            'position'    => 0,
         ];
     }
 

@@ -10,9 +10,9 @@ class UserService
     public function create(array $data): User
     {
         return User::query()->create([
-            'name' => $data['name'],
-            'email' => strtolower($data['email']),
-            'phone' => $data['phone'] ?? null,
+            'name'     => $data['name'],
+            'email'    => strtolower($data['email']),
+            'phone'    => $data['phone'] ?? null,
             'password' => $data['password'],
         ]);
     }
@@ -20,7 +20,7 @@ class UserService
     public function updateProfile(User $user, array $data): User
     {
         $user->fill([
-            'name' => $data['name'],
+            'name'  => $data['name'],
             'email' => strtolower($data['email']),
             'phone' => $data['phone'] ?? null,
         ]);

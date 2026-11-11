@@ -18,9 +18,9 @@ class CategoryFactory extends Factory
     {
         return [
             'user_id' => User::factory(),
-            'name' => ucfirst(fake()->unique()->words(fake()->numberBetween(1, 2), true)),
-            'color' => fake()->randomElement(ColorEnum::values()),
-            'icon' => fake()->randomElement(['briefcase', 'home', 'book', 'heart', 'star', null]),
+            'name'    => ucfirst(fake()->unique()->words(fake()->numberBetween(1, 2), true)),
+            'color'   => fake()->randomElement(ColorEnum::values()),
+            'icon'    => fake()->randomElement(['briefcase', 'home', 'book', 'heart', 'star', null]),
         ];
     }
 }

@@ -17,7 +17,8 @@ class CategoryController extends Controller
     public function __construct(
         private readonly CategoryRepoEloquent $repo,
         private readonly CategoryService $service,
-    ) {}
+    ) {
+    }
 
     public function index(Request $request): AnonymousResourceCollection
     {

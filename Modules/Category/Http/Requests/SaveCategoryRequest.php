@@ -20,7 +20,7 @@ class SaveCategoryRequest extends FormRequest
                     ->ignore($this->route('category')),
             ],
             'color' => ['sometimes', 'string', Rule::enum(ColorEnum::class)],
-            'icon' => ['nullable', 'string', 'max:50', 'regex:/^[a-z0-9-]+$/'],
+            'icon'  => ['nullable', 'string', 'max:50', 'regex:/^[a-z0-9-]+$/'],
         ];
     }
 

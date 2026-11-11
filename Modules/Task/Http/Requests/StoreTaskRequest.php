@@ -14,18 +14,18 @@ class StoreTaskRequest extends FormRequest
         $userId = $this->user()->id;
 
         return [
-            'title' => [$this->titleRequirement(), 'string', 'min:1', 'max:255'],
+            'title'       => [$this->titleRequirement(), 'string', 'min:1', 'max:255'],
             'description' => ['sometimes', 'nullable', 'string', 'max:20000'],
-            'status' => ['sometimes', Rule::enum(TaskStatusEnum::class)],
-            'priority' => ['sometimes', 'integer', Rule::enum(TaskPriorityEnum::class)],
+            'status'      => ['sometimes', Rule::enum(TaskStatusEnum::class)],
+            'priority'    => ['sometimes', 'integer', Rule::enum(TaskPriorityEnum::class)],
             'category_id' => ['sometimes', 'nullable', 'integer', Rule::exists('categories', 'id')->where('user_id', $userId)],
-            'label_ids' => ['sometimes', 'array', 'max:20'],
+            'label_ids'   => ['sometimes', 'array', 'max:20'],
             'label_ids.*' => ['integer', 'distinct', Rule::exists('labels', 'id')->where('user_id', $userId)],
-            'due_date' => ['sometimes', 'nullable', 'date_format:Y-m-d'],
-            'due_time' => ['sometimes', 'nullable', 'date_format:H:i'],
-            'remind_at' => ['sometimes', 'nullable', 'date'],
-            'subtasks' => ['sometimes', 'array', 'max:50'],
-            'subtasks.*' => ['string', 'min:1', 'max:255'],
+            'due_date'    => ['sometimes', 'nullable', 'date_format:Y-m-d'],
+            'due_time'    => ['sometimes', 'nullable', 'date_format:H:i'],
+            'remind_at'   => ['sometimes', 'nullable', 'date'],
+            'subtasks'    => ['sometimes', 'array', 'max:50'],
+            'subtasks.*'  => ['string', 'min:1', 'max:255'],
         ];
     }
 
@@ -58,7 +58,7 @@ class StoreTaskRequest extends FormRequest
     {
         return [
             function ($validator) {
-                if ($this->filled('due_time') && ! $this->filled('due_date') && $this->isMethod('POST')) {
+                if ($this->filled('due_time') && !$this->filled('due_date') && $this->isMethod('POST')) {
                     $validator->errors()->add('due_date', 'A due date is required when a time is set.');
                 }
             },

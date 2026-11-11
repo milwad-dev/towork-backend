@@ -11,9 +11,9 @@ class ReorderTasksRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'tasks' => ['required', 'array', 'min:1', 'max:500'],
-            'tasks.*.id' => ['required', 'integer', 'distinct', Rule::exists('tasks', 'id')->where('user_id', $this->user()->id)],
-            'tasks.*.status' => ['required', Rule::enum(TaskStatusEnum::class)],
+            'tasks'            => ['required', 'array', 'min:1', 'max:500'],
+            'tasks.*.id'       => ['required', 'integer', 'distinct', Rule::exists('tasks', 'id')->where('user_id', $this->user()->id)],
+            'tasks.*.status'   => ['required', Rule::enum(TaskStatusEnum::class)],
             'tasks.*.position' => ['required', 'integer', 'min:0', 'max:100000'],
         ];
     }

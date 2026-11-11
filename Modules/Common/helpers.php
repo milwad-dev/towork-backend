@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Carbon;
 
-if (! function_exists('client_timezone')) {
+if (!function_exists('client_timezone')) {
     /**
      * The timezone sent by the client (X-Timezone header), or the app timezone.
      */
@@ -12,7 +12,7 @@ if (! function_exists('client_timezone')) {
     }
 }
 
-if (! function_exists('client_now')) {
+if (!function_exists('client_now')) {
     /**
      * "Now" in the client's timezone.
      */

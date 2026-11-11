@@ -35,8 +35,8 @@ class DemoSeeder extends Seeder
     private function seedDemo(): void
     {
         $user = User::query()->create([
-            'name' => 'Demo User',
-            'email' => self::EMAIL,
+            'name'     => 'Demo User',
+            'email'    => self::EMAIL,
             'password' => self::PASSWORD,
         ]);
         $user->markEmailAsVerified();
@@ -85,13 +85,13 @@ class DemoSeeder extends Seeder
         $i = 0;
         foreach ($tasks as [$title, $cat, $priority, $status, $due, $time, $taskLabels, $subtasks, $doneAgo]) {
             $task = $user->tasks()->create([
-                'title' => $title,
-                'category_id' => $cat ? $categories[$cat]->id : null,
-                'priority' => $priority,
-                'status' => $status,
-                'due_date' => $due === null ? null : $d($due),
-                'due_time' => $time,
-                'position' => $positions[$status] = ($positions[$status] ?? -1) + 1,
+                'title'        => $title,
+                'category_id'  => $cat ? $categories[$cat]->id : null,
+                'priority'     => $priority,
+                'status'       => $status,
+                'due_date'     => $due === null ? null : $d($due),
+                'due_time'     => $time,
+                'position'     => $positions[$status] = ($positions[$status] ?? -1) + 1,
                 'completed_at' => $status === TaskStatusEnum::Done->value ? now()->subDays($doneAgo)->setTime(17, 0) : null,
             ]);
 
@@ -114,11 +114,11 @@ class DemoSeeder extends Seeder
                 continue;
             }
             $user->tasks()->create([
-                'title' => $history[$daysAgo % count($history)],
-                'priority' => 2,
-                'status' => TaskStatusEnum::Done,
+                'title'        => $history[$daysAgo % count($history)],
+                'priority'     => 2,
+                'status'       => TaskStatusEnum::Done,
                 'completed_at' => now()->subDays($daysAgo)->setTime(18, 0),
-                'position' => $positions['done'] = ($positions['done'] ?? -1) + 1,
+                'position'     => $positions['done'] = ($positions['done'] ?? -1) + 1,
             ])->forceFill(['created_at' => now()->subDays($daysAgo + 1)->setTime(10, 0)])->saveQuietly();
         }
     }

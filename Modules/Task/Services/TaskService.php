@@ -12,7 +12,9 @@ use Modules\User\Models\User;
 
 class TaskService
 {
-    public function __construct(private readonly TaskRepoEloquent $repo) {}
+    public function __construct(private readonly TaskRepoEloquent $repo)
+    {
+    }
 
     public function store(User $user, array $data): Task
     {
@@ -22,7 +24,7 @@ class TaskService
             /** @var Task $task */
             $task = $user->tasks()->create([
                 ...Arr::except($data, ['label_ids', 'subtasks']),
-                'status' => $status,
+                'status'   => $status,
                 'position' => $this->repo->nextPosition($user, $status),
             ]);
 
@@ -44,7 +46,7 @@ class TaskService
             $task->fill(Arr::except($data, ['label_ids']));
 
             // Moving to another column puts the task at the bottom of it.
-            if ($task->isDirty('status') && ! array_key_exists('position', $data)) {
+            if ($task->isDirty('status') && !array_key_exists('position', $data)) {
                 $task->position = $this->repo->nextPosition($task->user, $task->status->value);
             }
 
@@ -96,7 +98,7 @@ class TaskService
     public function addSubtask(Task $task, string $title): Subtask
     {
         return $task->subtasks()->create([
-            'title' => $title,
+            'title'    => $title,
             'position' => (int) $task->subtasks()->max('position') + 1,
         ]);
     }

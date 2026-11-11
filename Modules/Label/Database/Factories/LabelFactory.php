@@ -18,8 +18,8 @@ class LabelFactory extends Factory
     {
         return [
             'user_id' => User::factory(),
-            'name' => ucfirst(fake()->unique()->words(fake()->numberBetween(1, 2), true)),
-            'color' => fake()->randomElement(ColorEnum::values()),
+            'name'    => ucfirst(fake()->unique()->words(fake()->numberBetween(1, 2), true)),
+            'color'   => fake()->randomElement(ColorEnum::values()),
         ];
     }
 }

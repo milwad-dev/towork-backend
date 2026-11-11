@@ -13,9 +13,9 @@ class UpdateProfileRequest extends FormRequest
         $id = $this->user()->id;
 
         return [
-            'name' => ['required', 'string', 'min:2', 'max:100'],
+            'name'  => ['required', 'string', 'min:2', 'max:100'],
             'email' => ['required', 'email', 'max:255', Rule::unique('users', 'email')->ignore($id)],
-            'phone' => ['nullable', 'string', 'max:32', new ValidPhoneNumber, Rule::unique('users', 'phone')->ignore($id)],
+            'phone' => ['nullable', 'string', 'max:32', new ValidPhoneNumber(), Rule::unique('users', 'phone')->ignore($id)],
         ];
     }
 

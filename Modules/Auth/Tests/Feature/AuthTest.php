@@ -31,9 +31,9 @@ function lastCode(string $email, AuthCodePurpose $purpose): string
 describe('register', function () {
     it('creates an account, returns a token and e-mails a verification code', function () {
         $response = postJson(api('auth/register'), [
-            'name' => 'Jane Doe',
-            'email' => 'Jane@Example.com',
-            'password' => 'secret123',
+            'name'                  => 'Jane Doe',
+            'email'                 => 'Jane@Example.com',
+            'password'              => 'secret123',
             'password_confirmation' => 'secret123',
         ]);
 
@@ -52,10 +52,10 @@ describe('register', function () {
         User::factory()->create(['email' => 'taken@example.com']);
 
         postJson(api('auth/register'), [
-            'name' => '',
-            'email' => 'taken@example.com',
-            'phone' => 'nope',
-            'password' => 'short',
+            'name'                  => '',
+            'email'                 => 'taken@example.com',
+            'phone'                 => 'nope',
+            'password'              => 'short',
             'password_confirmation' => 'different',
         ])->assertUnprocessable()->assertJsonValidationErrors(['name', 'email', 'phone', 'password']);
     });
@@ -104,9 +104,9 @@ describe('password reset', function () {
         postJson(api('auth/reset-password/check'), ['email' => $user->email, 'code' => $code])->assertOk();
 
         postJson(api('auth/reset-password'), [
-            'email' => $user->email,
-            'code' => $code,
-            'password' => 'brandnew123',
+            'email'                 => $user->email,
+            'code'                  => $code,
+            'password'              => 'brandnew123',
             'password_confirmation' => 'brandnew123',
         ])->assertOk();
 

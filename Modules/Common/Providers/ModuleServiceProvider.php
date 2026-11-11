@@ -26,7 +26,7 @@ abstract class ModuleServiceProvider extends ServiceProvider
             $this->loadViewsFrom($base.'/Resources/Views', $this->module);
         }
 
-        if (is_file($base.'/Routes/api.php') && ! $this->app->routesAreCached()) {
+        if (is_file($base.'/Routes/api.php') && !$this->app->routesAreCached()) {
             Route::middleware(['api', 'timezone'])
                 ->prefix('api/'.config('app.version'))
                 ->group($base.'/Routes/api.php');

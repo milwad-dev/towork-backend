@@ -17,7 +17,8 @@ class PasswordResetController extends Controller
     public function __construct(
         private readonly AuthCodeService $codes,
         private readonly UserRepoEloquent $users,
-    ) {}
+    ) {
+    }
 
     /**
      * Send a reset code. Always answers 200 so e-mail addresses can't be enumerated.
@@ -54,7 +55,7 @@ class PasswordResetController extends Controller
 
     private function ensureValidCode(string $email, string $code, bool $consume): void
     {
-        if (! $this->codes->verify($email, AuthCodePurpose::ResetPassword, $code, $consume)) {
+        if (!$this->codes->verify($email, AuthCodePurpose::ResetPassword, $code, $consume)) {
             throw ValidationException::withMessages(['code' => 'This code is invalid or has expired.']);
         }
     }

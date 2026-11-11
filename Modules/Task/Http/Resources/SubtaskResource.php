@@ -12,11 +12,11 @@ class SubtaskResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'id' => $this->id,
-            'task_id' => $this->task_id,
-            'title' => $this->title,
+            'id'           => $this->id,
+            'task_id'      => $this->task_id,
+            'title'        => $this->title,
             'is_completed' => $this->is_completed,
-            'position' => $this->position,
+            'position'     => $this->position,
         ];
     }
 }

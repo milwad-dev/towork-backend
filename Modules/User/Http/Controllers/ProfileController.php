@@ -13,7 +13,9 @@ use Modules\User\Services\UserService;
 
 class ProfileController extends Controller
 {
-    public function __construct(private readonly UserService $users) {}
+    public function __construct(private readonly UserService $users)
+    {
+    }
 
     public function show(Request $request): UserResource
     {

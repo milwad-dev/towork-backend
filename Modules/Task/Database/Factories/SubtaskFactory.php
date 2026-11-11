@@ -16,10 +16,10 @@ class SubtaskFactory extends Factory
     public function definition(): array
     {
         return [
-            'task_id' => Task::factory(),
-            'title' => rtrim(fake()->sentence(4), '.'),
+            'task_id'      => Task::factory(),
+            'title'        => rtrim(fake()->sentence(4), '.'),
             'is_completed' => fake()->boolean(30),
-            'position' => 0,
+            'position'     => 0,
         ];
     }
 }

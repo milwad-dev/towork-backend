@@ -11,9 +11,9 @@ class SaveSubtaskRequest extends FormRequest
         $required = $this->isMethod('POST') ? 'required' : 'sometimes';
 
         return [
-            'title' => [$required, 'string', 'min:1', 'max:255'],
+            'title'        => [$required, 'string', 'min:1', 'max:255'],
             'is_completed' => ['sometimes', 'boolean'],
-            'position' => ['sometimes', 'integer', 'min:0'],
+            'position'     => ['sometimes', 'integer', 'min:0'],
         ];
     }
 

@@ -15,7 +15,9 @@ class TaskReminderMail extends Mailable implements ShouldQueue
     use Queueable;
     use SerializesModels;
 
-    public function __construct(public Task $task) {}
+    public function __construct(public Task $task)
+    {
+    }
 
     public function envelope(): Envelope
     {

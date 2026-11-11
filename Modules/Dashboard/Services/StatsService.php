@@ -23,19 +23,19 @@ class StatsService
 
         return [
             'totals' => [
-                'all' => $all,
-                'todo' => (int) ($byStatus[TaskStatusEnum::Todo->value] ?? 0),
+                'all'         => $all,
+                'todo'        => (int) ($byStatus[TaskStatusEnum::Todo->value] ?? 0),
                 'in_progress' => (int) ($byStatus[TaskStatusEnum::InProgress->value] ?? 0),
-                'done' => $done,
-                'overdue' => $tasks()->overdue($today)->count(),
-                'due_today' => $tasks()->open()->whereDate('due_date', $today)->count(),
-                'upcoming' => $tasks()->open()->whereDate('due_date', '>', $today)->count(),
+                'done'        => $done,
+                'overdue'     => $tasks()->overdue($today)->count(),
+                'due_today'   => $tasks()->open()->whereDate('due_date', $today)->count(),
+                'upcoming'    => $tasks()->open()->whereDate('due_date', '>', $today)->count(),
             ],
             'completion_rate' => $all > 0 ? (int) round($done / $all * 100) : 0,
-            'by_priority' => $this->byPriority($tasks()),
-            'by_category' => $this->byCategory($user),
-            'activity' => $this->activity($tasks, $now),
-            'streak' => $this->streak($tasks(), $now),
+            'by_priority'     => $this->byPriority($tasks()),
+            'by_category'     => $this->byCategory($user),
+            'activity'        => $this->activity($tasks, $now),
+            'streak'          => $this->streak($tasks(), $now),
         ];
     }
 
@@ -100,7 +100,7 @@ class StatsService
             ->flip();
 
         $day = $now->copy()->startOfDay();
-        if (! isset($dates[$day->toDateString()])) {
+        if (!isset($dates[$day->toDateString()])) {
             $day->subDay();
         }
 

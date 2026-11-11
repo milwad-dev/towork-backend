@@ -67,13 +67,13 @@ class TaskRepoEloquent
         }
 
         match ($f['due'] ?? null) {
-            'today' => $query->whereDate('due_date', $today),
-            'overdue' => $query->overdue($today),
-            'upcoming' => $query->whereDate('due_date', '>', $today),
-            'week' => $query->whereBetween('due_date', [$today, Carbon::parse($today)->addDays(6)->toDateString()]),
+            'today'     => $query->whereDate('due_date', $today),
+            'overdue'   => $query->overdue($today),
+            'upcoming'  => $query->whereDate('due_date', '>', $today),
+            'week'      => $query->whereBetween('due_date', [$today, Carbon::parse($today)->addDays(6)->toDateString()]),
             'scheduled' => $query->whereNotNull('due_date'),
-            'none' => $query->whereNull('due_date'),
-            default => null,
+            'none'      => $query->whereNull('due_date'),
+            default     => null,
         };
 
         if (filled($f['date_from'] ?? null)) {
@@ -96,7 +96,7 @@ class TaskRepoEloquent
                 ->orderByRaw('CASE WHEN due_time IS NULL THEN 1 ELSE 0 END')
                 ->orderBy('due_time', $direction),
             'priority' => $query->orderBy('priority', $direction === 'asc' ? 'desc' : 'asc'), // "asc" = most important first
-            default => $query->orderBy($sort, $direction),
+            default    => $query->orderBy($sort, $direction),
         };
 
         $query->orderBy('id', $sort === 'created_at' ? $direction : 'asc');

@@ -17,7 +17,7 @@ use Modules\Task\Enums\TaskStatusEnum;
 use Modules\User\Models\User;
 
 /**
- * @property TaskStatusEnum $status
+ * @property TaskStatusEnum   $status
  * @property TaskPriorityEnum $priority
  */
 #[UseFactory(TaskFactory::class)]
@@ -41,7 +41,7 @@ class Task extends Model
     ];
 
     protected $attributes = [
-        'status' => 'todo',
+        'status'   => 'todo',
         'priority' => 2,
         'position' => 0,
     ];
@@ -49,13 +49,13 @@ class Task extends Model
     protected function casts(): array
     {
         return [
-            'status' => TaskStatusEnum::class,
-            'priority' => TaskPriorityEnum::class,
-            'due_date' => 'date:Y-m-d',
-            'remind_at' => 'datetime',
-            'reminded_at' => 'datetime',
+            'status'       => TaskStatusEnum::class,
+            'priority'     => TaskPriorityEnum::class,
+            'due_date'     => 'date:Y-m-d',
+            'remind_at'    => 'datetime',
+            'reminded_at'  => 'datetime',
             'completed_at' => 'datetime',
-            'position' => 'integer',
+            'position'     => 'integer',
         ];
     }
 
@@ -119,7 +119,7 @@ class Task extends Model
 
     public function isOverdue(): bool
     {
-        return ! $this->isDone()
+        return !$this->isDone()
             && $this->due_date !== null
             && $this->due_date->toDateString() < client_now()->toDateString();
     }

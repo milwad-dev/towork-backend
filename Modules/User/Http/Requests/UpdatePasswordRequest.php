@@ -11,7 +11,7 @@ class UpdatePasswordRequest extends FormRequest
     {
         return [
             'current_password' => ['required', 'string', 'current_password:sanctum'],
-            'password' => ['required', 'string', 'confirmed', 'max:255', Password::min(8)->letters()->numbers()],
+            'password'         => ['required', 'string', 'confirmed', 'max:255', Password::min(8)->letters()->numbers()],
         ];
     }
 }

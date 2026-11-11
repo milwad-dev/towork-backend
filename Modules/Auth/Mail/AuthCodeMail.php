@@ -16,7 +16,9 @@ class AuthCodeMail extends Mailable implements ShouldQueue
     use Queueable;
     use SerializesModels;
 
-    public function __construct(public string $code, public AuthCodePurpose $purpose) {}
+    public function __construct(public string $code, public AuthCodePurpose $purpose)
+    {
+    }
 
     public function envelope(): Envelope
     {

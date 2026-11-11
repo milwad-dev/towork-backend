@@ -13,7 +13,9 @@ use Modules\User\Http\Resources\UserResource;
 
 class EmailVerificationController extends Controller
 {
-    public function __construct(private readonly AuthCodeService $codes) {}
+    public function __construct(private readonly AuthCodeService $codes)
+    {
+    }
 
     public function send(Request $request): JsonResponse
     {
@@ -32,8 +34,8 @@ class EmailVerificationController extends Controller
     {
         $user = $request->user();
 
-        if (! $user->hasVerifiedEmail()) {
-            if (! $this->codes->verify($user->email, AuthCodePurpose::VerifyEmail, $request->validated('code'))) {
+        if (!$user->hasVerifiedEmail()) {
+            if (!$this->codes->verify($user->email, AuthCodePurpose::VerifyEmail, $request->validated('code'))) {
                 throw ValidationException::withMessages(['code' => 'This code is invalid or has expired.']);
             }
 

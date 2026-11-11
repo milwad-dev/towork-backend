@@ -18,7 +18,7 @@ class Subtask extends Model
 
     protected $attributes = [
         'is_completed' => false,
-        'position' => 0,
+        'position'     => 0,
     ];
 
     protected $touches = ['task'];
@@ -27,7 +27,7 @@ class Subtask extends Model
     {
         return [
             'is_completed' => 'boolean',
-            'position' => 'integer',
+            'position'     => 'integer',
         ];
     }
 

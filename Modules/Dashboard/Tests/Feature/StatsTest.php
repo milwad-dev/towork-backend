@@ -22,7 +22,7 @@ it('summarises my tasks', function () {
 
     $response
         ->assertJsonPath('data.totals', [
-            'all' => 6, 'todo' => 2, 'in_progress' => 1, 'done' => 3,
+            'all'     => 6, 'todo' => 2, 'in_progress' => 1, 'done' => 3,
             'overdue' => 1, 'due_today' => 1, 'upcoming' => 1,
         ])
         ->assertJsonPath('data.completion_rate', 50)

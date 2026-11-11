@@ -20,14 +20,14 @@ describe('create & read', function () {
         $labels = Label::factory()->for($user)->count(2)->create();
 
         postJson(api('tasks'), [
-            'title' => '  Ship v1  ',
+            'title'       => '  Ship v1  ',
             'description' => 'Release notes too',
-            'priority' => 4,
+            'priority'    => 4,
             'category_id' => $category->id,
-            'label_ids' => $labels->pluck('id')->all(),
-            'due_date' => '2030-01-15',
-            'due_time' => '09:30',
-            'subtasks' => ['Write changelog', 'Tag release'],
+            'label_ids'   => $labels->pluck('id')->all(),
+            'due_date'    => '2030-01-15',
+            'due_time'    => '09:30',
+            'subtasks'    => ['Write changelog', 'Tag release'],
         ])
             ->assertCreated()
             ->assertJsonPath('data.title', 'Ship v1')
@@ -58,9 +58,9 @@ describe('create & read', function () {
         login();
 
         postJson(api('tasks'), [
-            'title' => 'x',
+            'title'       => 'x',
             'category_id' => Category::factory()->create()->id,
-            'label_ids' => [Label::factory()->create()->id],
+            'label_ids'   => [Label::factory()->create()->id],
         ])->assertJsonValidationErrors(['category_id', 'label_ids.0']);
     });
 

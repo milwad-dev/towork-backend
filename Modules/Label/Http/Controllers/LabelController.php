@@ -17,7 +17,8 @@ class LabelController extends Controller
     public function __construct(
         private readonly LabelRepoEloquent $repo,
         private readonly LabelService $service,
-    ) {}
+    ) {
+    }
 
     public function index(Request $request): AnonymousResourceCollection
     {

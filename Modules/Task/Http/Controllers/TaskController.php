@@ -19,7 +19,8 @@ class TaskController extends Controller
     public function __construct(
         private readonly TaskRepoEloquent $repo,
         private readonly TaskService $service,
-    ) {}
+    ) {
+    }
 
     public function index(ListTasksRequest $request): AnonymousResourceCollection
     {

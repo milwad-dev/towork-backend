@@ -11,7 +11,7 @@ enum AuthCodePurpose: string
     {
         return match ($this) {
             self::ResetPassword => 'Your password reset code',
-            self::VerifyEmail => 'Verify your e-mail address',
+            self::VerifyEmail   => 'Verify your e-mail address',
         };
     }
 }

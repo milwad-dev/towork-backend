@@ -10,7 +10,7 @@ class CheckResetCodeRequest extends FormRequest
     {
         return [
             'email' => ['required', 'email', 'max:255'],
-            'code' => ['required', 'digits:6'],
+            'code'  => ['required', 'digits:6'],
         ];
     }
 }

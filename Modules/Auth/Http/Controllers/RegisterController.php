@@ -20,7 +20,7 @@ class RegisterController extends Controller
 
         return response()->json([
             'data' => [
-                'user' => new UserResource($user),
+                'user'  => new UserResource($user),
                 'token' => $users->generateToken($user),
             ],
         ], 201);

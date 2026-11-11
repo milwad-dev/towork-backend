@@ -16,9 +16,9 @@ class AuthCode extends Model
     protected function casts(): array
     {
         return [
-            'purpose' => AuthCodePurpose::class,
+            'purpose'    => AuthCodePurpose::class,
             'expires_at' => 'datetime',
-            'attempts' => 'integer',
+            'attempts'   => 'integer',
         ];
     }
 

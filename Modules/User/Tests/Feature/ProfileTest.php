@@ -48,8 +48,8 @@ it('changes the password', function () {
         ->assertJsonValidationErrors('current_password');
 
     putJson(api('me/password'), [
-        'current_password' => UserFactory::PASSWORD,
-        'password' => 'another123',
+        'current_password'      => UserFactory::PASSWORD,
+        'password'              => 'another123',
         'password_confirmation' => 'another123',
     ])->assertNoContent();
 });

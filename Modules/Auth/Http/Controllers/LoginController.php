@@ -17,7 +17,7 @@ class LoginController extends Controller
     {
         $user = $repo->findByLogin($request->validated('login'));
 
-        if (! $user || ! Hash::check($request->validated('password'), $user->password)) {
+        if (!$user || !Hash::check($request->validated('password'), $user->password)) {
             throw ValidationException::withMessages([
                 'login' => 'These credentials do not match our records.',
             ]);
@@ -25,7 +25,7 @@ class LoginController extends Controller
 
         return response()->json([
             'data' => [
-                'user' => new UserResource($user),
+                'user'  => new UserResource($user),
                 'token' => $users->generateToken($user, substr((string) $request->userAgent(), 0, 100) ?: 'web'),
             ],
         ]);

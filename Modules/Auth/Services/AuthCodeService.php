@@ -36,9 +36,9 @@ class AuthCodeService
 
         AuthCode::query()->where(['email' => $email, 'purpose' => $purpose])->delete();
         AuthCode::query()->create([
-            'email' => $email,
-            'purpose' => $purpose,
-            'code' => Hash::make($code),
+            'email'      => $email,
+            'purpose'    => $purpose,
+            'code'       => Hash::make($code),
             'expires_at' => now()->addMinutes(self::TTL_MINUTES),
         ]);
 
@@ -55,11 +55,11 @@ class AuthCodeService
             ->latest('id')
             ->first();
 
-        if (! $record || $record->isExpired() || $record->attempts >= self::MAX_ATTEMPTS) {
+        if (!$record || $record->isExpired() || $record->attempts >= self::MAX_ATTEMPTS) {
             return false;
         }
 
-        if (! Hash::check($code, $record->code)) {
+        if (!Hash::check($code, $record->code)) {
             $record->increment('attempts');
 
             return false;
