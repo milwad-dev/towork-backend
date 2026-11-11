@@ -2,86 +2,62 @@
 
 namespace Modules\Common\Console\Commands;
 
-use File;
 use Illuminate\Console\Command;
-use Modules\Common\Console\Commands\Traits\MakeModuleTraits\{RepositoryTrait,
-    RouteTrait,
-    ServiceProviderTrait,
-    ServiceTrait};
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Str;
 
 class MakeModule extends Command
 {
-    use ServiceProviderTrait;
-    use RepositoryTrait;
-    use ServiceTrait;
-    use RouteTrait;
+    protected $signature = 'make:module {name : Module name, e.g. Comment}';
 
-    /**
-     * The name and signature of the console command.
-     *
-     * @var string
-     */
-    protected $signature = 'make:module {name}';
+    protected $description = 'Create a new module skeleton inside Modules/';
 
-    /**
-     * The console command description.
-     *
-     * @var string
-     */
-    protected $description = 'Create a new module';
-
-    /**
-     * Create a new command instance.
-     *
-     * @return void
-     */
-    public function __construct()
+    public function handle(): int
     {
-        parent::__construct();
-    }
+        $name = Str::studly($this->argument('name'));
+        $base = base_path('Modules/'.$name);
 
-    /**
-     * Execute the console command.
-     *
-     * @return void
-     */
-    public function handle()
-    {
-        $argument = $this->argument('name');
+        if (File::isDirectory($base)) {
+            $this->components->error("Module [{$name}] already exists.");
 
-        File::makeDirectory('Modules/'.$argument);
+            return self::FAILURE;
+        }
 
-        // Databases
-        File::makeDirectory('Modules/'.$argument.'/Database');
-        File::makeDirectory('Modules/'.$argument.'/Database/Migrations');
+        foreach (['Database/Migrations', 'Database/Factories', 'Http/Controllers', 'Http/Requests', 'Http/Resources', 'Models', 'Providers', 'Routes', 'Services', 'Tests/Feature'] as $dir) {
+            File::makeDirectory($base.'/'.$dir, 0755, true);
+        }
 
-        // Providers
-        File::makeDirectory('Modules/'.$argument.'/Providers');
-        File::put('Modules/'.$argument.'/Providers/'.$argument.'ServiceProvider.php', $this->getServiceProviderBodyData($argument));
+        File::put($base."/Providers/{$name}ServiceProvider.php", <<<PHP
+        <?php
 
-        // Repositories
-        File::makeDirectory('Modules/'.$argument.'/Repositories');
-        File::put('Modules/'.$argument.'/Repositories/'.$argument.'Repo.php', $this->getRepoBodyData($argument));
+        namespace Modules\\{$name}\\Providers;
 
-        // Http
-        File::makeDirectory('Modules/'.$argument.'/Http');
-        File::makeDirectory('Modules/'.$argument.'/Http/Controllers');
+        use Modules\\Common\\Providers\\ModuleServiceProvider;
 
-        // Models
-        File::makeDirectory('Modules/'.$argument.'/Models');
+        class {$name}ServiceProvider extends ModuleServiceProvider
+        {
+            protected string \$module = '{$name}';
+        }
 
-        // routes
-        File::makeDirectory('Modules/'.$argument.'/routes');
-        File::put('Modules/'.$argument.'/routes/'.strtolower($argument).'_routes.php', $this->getRouteBodyData());
+        PHP);
 
-        // Services
-        File::makeDirectory('Modules/'.$argument.'/Services');
-        File::put('Modules/'.$argument.'/Services/'.$argument.'Service.php', $this->getServiceBodyData($argument));
+        File::put($base.'/Routes/api.php', <<<'PHP'
+        <?php
 
-        // Views
-        File::makeDirectory('Modules/'.$argument.'/Resources');
-        File::makeDirectory('Modules/'.$argument.'/Resources/Views');
+        use Illuminate\Support\Facades\Route;
 
-        $this->info("Your Module $argument Make Successfully");
+        Route::middleware('auth:sanctum')->group(function () {
+            //
+        });
+
+        PHP);
+
+        $this->components->info("Module [{$name}] created.");
+        $this->components->bulletList([
+            "Add \"Modules\\\\{$name}\\\\\": \"Modules/{$name}/\" to composer.json autoload and run composer dump-autoload.",
+            "Register Modules\\{$name}\\Providers\\{$name}ServiceProvider in bootstrap/providers.php.",
+        ]);
+
+        return self::SUCCESS;
     }
 }

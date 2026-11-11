@@ -2,8 +2,14 @@
 
 namespace Modules\Task\Enums;
 
-enum TaskStatusEnum: int
+enum TaskStatusEnum: string
 {
-    case STATUS_INACTIVE = 0;
-    case STATUS_ACTIVE = 1;
+    case Todo = 'todo';
+    case InProgress = 'in_progress';
+    case Done = 'done';
+
+    public static function values(): array
+    {
+        return array_column(self::cases(), 'value');
+    }
 }

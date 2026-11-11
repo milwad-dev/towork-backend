@@ -2,32 +2,21 @@
 
 namespace Modules\Task\Http\Requests;
 
-use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rules\Enum;
-use Modules\Task\Enums\TaskPriorityEnum;
-use Modules\Task\Enums\TaskStatusEnum;
-
-class UpdateTaskRequest extends FormRequest
+/**
+ * Partial update: every field is optional; `label_ids` replaces the whole set.
+ */
+class UpdateTaskRequest extends StoreTaskRequest
 {
-    /**
-     * Determine if the user is authorized to make this request.
-     */
-    public function authorize(): bool
-    {
-        return auth()->check() === true;
-    }
-
-    /**
-     * Get the validation rules that apply to the request.
-     */
     public function rules(): array
     {
-        return [
-            'title'       => 'required|string|min:3|max:255',
-            'description' => 'required|string|min:3',
-            'remind_date' => 'required|string',
-            'priority'    => ['required', 'string', new Enum(TaskPriorityEnum::class), 'max:250'],
-            'status'      => ['required', 'string', new Enum(TaskStatusEnum::class), 'max:250'],
-        ];
+        $rules = parent::rules();
+        unset($rules['subtasks'], $rules['subtasks.*']);
+
+        return $rules;
+    }
+
+    protected function titleRequirement(): string
+    {
+        return 'sometimes';
     }
 }

@@ -4,32 +4,18 @@ namespace Modules\Auth\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-/**
- * @property $email
- * @property $password
- */
 class LoginRequest extends FormRequest
 {
-    /**
-     * Determine if the user is authorized to make this request.
-     *
-     * @return bool
-     */
-    public function authorize()
-    {
-        return auth()->check() === false;
-    }
-
-    /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array<string, mixed>
-     */
-    public function rules()
+    public function rules(): array
     {
         return [
-            'email'     => ['required', 'min:3', 'max:250'],
-            'password'  => ['required', 'string', 'max:250'],
+            'login' => ['required', 'string', 'max:255'], // e-mail or phone
+            'password' => ['required', 'string', 'max:255'],
         ];
+    }
+
+    public function attributes(): array
+    {
+        return ['login' => 'e-mail or phone'];
     }
 }

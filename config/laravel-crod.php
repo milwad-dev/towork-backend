@@ -1,5 +1,7 @@
 <?php
 
+use Modules\Common\Http\Controllers\Controller;
+
 return [
     /*
      * Repository namespace.
@@ -14,7 +16,7 @@ return [
      *
      * This is a namespace of main controller that default path is `App\Http\Controllers\Controller`.
      */
-    'main_controller' => \Modules\Common\Http\Controllers\Controller::class,
+    'main_controller' => Controller::class,
 
     /*
      * Modules config.
@@ -22,19 +24,19 @@ return [
      * You can make custom modules with special folders ... .
      */
     'modules' => [
-        'module_namespace'  => 'Modules', // This value is for the name of the folder that the modules are in.
-        'model_path'        => 'Models', // This value is for the name of the folder that contains the module models.
-        'migration_path'    => 'Database\Migrations', // This value is for the name of the folder that contains the module migrations.
-        'controller_path'   => 'Http\Controllers', // This value is for the name of the folder that contains the module controllers.
-        'request_path'      => 'Http\Requests', // This value is for the name of the folder that contains the module requests-form.
-        'view_path'         => 'Resources\Views', // This value is for the name of the folder that contains the module views.
-        'service_path'      => 'Services', // This value is for the name of the folder that contains the module services.
-        'repository_path'   => 'Repositories', // This value is for the name of the folder that contains the module Repositories.
+        'module_namespace' => 'Modules', // This value is for the name of the folder that the modules are in.
+        'model_path' => 'Models', // This value is for the name of the folder that contains the module models.
+        'migration_path' => 'Database\Migrations', // This value is for the name of the folder that contains the module migrations.
+        'controller_path' => 'Http\Controllers', // This value is for the name of the folder that contains the module controllers.
+        'request_path' => 'Http\Requests', // This value is for the name of the folder that contains the module requests-form.
+        'view_path' => 'Resources\Views', // This value is for the name of the folder that contains the module views.
+        'service_path' => 'Services', // This value is for the name of the folder that contains the module services.
+        'repository_path' => 'Repositories', // This value is for the name of the folder that contains the module Repositories.
         'feature_test_path' => 'Tests\Feature', // This value is for the name of the folder that contains the module feature-tests.
-        'unit_test_path'    => 'Tests\Unit', // This value is for the name of the folder that contains the module unit-tests.
-        'provider_path'     => 'Providers', // This value is for the name of the folder that contains the module providers.
-        'factory_path'      => 'Database\Factories', // This value is for the name of the folder that contains the module factories.
-        'seeder_path'       => 'Database\Seeders', // This value is for the name of the folder that contains the module seeders.
+        'unit_test_path' => 'Tests\Unit', // This value is for the name of the folder that contains the module unit-tests.
+        'provider_path' => 'Providers', // This value is for the name of the folder that contains the module providers.
+        'factory_path' => 'Database\Factories', // This value is for the name of the folder that contains the module factories.
+        'seeder_path' => 'Database\Seeders', // This value is for the name of the folder that contains the module seeders.
     ],
 
     /*

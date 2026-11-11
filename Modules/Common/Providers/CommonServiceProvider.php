@@ -4,40 +4,13 @@ namespace Modules\Common\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use Modules\Common\Console\Commands\MakeModule;
-use Modules\Common\Responses\JsonResponse;
 
 class CommonServiceProvider extends ServiceProvider
 {
-    /**
-     * Register files.
-     *
-     * @return void
-     */
-    public function register()
+    public function boot(): void
     {
-        $this->bindJsonResponseFacade();
-        $this->registerCommands();
-    }
-
-    /**
-     * Bind json response facade.
-     *
-     * @return void
-     */
-    private function bindJsonResponseFacade()
-    {
-        app()->bind('json-response', function ($app) {
-            return new JsonResponse();
-        });
-    }
-
-    /**
-     * Register commands.
-     *
-     * @return void
-     */
-    private function registerCommands(): void
-    {
-        $this->commands(MakeModule::class);
+        if ($this->app->runningInConsole()) {
+            $this->commands([MakeModule::class]);
+        }
     }
 }

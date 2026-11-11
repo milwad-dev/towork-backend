@@ -2,52 +2,22 @@
 
 namespace Modules\User\Repositories;
 
-use Illuminate\Database\Eloquent\Model;
 use Modules\User\Models\User;
 
 class UserRepoEloquent
 {
-    /**
-     * Get latest users.
-     *
-     * @return User|Model
-     */
-    public function query()
+    public function findByEmail(string $email): ?User
     {
-        return new User();
+        return User::query()->where('email', strtolower($email))->first();
     }
 
     /**
-     * Get the latest users.
-     *
-     * @return Model|User
+     * Find a user by e-mail address or phone number.
      */
-    public function getLatest()
+    public function findByLogin(string $login): ?User
     {
-        return $this->query()->latest();
-    }
+        $field = filter_var($login, FILTER_VALIDATE_EMAIL) ? 'email' : 'phone';
 
-    /**
-     * Find user by email.
-     *
-     * @param string $email
-     *
-     * @return User
-     */
-    public function findByEmail(string $email)
-    {
-        return $this->query()->where('email', $email)->firstOrFail();
-    }
-
-    /**
-     * Find user by id.
-     *
-     * @param int $id
-     *
-     * @return bool|mixed|null
-     */
-    public function findById(int $id)
-    {
-        return $this->query()->findOrFail($id);
+        return User::query()->where($field, $field === 'email' ? strtolower($login) : $login)->first();
     }
 }

@@ -2,68 +2,69 @@
 
 namespace Modules\Task\Http\Controllers;
 
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+use Illuminate\Http\Response;
 use Modules\Common\Http\Controllers\Controller;
+use Modules\Task\Http\Requests\ListTasksRequest;
+use Modules\Task\Http\Requests\ReorderTasksRequest;
 use Modules\Task\Http\Requests\StoreTaskRequest;
 use Modules\Task\Http\Requests\UpdateTaskRequest;
 use Modules\Task\Http\Resources\TaskResource;
 use Modules\Task\Models\Task;
 use Modules\Task\Repositories\TaskRepoEloquent;
 use Modules\Task\Services\TaskService;
-use Symfony\Component\HttpFoundation\Response;
 
 class TaskController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index(): \Illuminate\Http\Resources\Json\AnonymousResourceCollection
-    {
-        $tasks = resolve(TaskRepoEloquent::class)->getLatest()->get();
+    public function __construct(
+        private readonly TaskRepoEloquent $repo,
+        private readonly TaskService $service,
+    ) {}
 
-        return TaskResource::collection($tasks);
+    public function index(ListTasksRequest $request): AnonymousResourceCollection
+    {
+        return TaskResource::collection($this->repo->paginate($request->user(), $request->validated()));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(StoreTaskRequest $request): TaskResource
     {
-        $task = resolve(TaskService::class)->store($request->validated());
-
-        return new TaskResource($task);
+        return new TaskResource($this->service->store($request->user(), $request->validated()));
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Task $task): \Illuminate\Http\JsonResponse|TaskResource
+    public function show(Task $task): TaskResource
     {
-        if ($task->user()->isNot(auth()->user())) {
-            return response()->json(['data' => []], Response::HTTP_FORBIDDEN);
-        }
+        $this->authorize('view', $task);
 
-        return new TaskResource($task);
+        return new TaskResource($this->repo->loadDetails($task));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(UpdateTaskRequest $request, Task $task): \Illuminate\Http\JsonResponse
+    public function update(UpdateTaskRequest $request, Task $task): TaskResource
     {
-        resolve(TaskService::class)->update($request->validated(), $task);
+        $this->authorize('update', $task);
 
-        return (new TaskResource($task))
-            ->response()
-            ->setStatusCode(204);
+        return new TaskResource($this->service->update($task, $request->validated()));
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Task $task): \Illuminate\Foundation\Application|\Illuminate\Http\Response|\Illuminate\Contracts\Routing\ResponseFactory
+    public function destroy(Task $task): Response
     {
-        $task->delete();
+        $this->authorize('delete', $task);
 
-        return response([], Response::HTTP_NO_CONTENT);
+        $this->service->delete($task);
+
+        return response()->noContent();
+    }
+
+    public function toggle(Task $task): TaskResource
+    {
+        $this->authorize('update', $task);
+
+        return new TaskResource($this->service->toggle($task));
+    }
+
+    public function reorder(ReorderTasksRequest $request): Response
+    {
+        $this->service->reorder($request->user(), $request->validated('tasks'));
+
+        return response()->noContent();
     }
 }

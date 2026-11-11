@@ -2,35 +2,25 @@
 
 namespace Modules\Task\Providers;
 
-use Illuminate\Support\Facades\Route;
-use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Facades\Gate;
+use Modules\Common\Policies\OwnedByUserPolicy;
+use Modules\Common\Providers\ModuleServiceProvider;
+use Modules\Task\Console\SendTaskReminders;
+use Modules\Task\Models\Subtask;
+use Modules\Task\Models\Task;
+use Modules\Task\Policies\SubtaskPolicy;
 
-class TaskServiceProvider extends ServiceProvider
+class TaskServiceProvider extends ModuleServiceProvider
 {
-    /**
-     * Register any application services.
-     */
-    public function register(): void
-    {
-        $this->registerMigrations();
-        $this->registerRoutes();
-    }
+    protected string $module = 'Task';
 
-    /**
-     * Load route files.
-     */
-    private function registerRoutes(): void
+    protected function bootModule(): void
     {
-        Route::middleware('api')
-            ->prefix('api/'.config('app.version'))
-            ->group(__DIR__.'/../routes/api.php');
-    }
+        Gate::policy(Task::class, OwnedByUserPolicy::class);
+        Gate::policy(Subtask::class, SubtaskPolicy::class);
 
-    /**
-     * Load migration files.
-     */
-    private function registerMigrations(): void
-    {
-        $this->loadMigrationsFrom(__DIR__.'/../Database/Migrations');
+        if ($this->app->runningInConsole()) {
+            $this->commands([SendTaskReminders::class]);
+        }
     }
 }

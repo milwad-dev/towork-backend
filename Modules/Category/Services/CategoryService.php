@@ -2,54 +2,25 @@
 
 namespace Modules\Category\Services;
 
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Model;
 use Modules\Category\Models\Category;
+use Modules\User\Models\User;
 
 class CategoryService
 {
-    /**
-     * Store category by array of data.
-     *
-     * @param array $data
-     *
-     * @return \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Eloquent\Model
-     */
-    public function store(array $data)
+    public function store(User $user, array $data): Category
     {
-        return Category::query()->create([
-            'title'   => $data['title'],
-            'user_id' => auth()->id(),
-        ]);
+        return $user->categories()->create($data);
     }
 
-    /**
-     * Update category by array of data.
-     *
-     * @param array $data
-     * @param int   $id
-     *
-     * @return Builder|Model
-     */
-    public function update(int $id, array $data)
+    public function update(Category $category, array $data): Category
     {
-        return tap(Category::query()->where('id', $id))->update([
-            'title'   => $data['title'],
-            'user_id' => auth()->id(),
-        ]);
+        $category->update($data);
+
+        return $category;
     }
 
-    /**
-     * Delete category by id.
-     *
-     * @param int $id
-     *
-     * @return bool
-     */
-    public function delete(int $id)
+    public function delete(Category $category): void
     {
-        Category::query()->where('id', $id)->delete();
-
-        return true;
+        $category->delete();
     }
 }

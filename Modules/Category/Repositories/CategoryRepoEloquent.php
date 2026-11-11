@@ -3,32 +3,31 @@
 namespace Modules\Category\Repositories;
 
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Collection;
 use Modules\Category\Models\Category;
+use Modules\Task\Enums\TaskStatusEnum;
+use Modules\User\Models\User;
 
 class CategoryRepoEloquent
 {
     /**
-     * Get the latest categories with filter by user_id.
-     *
-     * @return Builder
+     * All categories of the user, alphabetically, with task counters.
      */
-    public function getLatest()
+    public function allFor(User $user): Collection
     {
-        return Category::query()
-            ->with('user')
-            ->latest();
+        return $user->categories()->withCount($this->counts())->orderBy('name')->get();
     }
 
-    /**
-     * Find or fail category by id.
-     *
-     * @param int $id
-     *
-     * @return Builder|null|Category|Model
-     */
-    public function findById(int $id)
+    public function loadCounts(Category $category): Category
     {
-        return Category::query()->findOrFail($id);
+        return $category->loadCount($this->counts());
+    }
+
+    private function counts(): array
+    {
+        return [
+            'tasks',
+            'tasks as open_tasks_count' => fn (Builder $q) => $q->where('status', '!=', TaskStatusEnum::Done->value),
+        ];
     }
 }

@@ -2,41 +2,17 @@
 
 namespace Modules\Category\Providers;
 
-use Illuminate\Support\Facades\Route;
-use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Facades\Gate;
+use Modules\Category\Models\Category;
+use Modules\Common\Policies\OwnedByUserPolicy;
+use Modules\Common\Providers\ModuleServiceProvider;
 
-class CategoryServiceProvider extends ServiceProvider
+class CategoryServiceProvider extends ModuleServiceProvider
 {
-    /**
-     * Register any application services.
-     *
-     * @return void
-     */
-    public function register()
-    {
-        $this->registerMigrations();
-        $this->registerRoutes();
-    }
+    protected string $module = 'Category';
 
-    /**
-     * Load route files.
-     *
-     * @return void
-     */
-    private function registerRoutes(): void
+    protected function bootModule(): void
     {
-        Route::middleware('api')
-            ->prefix('api/'.config('app.version'))
-            ->group(__DIR__.'/../Routes/api.php');
-    }
-
-    /**
-     * Load migration files.
-     *
-     * @return void
-     */
-    private function registerMigrations(): void
-    {
-        $this->loadMigrationsFrom(__DIR__.'/../Database/Migrations');
+        Gate::policy(Category::class, OwnedByUserPolicy::class);
     }
 }

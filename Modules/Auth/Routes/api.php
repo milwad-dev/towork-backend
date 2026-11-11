@@ -1,29 +1,30 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Modules\Auth\Http\Controllers\EmailVerificationController;
 use Modules\Auth\Http\Controllers\LoginController;
-use Modules\Auth\Http\Controllers\Password\CodeCheckController;
-use Modules\Auth\Http\Controllers\Password\ForgotPasswordController;
-use Modules\Auth\Http\Controllers\Password\ResetPasswordController;
+use Modules\Auth\Http\Controllers\LogoutController;
+use Modules\Auth\Http\Controllers\PasswordResetController;
 use Modules\Auth\Http\Controllers\RegisterController;
-use Modules\Auth\Http\Controllers\Verify\Email\EmailVerifyController;
 
-Route::group(['middleware' => 'throttle:5,1', 'as' => 'auth.'], static function ($router) {
-    // Register
-    $router->post('register', RegisterController::class)->name('register')->middleware('guest:sanctum');
+Route::prefix('auth')->name('auth.')->group(function () {
+    Route::middleware(['guest:sanctum', 'throttle:auth'])->group(function () {
+        Route::post('register', RegisterController::class)->name('register');
+        Route::post('login', LoginController::class)->name('login');
 
-    // Login
-    $router->post('login', LoginController::class)->name('login')->middleware('guest:sanctum');
+        Route::controller(PasswordResetController::class)->group(function () {
+            Route::post('forgot-password', 'send')->name('password.email');
+            Route::post('reset-password/check', 'check')->name('password.check');
+            Route::post('reset-password', 'reset')->name('password.reset');
+        });
+    });
 
-    // Password
-    $router->post('password/email', ForgotPasswordController::class)->name('forgot_password')->middleware('guest:sanctum');
-    $router->post('password/code/check', CodeCheckController::class)->name('check_code_password')->middleware('guest:sanctum');
-    $router->post('password/reset', ResetPasswordController::class)->name('reset_password')->middleware('guest:sanctum');
+    Route::middleware('auth:sanctum')->group(function () {
+        Route::post('logout', LogoutController::class)->name('logout');
 
-    // Verify
-    $router->group(['middleware' => 'auth:sanctum'], static function ($routerGroup) {
-        $routerGroup->post('email/verify/request', [EmailVerifyController::class, 'request'])->name('email.request');
-        $routerGroup->post('email/verify', [EmailVerifyController::class, 'verify'])->name('email.verify');
-        $routerGroup->post('email/verify/resend', [EmailVerifyController::class, 'resend'])->name('email.verify.resend');
+        Route::middleware('throttle:auth')->controller(EmailVerificationController::class)->group(function () {
+            Route::post('email/verification-notification', 'send')->name('verification.send');
+            Route::post('email/verify', 'verify')->name('verification.verify');
+        });
     });
 });
