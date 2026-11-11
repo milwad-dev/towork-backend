@@ -2,88 +2,55 @@
 
 namespace Modules\Category\Http\Controllers;
 
-use Illuminate\Http\JsonResponse;
-use Modules\Category\Http\Requests\CategoryStoreRequest;
-use Modules\Category\Http\Requests\CategoryUpdateRequest;
+use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+use Illuminate\Http\Response;
+use Modules\Category\Http\Requests\SaveCategoryRequest;
+use Modules\Category\Http\Resources\CategoryResource;
+use Modules\Category\Models\Category;
 use Modules\Category\Repositories\CategoryRepoEloquent;
 use Modules\Category\Services\CategoryService;
 use Modules\Common\Http\Controllers\Controller;
-use Symfony\Component\HttpFoundation\Response;
 
 class CategoryController extends Controller
 {
-    /**
-     * Get latest categories and return json response.
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function index()
-    {
-        $categories = resolve(CategoryRepoEloquent::class)->getLatest((int) auth()->id())->get();
+    public function __construct(
+        private readonly CategoryRepoEloquent $repo,
+        private readonly CategoryService $service,
+    ) {}
 
-        return response()->json([
-            'data' => [
-                'categories' => $categories,
-            ],
-            'status' => 'success',
-        ]);
+    public function index(Request $request): AnonymousResourceCollection
+    {
+        return CategoryResource::collection($this->repo->allFor($request->user()));
     }
 
-    /**
-     * Store category by request.
-     *
-     * @param CategoryStoreRequest $request
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function store(CategoryStoreRequest $request)
+    public function store(SaveCategoryRequest $request): CategoryResource
     {
-        $category = resolve(CategoryService::class)->store($request->validated());
+        $category = $this->service->store($request->user(), $request->validated());
 
-        return response()->json([
-            'data' => [
-                $category,
-            ],
-            'status' => 'success',
-        ]);
+        return new CategoryResource($this->repo->loadCounts($category));
     }
 
-    /**
-     * Update category by request and id.
-     *
-     * @param int                   $id
-     * @param CategoryUpdateRequest $request
-     *
-     * @return JsonResponse
-     */
-    public function update(CategoryUpdateRequest $request, int $id)
+    public function show(Category $category): CategoryResource
     {
-        resolve(CategoryService::class)->update($id, $request->validated());
+        $this->authorize('view', $category);
 
-        return response()->json([
-            'data' => [
-                'message' => 'Category updated successfully.',
-            ],
-            'status' => 'success',
-        ]);
+        return new CategoryResource($this->repo->loadCounts($category));
     }
 
-    /**
-     * Delete category by id.
-     *
-     * @param int $id
-     *
-     * @return JsonResponse
-     */
-    public function destroy(int $id)
+    public function update(SaveCategoryRequest $request, Category $category): CategoryResource
     {
-        resolve(CategoryService::class)->delete($id);
+        $this->authorize('update', $category);
 
-        return response()->json([
-            'data' => [
-                'message' => 'Category deleted successfully.',
-            ],
-            'status' => 'success',
-        ], Response::HTTP_NO_CONTENT);
+        return new CategoryResource($this->repo->loadCounts($this->service->update($category, $request->validated())));
+    }
+
+    public function destroy(Category $category): Response
+    {
+        $this->authorize('delete', $category);
+
+        $this->service->delete($category);
+
+        return response()->noContent();
     }
 }

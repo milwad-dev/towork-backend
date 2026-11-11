@@ -1,12 +1,11 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Modules\User\Http\Controllers\UserController;
+use Modules\User\Http\Controllers\ProfileController;
 
-/*
- * User routes.
- */
-
-Route::group(['middleware' => 'auth'], static function ($router) {
-    $router->apiResource('users', UserController::class)->except('store');
+Route::middleware('auth:sanctum')->prefix('me')->name('me.')->controller(ProfileController::class)->group(function () {
+    Route::get('/', 'show')->name('show');
+    Route::put('/', 'update')->name('update');
+    Route::put('password', 'updatePassword')->name('password');
+    Route::delete('/', 'destroy')->name('destroy');
 });

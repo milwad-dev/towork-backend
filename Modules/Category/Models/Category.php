@@ -2,41 +2,30 @@
 
 namespace Modules\Category\Models;
 
+use Illuminate\Database\Eloquent\Attributes\UseFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Modules\Category\Database\Factories\CategoryFactory;
+use Modules\Task\Models\Task;
 use Modules\User\Models\User;
 
+#[UseFactory(CategoryFactory::class)]
 class Category extends Model
 {
+    /** @use HasFactory<CategoryFactory> */
     use HasFactory;
 
-    /**
-     * Set factory.
-     *
-     * @return CategoryFactory
-     */
-    protected static function newFactory()
+    protected $fillable = ['user_id', 'name', 'color', 'icon'];
+
+    public function user(): BelongsTo
     {
-        return CategoryFactory::new();
+        return $this->belongsTo(User::class);
     }
 
-    /**
-     * Fillable columns.
-     *
-     * @var string[]
-     */
-    protected $fillable = ['title', 'user_id'];
-
-    // Relations
-
-    /**
-     * Relation one-to-many, User model.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function user()
+    public function tasks(): HasMany
     {
-        return $this->belongsTo(User::class, 'user_id');
+        return $this->hasMany(Task::class);
     }
 }

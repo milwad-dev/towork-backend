@@ -2,55 +2,56 @@
 
 namespace Modules\User\Services;
 
-use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\DB;
 use Modules\User\Models\User;
 
 class UserService
 {
-    /**
-     * Create user by array of data.
-     *
-     * @param array $data
-     *
-     * @return User
-     */
     public function create(array $data): User
     {
         return User::query()->create([
-            'name'      => $data['name'],
-            'email'     => $data['email'],
-            'phone'     => $data['phone'],
-            'password'  => $data['password'],
+            'name' => $data['name'],
+            'email' => strtolower($data['email']),
+            'phone' => $data['phone'] ?? null,
+            'password' => $data['password'],
         ]);
     }
 
-    /**
-     * Update user by array of data and id.
-     *
-     * @param array $data
-     * @param int   $id
-     *
-     * @return int
-     */
-    public function update(array $data, int $id)
+    public function updateProfile(User $user, array $data): User
     {
-        return User::query()->where('id', $id)->update([
-            'name'      => $data['name'],
-            'email'     => $data['email'],
-            'phone'     => $data['phone'],
-            'password'  => Hash::make($data['password']),
+        $user->fill([
+            'name' => $data['name'],
+            'email' => strtolower($data['email']),
+            'phone' => $data['phone'] ?? null,
         ]);
+
+        if ($user->isDirty('email')) {
+            $user->email_verified_at = null;
+        }
+
+        $user->save();
+
+        return $user;
     }
 
-    /**
-     * Generate token.
-     *
-     * @param User   $user
-     * @param string $name
-     *
-     * @return string
-     */
-    public function generateToken(User $user, string $name = 'create-user')
+    public function updatePassword(User $user, string $password): void
+    {
+        $user->update(['password' => $password]);
+
+        // Sign out every other device.
+        $current = $user->currentAccessToken();
+        $user->tokens()->when($current?->id, fn ($q, $id) => $q->whereKeyNot($id))->delete();
+    }
+
+    public function delete(User $user): void
+    {
+        DB::transaction(function () use ($user) {
+            $user->tokens()->delete();
+            $user->delete(); // tasks, categories and labels cascade
+        });
+    }
+
+    public function generateToken(User $user, string $name = 'web'): string
     {
         return $user->createToken($name)->plainTextToken;
     }

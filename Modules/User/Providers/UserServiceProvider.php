@@ -2,41 +2,9 @@
 
 namespace Modules\User\Providers;
 
-use Illuminate\Support\Facades\Route;
-use Illuminate\Support\ServiceProvider;
+use Modules\Common\Providers\ModuleServiceProvider;
 
-class UserServiceProvider extends ServiceProvider
+class UserServiceProvider extends ModuleServiceProvider
 {
-    /**
-     * Register files.
-     *
-     * @return void
-     */
-    public function register()
-    {
-        $this->registerMigrations();
-        $this->registerRoutes();
-    }
-
-    /**
-     * Load migration files.
-     *
-     * @return void
-     */
-    private function registerMigrations(): void
-    {
-        $this->loadMigrationsFrom(__DIR__.'/../Database/Migrations');
-    }
-
-    /**
-     * Load route files.
-     *
-     * @return void
-     */
-    private function registerRoutes(): void
-    {
-        Route::middleware('api')
-            ->prefix('api/'.config('app.version'))
-            ->group(__DIR__.'/../Routes/api.php');
-    }
+    protected string $module = 'User';
 }

@@ -2,54 +2,32 @@
 
 namespace Modules\Auth\Http\Controllers;
 
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\ValidationException;
 use Modules\Auth\Http\Requests\LoginRequest;
 use Modules\Common\Http\Controllers\Controller;
+use Modules\User\Http\Resources\UserResource;
+use Modules\User\Repositories\UserRepoEloquent;
 use Modules\User\Services\UserService;
-use Symfony\Component\HttpFoundation\Response;
 
 class LoginController extends Controller
 {
-    /**
-     * Login user.
-     *
-     * @param LoginRequest $request
-     *
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response
-     */
-    public function __invoke(LoginRequest $request)
+    public function __invoke(LoginRequest $request, UserRepoEloquent $repo, UserService $users): JsonResponse
     {
-        $field = $request->email;
-        $correctField = $this->filterField($field);
+        $user = $repo->findByLogin($request->validated('login'));
 
-        if (!Auth::attempt([$correctField => $field, 'password' => $request->password])) {
-            return response([
-                'data'   => ['message' => 'Unauthorised.'],
-                'status' => 'error',
-            ], Response::HTTP_FORBIDDEN);
+        if (! $user || ! Hash::check($request->validated('password'), $user->password)) {
+            throw ValidationException::withMessages([
+                'login' => 'These credentials do not match our records.',
+            ]);
         }
 
-        $user = Auth::user();
-
-        return response([
+        return response()->json([
             'data' => [
-                'token' => resolve(UserService::class)->generateToken($user, 'login-user'),
-                'name'  => $user->name,
-                'email' => $user->email,
+                'user' => new UserResource($user),
+                'token' => $users->generateToken($user, substr((string) $request->userAgent(), 0, 100) ?: 'web'),
             ],
-            'status' => 'success',
         ]);
-    }
-
-    /**
-     * Filter field by email or phone.
-     *
-     * @param string $field
-     *
-     * @return string
-     */
-    private function filterField(string $field): string
-    {
-        return filter_var($field, FILTER_VALIDATE_EMAIL) ? 'email' : 'phone';
     }
 }

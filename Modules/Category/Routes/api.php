@@ -3,10 +3,6 @@
 use Illuminate\Support\Facades\Route;
 use Modules\Category\Http\Controllers\CategoryController;
 
-/*
- * User routes.
- */
-
-Route::group(['middleware' => 'auth:sanctum'], static function ($router) {
-    $router->apiResource('categories', CategoryController::class);
+Route::middleware('auth:sanctum')->group(function () {
+    Route::apiResource('categories', CategoryController::class);
 });

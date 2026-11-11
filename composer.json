@@ -1,39 +1,51 @@
 {
-    "name": "laravel/laravel",
+    "$schema": "https://getcomposer.org/schema.json",
+    "name": "milwad-dev/towork-backend",
     "type": "project",
-    "description": "The Laravel Framework.",
-    "keywords": ["framework", "laravel"],
+    "description": "ToWork: an open-source, advanced todo app API built with Laravel.",
+    "keywords": [
+        "laravel",
+        "todo",
+        "api",
+        "kanban",
+        "sanctum"
+    ],
     "license": "MIT",
     "require": {
-        "php": "^8.1",
-        "guzzlehttp/guzzle": "^7.2",
-        "laravel/framework": "^10.0",
-        "laravel/sanctum": "^3.2",
-        "laravel/tinker": "^2.7",
-        "milwad/laravel-crod": "^1.2",
-        "milwad/laravel-validate": "^1.6",
-        "rakutentech/laravel-request-docs": "^2.12"
+        "php": "^8.4",
+        "laravel/framework": "^13.42",
+        "laravel/sanctum": "^4.4",
+        "laravel/tinker": "^3.0",
+        "milwad/laravel-validate": "^2.2",
+        "predis/predis": "^3.0",
+        "rakutentech/laravel-request-docs": "^2.44"
     },
     "require-dev": {
-        "fakerphp/faker": "^1.9.1",
-        "laravel/pint": "^1.0",
-        "mockery/mockery": "^1.4.4",
-        "nunomaduro/collision": "^7.0",
-        "pestphp/pest": "^2.x-dev",
-        "pestphp/pest-plugin-faker": "^2.0",
-        "pestphp/pest-plugin-laravel": "^2.0",
-        "spatie/laravel-ignition": "^2.0"
+        "fakerphp/faker": "^1.24",
+        "laravel/pail": "^1.2.5",
+        "laravel/pint": "^1.27",
+        "milwad/laravel-crod": "^1.6",
+        "mockery/mockery": "^1.6",
+        "nunomaduro/collision": "^8.6",
+        "pestphp/pest": "^5.3",
+        "pestphp/pest-plugin-laravel": "^5.0"
     },
     "autoload": {
         "psr-4": {
             "App\\": "app/",
             "Database\\Factories\\": "database/factories/",
             "Database\\Seeders\\": "database/seeders/",
-            "Modules\\User\\": "Modules/User/",
             "Modules\\Common\\": "Modules/Common/",
+            "Modules\\User\\": "Modules/User/",
             "Modules\\Auth\\": "Modules/Auth/",
-            "Modules\\Category\\": "Modules/Category/"
-        }
+            "Modules\\Category\\": "Modules/Category/",
+            "Modules\\Label\\": "Modules/Label/",
+            "Modules\\Task\\": "Modules/Task/",
+            "Modules\\Dashboard\\": "Modules/Dashboard/"
+        },
+        "files": [
+            "Modules/Common/helpers.php"
+        ]
     },
     "autoload-dev": {
         "psr-4": {
@@ -41,6 +53,16 @@
         }
     },
     "scripts": {
+        "setup": [
+            "composer install",
+            "@php -r \"file_exists('.env') || copy('.env.example', '.env');\"",
+            "@php artisan key:generate",
+            "@php artisan migrate --force"
+        ],
+        "test": [
+            "@php artisan config:clear --ansi @no_additional_args",
+            "@php vendor/bin/pest"
+        ],
         "post-autoload-dump": [
             "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
             "@php artisan package:discover --ansi"
@@ -54,8 +76,12 @@
         "post-create-project-cmd": [
             "@php artisan key:generate --ansi"
         ],
-        "test": "vendor\\bin\\pest",
-        "test-coverage": "vendor\\bin\\pest --coverage-html ./coverage"
+        "pre-package-uninstall": [
+            "Illuminate\\Foundation\\ComposerScripts::prePackageUninstall"
+        ],
+        "lint": [
+            "@php vendor/bin/pint"
+        ]
     },
     "extra": {
         "laravel": {
@@ -67,9 +93,11 @@
         "preferred-install": "dist",
         "sort-packages": true,
         "allow-plugins": {
-            "pestphp/pest-plugin": true
+            "pestphp/pest-plugin": true,
+            "php-http/discovery": true
         }
     },
-    "minimum-stability": "dev",
-    "prefer-stable": true
+    "minimum-stability": "stable",
+    "prefer-stable": true,
+    "version": "1.0.0"
 }

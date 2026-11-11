@@ -2,173 +2,62 @@
 
 namespace Modules\Common\Console\Commands;
 
-use File;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Str;
 
 class MakeModule extends Command
 {
-    /**
-     * The name and signature of the console command.
-     *
-     * @var string
-     */
-    protected $signature = 'make:module {name}';
+    protected $signature = 'make:module {name : Module name, e.g. Comment}';
 
-    /**
-     * The console command description.
-     *
-     * @var string
-     */
-    protected $description = 'Create a new module';
+    protected $description = 'Create a new module skeleton inside Modules/';
 
-    /**
-     * Create a new command instance.
-     *
-     * @return void
-     */
-    public function __construct()
+    public function handle(): int
     {
-        parent::__construct();
-    }
+        $name = Str::studly($this->argument('name'));
+        $base = base_path('Modules/'.$name);
 
-    /**
-     * Execute the console command.
-     *
-     * @return int
-     */
-    public function handle()
-    {
-        $argument = $this->argument('name');
-        $router = '$router';
+        if (File::isDirectory($base)) {
+            $this->components->error("Module [{$name}] already exists.");
 
-        $pathServiceProvider = "<?php
+            return self::FAILURE;
+        }
 
-namespace Modules\\$argument\Providers;
+        foreach (['Database/Migrations', 'Database/Factories', 'Http/Controllers', 'Http/Requests', 'Http/Resources', 'Models', 'Providers', 'Routes', 'Services', 'Tests/Feature'] as $dir) {
+            File::makeDirectory($base.'/'.$dir, 0755, true);
+        }
 
-use Illuminate\Support\ServiceProvider;
-use Illuminate\Support\Facades\Route;
+        File::put($base."/Providers/{$name}ServiceProvider.php", <<<PHP
+        <?php
 
-class {$argument}ServiceProvider extends ServiceProvider
-{
-    public $/namespace = 'Modules\\$argument\Http\Controllers';
+        namespace Modules\\{$name}\\Providers;
 
-    public function register()
-    {
-        $/this->loadMigrationsFrom(__DIR__ . '/../Database/Migrations');
-        $/this->loadViewsFrom(__DIR__ . '/../Resources/Views/', '{$argument}');
-        Route::middleware('web')->namespace($/this->namespace)->group(__DIR__ . '/../routes/{$argument}_routes.php');
-    }
-}
-";
-        // -------------------------------------------------------------------------------------
-        $pathRepo = "<?php
+        use Modules\\Common\\Providers\\ModuleServiceProvider;
 
-namespace Modules\\$argument\Repositories;
+        class {$name}ServiceProvider extends ModuleServiceProvider
+        {
+            protected string \$module = '{$name}';
+        }
 
-use Modules\Common\Contracts\Interface\RepositoriesInterface;
-use Modules\Common\Repositories\CommonRepoEloquent;
-use Modules\\$argument\Models\\$argument;
+        PHP);
 
-class {$argument}Repo implements RepositoriesInterface
-{
-    private \$class = $argument::class;
+        File::put($base.'/Routes/api.php', <<<'PHP'
+        <?php
 
-    public function index()
-    {
+        use Illuminate\Support\Facades\Route;
 
-    }
+        Route::middleware('auth:sanctum')->group(function () {
+            //
+        });
 
-    public function findById(\$id)
-    {
+        PHP);
 
-    }
-
-    public function delete(\$id)
-    {
-
-    }
-
-    private function query()
-    {
-        return CommonRepoEloquent::query(\$this->class);
-    }
-}
-";
-        $route = "<?php
-
-use Illuminate\Support\Facades\Route;
-
-Route::group([], function ($router) {
-
-});
-        ";
-
-        $service = "<?php
-
-namespace Modules\\{$argument}\Services;
-
-use Modules\Common\Contracts\Interface\ServicesInterface;
-use Modules\\{$argument}\Models\\{$argument};
-use Modules\Common\Repositories\CommonRepoEloquent;
-
-class {$argument}Service implements ServicesInterface
-{
-    private \$class = {$argument}::class;
-
-    public function store(\$request)
-    {
-        return \$this->query()->create([
-
+        $this->components->info("Module [{$name}] created.");
+        $this->components->bulletList([
+            "Add \"Modules\\\\{$name}\\\\\": \"Modules/{$name}/\" to composer.json autoload and run composer dump-autoload.",
+            "Register Modules\\{$name}\\Providers\\{$name}ServiceProvider in bootstrap/providers.php.",
         ]);
-    }
 
-    public function update(\$request, \$id)
-    {
-         return \$this->query()->whereId(\$id)->update([
-
-        ]);
-    }
-
-    private function query()
-    {
-        return CommonRepoEloquent::query(\$this->class);
-    }
-}
-        ";
-
-        File::makeDirectory('Modules/'.$argument);
-
-        // Databases
-        File::makeDirectory('Modules/'.$argument.'/Database');
-        File::makeDirectory('Modules/'.$argument.'/Database/Migrations');
-
-        // Providers
-        File::makeDirectory('Modules/'.$argument.'/Providers');
-        File::put('Modules/'.$argument.'/Providers/'.$argument.'ServiceProvider.php', $pathServiceProvider);
-
-        // Repositories
-        File::makeDirectory('Modules/'.$argument.'/Repositories');
-        File::put('Modules/'.$argument.'/Repositories/'.$argument.'Repo.php', $pathRepo);
-
-        // Http
-        File::makeDirectory('Modules/'.$argument.'/Http');
-        File::makeDirectory('Modules/'.$argument.'/Http/Controllers');
-
-        // Models
-        File::makeDirectory('Modules/'.$argument.'/Models');
-
-        // routes
-        File::makeDirectory('Modules/'.$argument.'/routes');
-        File::put('Modules/'.$argument.'/routes/'.strtolower($argument).'_routes.php', $route);
-
-        // Services
-        File::makeDirectory('Modules/'.$argument.'/Services');
-        File::put('Modules/'.$argument.'/Services/'.$argument.'Service.php', $service);
-
-        // Views
-        File::makeDirectory('Modules/'.$argument.'/Resources');
-        File::makeDirectory('Modules/'.$argument.'/Resources/Views');
-
-        $this->info("Your Module {$argument} Make Successfully");
+        return self::SUCCESS;
     }
 }

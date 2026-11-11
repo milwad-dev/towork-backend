@@ -2,32 +2,27 @@
 
 namespace Modules\Auth\Http\Controllers;
 
+use Illuminate\Http\JsonResponse;
+use Modules\Auth\Enums\AuthCodePurpose;
 use Modules\Auth\Http\Requests\RegisterRequest;
+use Modules\Auth\Services\AuthCodeService;
 use Modules\Common\Http\Controllers\Controller;
+use Modules\User\Http\Resources\UserResource;
 use Modules\User\Services\UserService;
-use Symfony\Component\HttpFoundation\Response;
 
 class RegisterController extends Controller
 {
-    /**
-     * Register user.
-     *
-     * @param RegisterRequest $request
-     * @param UserService     $userService
-     *
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response
-     */
-    public function __invoke(RegisterRequest $request, UserService $userService)
+    public function __invoke(RegisterRequest $request, UserService $users, AuthCodeService $codes): JsonResponse
     {
-        $user = $userService->create($request->validated());
-        $token = $userService->generateToken($user);
+        $user = $users->create($request->validated());
 
-        return response([
+        $codes->send($user->email, AuthCodePurpose::VerifyEmail);
+
+        return response()->json([
             'data' => [
-                'user'  => $user,
-                'token' => $token,
+                'user' => new UserResource($user),
+                'token' => $users->generateToken($user),
             ],
-            'status' => 'success',
-        ], Response::HTTP_CREATED);
+        ], 201);
     }
 }
