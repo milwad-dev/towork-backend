@@ -1,0 +1,128 @@
+# ToWork backend: `docker compose up -d --build`, then open http://localhost:8000
+# Settings are read from TOWORK_* variables (shell or .env), see .env.docker.example.
+name: towork-backend
+
+x-app: &app
+  build:
+    context: .
+    target: app
+  image: towork-backend-app:1.0.0
+  restart: unless-stopped
+  environment: &app-env
+    APP_NAME: ToWork
+    APP_ENV: ${TOWORK_APP_ENV:-production}
+    APP_DEBUG: ${TOWORK_APP_DEBUG:-false}
+    APP_KEY: ${TOWORK_APP_KEY:-}
+    APP_URL: ${TOWORK_APP_URL:-http://localhost:8000}
+    FRONTEND_URL: ${TOWORK_FRONTEND_URL:-http://localhost:3000}
+    CORS_ALLOWED_ORIGINS: ${TOWORK_CORS_ALLOWED_ORIGINS:-*}
+    LOG_CHANNEL: stderr
+    LOG_LEVEL: ${TOWORK_LOG_LEVEL:-info}
+    DB_CONNECTION: mysql
+    DB_HOST: mysql
+    DB_PORT: 3306
+    DB_DATABASE: ${TOWORK_DB_DATABASE:-towork}
+    DB_USERNAME: ${TOWORK_DB_USERNAME:-towork}
+    DB_PASSWORD: ${TOWORK_DB_PASSWORD:-secret}
+    REDIS_CLIENT: phpredis
+    REDIS_HOST: redis
+    CACHE_STORE: redis
+    QUEUE_CONNECTION: redis
+    SESSION_DRIVER: redis
+    MAIL_MAILER: smtp
+    MAIL_HOST: ${TOWORK_MAIL_HOST:-mailpit}
+    MAIL_PORT: ${TOWORK_MAIL_PORT:-1025}
+    MAIL_USERNAME: ${TOWORK_MAIL_USERNAME:-}
+    MAIL_PASSWORD: ${TOWORK_MAIL_PASSWORD:-}
+    MAIL_FROM_ADDRESS: ${TOWORK_MAIL_FROM_ADDRESS:-hello@towork.test}
+    MAIL_FROM_NAME: ToWork
+  volumes:
+    - storage:/var/www/html/storage/app
+  depends_on:
+    mysql:
+      condition: service_healthy
+    redis:
+      condition: service_healthy
+
+services:
+  app:
+    <<: *app
+    environment:
+      <<: *app-env
+      CONTAINER_ROLE: app
+      SEED_DEMO: ${TOWORK_SEED_DEMO:-true}
+
+  queue:
+    <<: *app
+    environment:
+      <<: *app-env
+      CONTAINER_ROLE: queue
+    healthcheck:
+      disable: true
+    depends_on:
+      app:
+        condition: service_healthy
+
+  scheduler:
+    <<: *app
+    environment:
+      <<: *app-env
+      CONTAINER_ROLE: scheduler
+    healthcheck:
+      disable: true
+    depends_on:
+      app:
+        condition: service_healthy
+
+  web:
+    build:
+      context: .
+      target: web
+    image: towork-backend-web:1.0.0
+    restart: unless-stopped
+    ports:
+      - "${TOWORK_APP_PORT:-8000}:80"
+    depends_on:
+      app:
+        condition: service_healthy
+
+  mysql:
+    image: mysql:8.4
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: ${TOWORK_DB_DATABASE:-towork}
+      MYSQL_USER: ${TOWORK_DB_USERNAME:-towork}
+      MYSQL_PASSWORD: ${TOWORK_DB_PASSWORD:-secret}
+      MYSQL_ROOT_PASSWORD: ${TOWORK_DB_ROOT_PASSWORD:-root-secret}
+    volumes:
+      - mysql-data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "127.0.0.1", "-u", "root", "-p${TOWORK_DB_ROOT_PASSWORD:-root-secret}"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+      start_period: 20s
+
+  redis:
+    image: redis:7.4-alpine
+    restart: unless-stopped
+    command: ["redis-server", "--appendonly", "yes"]
+    volumes:
+      - redis-data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+
+  # Catches every e-mail (verification codes, reminders): http://localhost:8025
+  mailpit:
+    image: axllent/mailpit:latest
+    restart: unless-stopped
+    ports:
+      - "${TOWORK_MAILPIT_PORT:-8025}:8025"
+
+volumes:
+  mysql-data:
+  redis-data:
+  storage:
